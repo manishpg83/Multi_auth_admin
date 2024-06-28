@@ -9,11 +9,11 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
-                            <p>Total Contacts</p>
+                            <h3><?php echo e($festivals->count()); ?></h3>
+                            <p>Total Festival</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="far fa-calendar-alt"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -37,8 +37,8 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
-                            <p>Email open ratio</p>
+                            <h3><?php echo e($users->count()); ?></h3>
+                            <p>Total User</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -62,7 +62,7 @@
                 </div>
                 <!-- ./col -->
             </div>
-
+            <!-- client table -->
             <section class="content">
                 <div class="container-fluid">
                     <!-- /.row -->
@@ -70,49 +70,50 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Client List</h3>
+                                    <h3 class="card-title">User List</h3>
                                     <div class="card-tools">
                                         <div class="input-group input-group-sm">
-                                            <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search">
+                                            
                                             <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-block btn-outline-primary"
+                                                
+                                                <!-- <button type="button" class="btn btn-block btn-outline-primary"
                                                     style="margin-left: 5px;" data-toggle="modal"
                                                     data-target="#addUserModal">
                                                     Add User
-                                                </button>
+                                                </button> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body table-responsive p-0">
-                                    <table class="table table-hover text-nowrap">
+                                    <table class="table table-hover text-nowrap" id="clientTable">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Name</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
-                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <tr>
                                                 <td><?php echo e($user->user_id); ?></td>
-                                                <td><?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?></td>
+                                                <td><?php echo e($user->first_name); ?></td>
+                                                <td><?php echo e($user->last_name); ?></td>
                                                 <td><?php echo e($user->email); ?></td>
-                                                <td><?php echo e($user->status); ?></td>
-                                                <td><a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
-                                                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a></td>
+                                                <td>
+                                                    <span class="<?php echo e($user->status === 'Active' ? 'status-active' : 'status-inactive'); ?>">
+                                                        <?php echo e($user->status); ?>
+
+                                                    </span>
+                                                </td>
                                             </tr>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                             <tr>
-                                                <td colspan="6">No users found</td>
+                                                <td colspan="5">No users found</td>
                                             </tr>
                                             <?php endif; ?>
                                         </tbody>
@@ -123,149 +124,250 @@
                             <!-- /.card -->
                         </div>
                     </div>
-
+                    <!-- festival table -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Festival Management</h3>
                                     <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search">
+                                        <div class="input-group input-group-sm">
+                                            
                                             <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
+                                                <button type="button" class="btn btn-block btn-outline-primary"
+                                                    style="margin-left: 5px;" data-toggle="modal"
+                                                    data-target="#addFestivalModal">
+                                                    Add Festival
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /.card-header -->
+                                <div class="modal fade" id="addFestivalModal" tabindex="-1"
+                                    aria-labelledby="addFestivalModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="<?php echo e(route('admin.festivals.store')); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addFestivalModalLabel">Add Festival</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="name">Festival Name</label>
+                                                        <input type="text" class="form-control" id="name" name="name"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="date">Date</label>
+                                                        <input type="date" class="form-control" id="date" name="date"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <select class="form-control" id="status" name="status" required>
+                                                            <option value="active">Active</option>
+                                                            <option value="inactive">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- <div class="form-group">
+                                                    <label for="email_scheduled">Email Scheduled</label>
+                                                    <input type="text" class="form-control" id="email_scheduled"
+                                                        name="email_scheduled">
+                                                    </div> -->
+                                                    <div class="form-group">
+                                                        <label for="subject_line">Subject Line</label>
+                                                        <input type="text" class="form-control" id="subject_line"
+                                                            name="subject_line">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email_body">Email Body</label>
+                                                        <textarea class="form-control" id="email_body"
+                                                            name="email_body"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card-body table-responsive p-0">
-                                    <table class="table table-hover text-nowrap">
+                                    <table class="table table-hover text-nowrap" id="festivalTable">
                                         <thead>
                                             <tr>
+                                                <th>ID</th>
                                                 <th>Festival</th>
                                                 <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Subject Line</th>
+                                                <th>Email Body</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $__empty_1 = true; $__currentLoopData = $festivals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $festival): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <tr>
-                                                <td>New Year's Day</td>
-                                                <td>11-7-2014</td>
-                                                <td><a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
-                                                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a></td>
+                                                <td><?php echo e($festival->festival_id); ?></td>
+                                                <td><?php echo e($festival->name); ?></td>
+                                                <td><?php echo e($festival->date); ?></td>
+                                                <td>
+                                                    <span class="<?php echo e($festival->status === 'Active' ? 'status-active' : 'status-inactive'); ?>">
+                                                        <?php echo e($festival->status); ?>
+
+                                                    </span>
+                                                </td>
+                                                <td><?php echo e($festival->subject_line); ?></td>
+                                                <td><?php echo e($festival->email_body); ?></td>
+                                                <td>
+                                                    <!-- Edit Icon -->
+                                                    <a href="#" class="text-indigo-600 hover:text-indigo-900" data-toggle="modal"
+                                                       data-target="#editFestivalModal<?php echo e($festival->festival_id); ?>">
+                                                       <i class="fas fa-edit"></i>
+                                                    </a>
+                                                
+                                                    <!-- Delete Icon -->
+                                                    |
+                                                    <a href="#" class="text-red-600 hover:text-red-900"
+                                                       onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this festival?')) { document.getElementById('delete-form-<?php echo e($festival->festival_id); ?>').submit(); }">
+                                                       <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                
+                                                    <!-- Delete Form -->
+                                                    <form id="delete-form-<?php echo e($festival->festival_id); ?>"
+                                                          action="<?php echo e(route('admin.festivals.destroy', $festival->festival_id)); ?>"
+                                                          method="POST" style="display: none;">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('DELETE'); ?>
+                                                    </form>
+                                                </td>
                                             </tr>
+
+                                            <!-- Edit Festival Modal -->
+                                            <div class="modal fade" id="editFestivalModal<?php echo e($festival->festival_id); ?>"
+                                                tabindex="-1"
+                                                aria-labelledby="editFestivalModalLabel<?php echo e($festival->festival_id); ?>"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form
+                                                            action="<?php echo e(route('admin.festivals.update', $festival->festival_id)); ?>"
+                                                            method="POST">
+                                                            <?php echo csrf_field(); ?>
+                                                            <?php echo method_field('PATCH'); ?>
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="editFestivalModalLabel<?php echo e($festival->festival_id); ?>">
+                                                                    Edit Festival</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="name<?php echo e($festival->festival_id); ?>">Festival
+                                                                        Name</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="name<?php echo e($festival->festival_id); ?>"
+                                                                        name="name" value="<?php echo e($festival->name); ?>"
+                                                                        required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="date<?php echo e($festival->festival_id); ?>">Date</label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="date<?php echo e($festival->festival_id); ?>"
+                                                                        name="date" value="<?php echo e($festival->date); ?>"
+                                                                        required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="status<?php echo e($festival->festival_id); ?>">Status</label>
+                                                                    <select class="form-control"
+                                                                        id="status<?php echo e($festival->festival_id); ?>"
+                                                                        name="status" required>
+                                                                        <option value="active"
+                                                                            <?php echo e($festival->status === 'active' ? 'selected' : ''); ?>>
+                                                                            Active</option>
+                                                                        <option value="inactive"
+                                                                            <?php echo e($festival->status === 'inactive' ? 'selected' : ''); ?>>
+                                                                            Inactive</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="email_scheduled<?php echo e($festival->festival_id); ?>">Email
+                                                                        Scheduled</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="email_scheduled<?php echo e($festival->festival_id); ?>"
+                                                                        name="email_scheduled"
+                                                                        value="<?php echo e($festival->email_scheduled); ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="subject_line<?php echo e($festival->festival_id); ?>">Subject
+                                                                        Line</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="subject_line<?php echo e($festival->festival_id); ?>"
+                                                                        name="subject_line"
+                                                                        value="<?php echo e($festival->subject_line); ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="email_body<?php echo e($festival->festival_id); ?>">Email
+                                                                        Body</label>
+                                                                    <textarea class="form-control"
+                                                                        id="email_body<?php echo e($festival->festival_id); ?>"
+                                                                        name="email_body"><?php echo e($festival->email_body); ?></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                             <tr>
-                                                <td>Valentine's Day</td>
-                                                <td>11-7-2014</td>
-                                                <td><a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
-                                                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a></td>
+                                                <td colspan="7">No festivals found</td>
                                             </tr>
-                                            <tr>
-                                                <td>Easter</td>
-                                                <td>11-7-2014</td>
-                                                <td><a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
-                                                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Christmas</td>
-                                                <td>11-7-2014</td>
-                                                <td><a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
-                                                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a></td>
-                                            </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-
-                    <!-- Add User Modal -->
-                    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addUserModalLabel">Register a new membership</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <?php echo $__env->make('auth.register', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                                </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-                <!-- Ratio Charts -->
-                <div class="flex flex-wrap -mx-2 -my-2 justify-between mb-8">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex-1 mx-2 my-2">
-                        <h3 class="text-lg font-semibold mb-2">Sales Chart</h3>
-                        <canvas id="salesChart" width="400" height="200"></canvas>
-                    </div>
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 flex-1 mx-2 my-2">
-                        <h3 class="text-lg font-semibold mb-2">User Growth Chart</h3>
-                        <canvas id="userGrowthChart" width="400" height="200"></canvas>
                     </div>
                 </div>
             </section>
-
         </div>
     </div>
 </div>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
-<script>
-const salesCtx = document.getElementById('salesChart').getContext('2d');
-const salesChart = new Chart(salesCtx, {
-    type: 'bar',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [{
-            label: 'Sales',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
 
-const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
-const userGrowthChart = new Chart(userGrowthCtx, {
-    type: 'line',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [{
-            label: 'User Growth',
-            data: [20, 15, 25, 30, 35, 40],
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+<script>
+    $(document).ready(function() {
+        $('#addFestivalModal').on('show.bs.modal', function(event) {
+            // Clear form fields when modal is opened
+            $('#name').val('');
+            $('#date').val('');
+            $('#status').val('active'); // Set default status if needed
+            $('#email_scheduled').val('');
+            $('#subject_line').val('');
+            $('#email_body').val('');
+        });
+    });
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/projects/laravel-11-multi-auth/resources/views/admin/dashboard.blade.php ENDPATH**/ ?>

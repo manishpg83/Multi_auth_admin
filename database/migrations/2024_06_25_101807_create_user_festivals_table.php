@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_festivals', function (Blueprint $table) {
-            $table->id('user_festival_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('festival_id');
-            $table->date('scheduled_date');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-            $table->foreign('festival_id')->references('festival_id')->on('festivals')->onDelete('cascade');
+        Schema::create('festivals', function (Blueprint $table) {
+            $table->id('festival_id');
+            $table->string('name');
+            $table->date('date');
+            $table->enum('status', ['active', 'inactive']);
+            $table->string('email_scheduled', 500)->nullable(); // Increase the length
+            $table->string('subject_line')->nullable();
+            $table->text('email_body')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_festivals');
+        Schema::dropIfExists('festivals');
     }
 };
