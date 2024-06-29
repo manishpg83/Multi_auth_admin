@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Festival;
+use App\Models\Plan;
+
 
 class AdminDashboardController extends Controller
 {
@@ -13,7 +15,8 @@ class AdminDashboardController extends Controller
     {
         $users = User::all();
         $festivals = Festival::all();
-        return view('admin.dashboard', compact('users', 'festivals'));
+        $plans = Plan::all();
+        return view('admin.dashboard', compact('users', 'festivals', 'plans'));
     }
 
     public function showUsers()
@@ -27,4 +30,11 @@ class AdminDashboardController extends Controller
         $festivals = Festival::paginate(10);
         return view('admin.layouts.festivals', compact('festivals'));
     }
+
+    public function showPlan()
+    {
+        $plans = Plan::paginate(10); // Adjust as per your pagination needs
+        return view('admin.layouts.plans.index', compact('plans'));
+    }
+
 }

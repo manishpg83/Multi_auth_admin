@@ -90,7 +90,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::EKbtZ4qv9FLlDrDV',
+            '_route' => 'generated::cNJHBJOOwg1yaniP',
           ),
           1 => NULL,
           2 => 
@@ -110,7 +110,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::42QM6UlLI13dbHzV',
+            '_route' => 'generated::24CrobLxkgqEOEOj',
           ),
           1 => NULL,
           2 => 
@@ -219,7 +219,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::wNvxVN1iCe3qzFp6',
+            '_route' => 'generated::uk5WwKNh8N1zHouE',
           ),
           1 => NULL,
           2 => 
@@ -255,7 +255,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::WG5OFyF0y4CEEbIg',
+            '_route' => 'generated::vkDCsf0df1ftyFTj',
           ),
           1 => NULL,
           2 => 
@@ -385,7 +385,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::XNkcD5tnb89grQeE',
+            '_route' => 'generated::3b4bp2Cv4pEFT4V9',
           ),
           1 => NULL,
           2 => 
@@ -495,7 +495,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'admin.generated::uMTWQzvPfUquKQfR',
+            '_route' => 'admin.generated::lTptHhuXLYwZoX9U',
           ),
           1 => NULL,
           2 => 
@@ -515,6 +515,62 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'admin.dashboard',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/plans' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.plans.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.plans.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/plans/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.plans.create',
           ),
           1 => NULL,
           2 => 
@@ -754,7 +810,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'teacher.generated::OMJpj8lLoYvFWn3S',
+            '_route' => 'teacher.generated::TyPnVeJOLZZScuGv',
           ),
           1 => NULL,
           2 => 
@@ -861,7 +917,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/verify\\-email/([^/]++)/([^/]++)(*:71)|/admin/festivals/([^/]++)(?|/edit(*:111)|(*:119)))/?$}sDu',
+      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/verify\\-email/([^/]++)/([^/]++)(*:71)|/admin/(?|plans/([^/]++)(?|/edit(*:110)|(*:118))|festivals/([^/]++)(?|/edit(*:153)|(*:161))))/?$}sDu',
     ),
     3 => 
     array (
@@ -912,7 +968,72 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      111 => 
+      110 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.plans.edit',
+          ),
+          1 => 
+          array (
+            0 => 'plan',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      118 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.plans.update',
+          ),
+          1 => 
+          array (
+            0 => 'plan',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.plans.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'plan',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      153 => 
       array (
         0 => 
         array (
@@ -935,7 +1056,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      119 => 
+      161 => 
       array (
         0 => 
         array (
@@ -1137,7 +1258,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::EKbtZ4qv9FLlDrDV' => 
+    'generated::cNJHBJOOwg1yaniP' => 
     array (
       'methods' => 
       array (
@@ -1156,7 +1277,7 @@ app('router')->setCompiledRoutes(
 
                     return \\Illuminate\\Support\\Facades\\View::file(\'/var/www/html/projects/laravel-11-multi-auth/vendor/laravel/framework/src/Illuminate/Foundation/Configuration\'.\'/../resources/health-up.blade.php\');
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000003650000000000000000";}}',
-        'as' => 'generated::EKbtZ4qv9FLlDrDV',
+        'as' => 'generated::cNJHBJOOwg1yaniP',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1172,7 +1293,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::42QM6UlLI13dbHzV' => 
+    'generated::24CrobLxkgqEOEOj' => 
     array (
       'methods' => 
       array (
@@ -1194,7 +1315,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::42QM6UlLI13dbHzV',
+        'as' => 'generated::24CrobLxkgqEOEOj',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1400,7 +1521,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::wNvxVN1iCe3qzFp6' => 
+    'generated::uk5WwKNh8N1zHouE' => 
     array (
       'methods' => 
       array (
@@ -1421,7 +1542,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::wNvxVN1iCe3qzFp6',
+        'as' => 'generated::uk5WwKNh8N1zHouE',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1475,7 +1596,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::WG5OFyF0y4CEEbIg' => 
+    'generated::vkDCsf0df1ftyFTj' => 
     array (
       'methods' => 
       array (
@@ -1496,7 +1617,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::WG5OFyF0y4CEEbIg',
+        'as' => 'generated::vkDCsf0df1ftyFTj',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1816,7 +1937,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::XNkcD5tnb89grQeE' => 
+    'generated::3b4bp2Cv4pEFT4V9' => 
     array (
       'methods' => 
       array (
@@ -1837,7 +1958,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::XNkcD5tnb89grQeE',
+        'as' => 'generated::3b4bp2Cv4pEFT4V9',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2040,7 +2161,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'admin.generated::uMTWQzvPfUquKQfR' => 
+    'admin.generated::lTptHhuXLYwZoX9U' => 
     array (
       'methods' => 
       array (
@@ -2056,7 +2177,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\Auth\\AuthenticatedSessionController@store',
         'controller' => 'App\\Http\\Controllers\\Admin\\Auth\\AuthenticatedSessionController@store',
-        'as' => 'admin.generated::uMTWQzvPfUquKQfR',
+        'as' => 'admin.generated::lTptHhuXLYwZoX9U',
         'namespace' => NULL,
         'prefix' => '/admin',
         'where' => 
@@ -2096,6 +2217,232 @@ app('router')->setCompiledRoutes(
         'uses' => 'App\\Http\\Controllers\\Admin\\AdminDashboardController@index',
         'controller' => 'App\\Http\\Controllers\\Admin\\AdminDashboardController@index',
         'as' => 'admin.dashboard',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.plans.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/plans',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:admin',
+        ),
+        'as' => 'admin.plans.index',
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@index',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.plans.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/plans/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:admin',
+        ),
+        'as' => 'admin.plans.create',
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@create',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@create',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.plans.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/plans',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:admin',
+        ),
+        'as' => 'admin.plans.store',
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@store',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@store',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.plans.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/plans/{plan}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:admin',
+        ),
+        'as' => 'admin.plans.edit',
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@edit',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@edit',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.plans.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'admin/plans/{plan}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:admin',
+        ),
+        'as' => 'admin.plans.update',
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@update',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@update',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.plans.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'admin/plans/{plan}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth:admin',
+        ),
+        'as' => 'admin.plans.destroy',
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminPlanController@destroy',
         'namespace' => NULL,
         'prefix' => '/admin',
         'where' => 
@@ -2680,7 +3027,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'teacher.generated::OMJpj8lLoYvFWn3S' => 
+    'teacher.generated::TyPnVeJOLZZScuGv' => 
     array (
       'methods' => 
       array (
@@ -2696,7 +3043,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'App\\Http\\Controllers\\Teacher\\Auth\\AuthenticatedSessionController@store',
         'controller' => 'App\\Http\\Controllers\\Teacher\\Auth\\AuthenticatedSessionController@store',
-        'as' => 'teacher.generated::OMJpj8lLoYvFWn3S',
+        'as' => 'teacher.generated::TyPnVeJOLZZScuGv',
         'namespace' => NULL,
         'prefix' => '/teacher',
         'where' => 
@@ -2735,7 +3082,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:62:"function () {
         return \\view(\'teacher.dashboard\');
-    }";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000007540000000000000000";}}',
+    }";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000075a0000000000000000";}}',
         'as' => 'teacher.dashboard',
         'namespace' => NULL,
         'prefix' => '/teacher',
