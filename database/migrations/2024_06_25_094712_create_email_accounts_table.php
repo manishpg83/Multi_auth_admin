@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('email_type', ['Gmail', 'Office 365', 'SMTP']);
             $table->string('email_address');
             $table->text('signature')->nullable();
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
