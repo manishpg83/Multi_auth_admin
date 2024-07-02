@@ -57,18 +57,18 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        <?php echo $__env->make('admin.layouts.navigation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <?php echo $__env->make('admin.layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('admin.layouts.navigation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('admin.layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <div class="min-h-screen bg-gray-100" style="">
         <div class="content-wrapper">
             <?php echo $__env->yieldContent('content'); ?>
         </div>
         <center>
-        <footer class="main-footer">
-            <strong>&copy; 2024.</strong>
-            All rights reserved.
-        </footer>
-    </center>
+            <footer class="main-footer">
+                <strong>&copy; 2024.</strong>
+                All rights reserved.
+            </footer>
+        </center>
     </div>
 
     <!-- jQuery -->

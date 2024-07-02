@@ -14,42 +14,36 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    
+    <style>
+        .register-box {
+            margin-top: 0px; /* Adjust the top margin as needed */
+            margin-bottom: 50px;
+            text-align: center; /* Center align content */
+        }
+
+        .register-logo img {
+            width: 80px; /* Adjust the width of the logo */
+            margin-bottom: 10px; /* Optional: Adjust margin for logo */
+        }
+    </style>
 </head>
 
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
+            <img src="{{ asset('/images/logo1.jpeg') }}" alt="Logo" class="brand-image elevation-3">
+        </div>
+        <div class="login-logo">
             <a href="{{ route('register') }}"><b>User</b>Register</a>
         </div>
         <!-- /.register-logo -->
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">Register a new membership</p>
+                <p class="login-box-msg">Register with your email</p>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-
-                    <!-- First Name -->
-                    <div class="input-group mb-3">
-                        <input id="first_name" class="form-control" type="text" name="first_name" :value="old('first_name')" placeholder="First Name" required autofocus autocomplete="first_name" />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
-
-                    <!-- Last Name -->
-                    <div class="input-group mb-3">
-                        <input id="last_name" class="form-control" type="text" name="last_name" :value="old('last_name')" placeholder="Last Name" required autofocus autocomplete="last_name" />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
 
                     <!-- Email Address -->
                     <div class="input-group mb-3">
@@ -61,50 +55,6 @@
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
-
-                    <!-- Password -->
-                    <div class="input-group mb-3">
-                        <input id="password" class="form-control" type="password" name="password" placeholder="Password" required autocomplete="new-password" />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-
-                    <!-- Confirm Password -->
-                    <div class="input-group mb-3">
-                        <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password" />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-
-                    <!-- Status -->
-                    <div class="input-group mb-3">
-                        <input id="status" class="form-control" type="text" name="status" :value="old('status')" placeholder="Status" required />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-info-circle"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
-
-                    <!-- Plan ID -->
-                    <div class="input-group mb-3">
-                        <input id="plan_id" class="form-control" type="number" name="plan_id" :value="old('plan_id')" placeholder="Plan ID" required />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-list"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('plan_id')" class="mt-2" />
 
                     <div class="row">
                         <div class="col-8">

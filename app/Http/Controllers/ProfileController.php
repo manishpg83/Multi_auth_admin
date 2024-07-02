@@ -26,15 +26,19 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Update user's profile fields
+        $user->fill($request->validated());
+
+        // Check if email address has changed and reset email verification
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('status', 'Profile updated successfully.');
     }
 
     /**
@@ -42,11 +46,16 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        $request->validate([
+            'password' => 'required',
         ]);
 
         $user = $request->user();
+
+        // Check if the provided password matches the user's password
+        if (!Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
+            return Redirect::back()->withErrors(['password' => 'Incorrect password.']);
+        }
 
         Auth::logout();
 
@@ -55,6 +64,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to('/')->with('status', 'Your account has been deleted.');
     }
 }

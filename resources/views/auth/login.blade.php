@@ -14,10 +14,25 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <style>
+        .register-box {
+            margin-top: 0px; /* Adjust the top margin as needed */
+            margin-bottom: 70px;
+            text-align: center; /* Center align content */
+        }
+
+        .register-logo img {
+            width: 80px; /* Adjust the width of the logo */
+            margin-bottom: 10px; /* Optional: Adjust margin for logo */
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
     <div class="login-box">
+        <div class="register-logo">
+            <img src="{{ asset('/images/logo1.jpeg') }}" alt="Logo" class="brand-image elevation-3">
+        </div>
         <div class="login-logo">
             <a href="{{ route('login') }}"><b>User</b>Login</a>
         </div>

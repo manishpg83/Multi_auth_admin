@@ -57,18 +57,18 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('admin.layouts.navigation')
-        @include('admin.layouts.sidebar')
+    @include('admin.layouts.navigation')
+    @include('admin.layouts.sidebar')
+    <div class="min-h-screen bg-gray-100" style="">
         <div class="content-wrapper">
             @yield('content')
         </div>
         <center>
-        <footer class="main-footer">
-            <strong>&copy; 2024.</strong>
-            All rights reserved.
-        </footer>
-    </center>
+            <footer class="main-footer">
+                <strong>&copy; 2024.</strong>
+                All rights reserved.
+            </footer>
+        </center>
     </div>
 
     <!-- jQuery -->

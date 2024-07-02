@@ -4,20 +4,22 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Carbon\Carbon;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
+     *
+     * @return \Illuminate\View\View
      */
-    public function create(): View
+    public function create()
     {
         return view('auth.register');
     }
@@ -25,32 +27,31 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'status' => ['required', 'string', 'max:255'],
-            'plan_id' => ['required', 'integer'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
+
+        // Generate an OTP
+        $otp = rand(100000, 999999);
 
         $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'status' => $request->status,
-            'plan_id' => $request->plan_id,
+            'otp' => $otp,
+            'password' => Hash::make($otp),
+            'otp_created_at' => Carbon::now(),
         ]);
 
-        event(new Registered($user));
+        // Send OTP to user (placeholder, implement actual OTP sending logic)
+        // Mail::to($user->email)->send(new OtpMail($otp));
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('otp.verify', ['user' => $user->user_id]);
     }
+
 }

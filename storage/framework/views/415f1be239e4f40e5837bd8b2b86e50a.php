@@ -15,12 +15,27 @@
     <link rel="stylesheet" href="<?php echo e(asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')); ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo e(asset('adminlte/dist/css/adminlte.min.css')); ?>">
+    <style>
+        .img-logo {
+            margin-top: 0px; /* Adjust the top margin as needed */
+            margin-bottom: 10px;
+            text-align: center; /* Center align content */
+        }
+
+        .img-logo img {
+            width: 80px; /* Adjust the width of the logo */
+            margin-bottom: 10px; /* Optional: Adjust margin for logo */
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
     <div class="login-box">
+        <div class="img-logo">
+            <img src="<?php echo e(asset('/images/logo1.jpeg')); ?>" alt="Logo" class="brand-image elevation-3">
+        </div>
         <div class="login-logo">
-            <a href="<?php echo e(route('admin.login')); ?>"><b>Letter Send </b>Login</a>
+            <a href="<?php echo e(route('admin.login')); ?>"><b>Admin</b>Login</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
