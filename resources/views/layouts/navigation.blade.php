@@ -105,7 +105,7 @@
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-user"></i> {{ Auth::user()->first_name }}
+                <i class="far fa-user"></i> {{ Auth::user()->email }}
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="{{ route('profile.edit') }}" class="dropdown-item">

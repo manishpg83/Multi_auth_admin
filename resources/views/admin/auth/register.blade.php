@@ -31,7 +31,7 @@
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <img src="{{ asset('/images/logo1.jpeg') }}" alt="Logo" class="brand-image elevation-3">
+            <img src="{{ asset('/images/logo2.jpeg') }}" alt="Logo" class="brand-image elevation-3">
         </div>
         <div class="register-logo">
             <a href="{{ route('admin.register') }}"><b>Admin</b>Register</a>

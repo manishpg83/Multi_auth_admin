@@ -68,18 +68,18 @@
                                     @auth('web')
                                         <a href="{{ url('/dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
                                     @else
-                                        <a href="{{ route('login') }}" class="btn btn-outline-primary">Log in</a>
+                                        <a href="{{ route('login') }}" class="btn btn-outline-warning">Log in</a>
                                         @if (Route::has('register'))
-                                            <a href="{{ route('register') }}" class="btn btn-outline-success">Register</a>
+                                            <a href="{{ route('register') }}" class="btn btn-outline-light">Register</a>
                                         @endif
                                     @endauth
 
                                     @auth('admin')
                                         <a href="{{ url('/admin/dashboard') }}" class="btn btn-outline-primary">Admin Dashboard</a>
                                     @else
-                                        <a href="{{ route('admin.login') }}" class="btn btn-outline-primary">Admin Log in</a>
+                                        <a href="{{ route('admin.login') }}" class="btn btn-outline-warning">Admin Log in</a>
                                         @if (Route::has('admin.register'))
-                                            <a href="{{ route('admin.register') }}" class="btn btn-outline-success">Admin Register</a>
+                                            <a href="{{ route('admin.register') }}" class="btn btn-outline-light">Admin Register</a>
                                         @endif
                                     @endauth
 

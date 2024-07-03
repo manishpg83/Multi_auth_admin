@@ -32,7 +32,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="img-logo">
-            <img src="<?php echo e(asset('/images/logo1.jpeg')); ?>" alt="Logo" class="brand-image elevation-3">
+            <img src="<?php echo e(asset('/images/logo2.jpeg')); ?>" alt="Logo" class="brand-image elevation-3">
         </div>
         <div class="login-logo">
             <a href="<?php echo e(route('admin.login')); ?>"><b>Admin</b>Login</a>

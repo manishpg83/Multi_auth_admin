@@ -57,9 +57,9 @@
 </head>
 
 <body class="font-sans antialiased">
-    @include('layouts.sidebar')
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
+        @include('layouts.sidebar')
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">

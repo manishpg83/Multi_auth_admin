@@ -68,18 +68,18 @@
                                     <?php if(auth()->guard('web')->check()): ?>
                                         <a href="<?php echo e(url('/dashboard')); ?>" class="btn btn-outline-primary">Dashboard</a>
                                     <?php else: ?>
-                                        <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-primary">Log in</a>
+                                        <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-warning">Log in</a>
                                         <?php if(Route::has('register')): ?>
-                                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-success">Register</a>
+                                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-light">Register</a>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
                                     <?php if(auth()->guard('admin')->check()): ?>
                                         <a href="<?php echo e(url('/admin/dashboard')); ?>" class="btn btn-outline-primary">Admin Dashboard</a>
                                     <?php else: ?>
-                                        <a href="<?php echo e(route('admin.login')); ?>" class="btn btn-outline-primary">Admin Log in</a>
+                                        <a href="<?php echo e(route('admin.login')); ?>" class="btn btn-outline-warning">Admin Log in</a>
                                         <?php if(Route::has('admin.register')): ?>
-                                            <a href="<?php echo e(route('admin.register')); ?>" class="btn btn-outline-success">Admin Register</a>
+                                            <a href="<?php echo e(route('admin.register')); ?>" class="btn btn-outline-light">Admin Register</a>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
