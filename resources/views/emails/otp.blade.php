@@ -1,13 +1,13 @@
-<!-- resources/views/emails/otp.blade.php -->
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>OTP Verification</title>
+    <meta charset="UTF-8">
+    <title>OTP Code</title>
 </head>
+
 <body>
-    <h1>Your OTP Code</h1>
-    <p>Your OTP code is: <strong>{{ $otp }}</strong></p>
-    <p>This code will expire in 10 minutes.</p>
+    <p>Your OTP code is: {{ $otp }}</p>
 </body>
+
 </html>
