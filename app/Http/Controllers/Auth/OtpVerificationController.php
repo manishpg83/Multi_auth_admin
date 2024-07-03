@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -6,11 +7,10 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;    
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class OtpVerificationController extends Controller
 {
@@ -36,9 +36,12 @@ class OtpVerificationController extends Controller
             'plan_id' => ['required', 'integer'],
         ]);
 
+        // Find the user by ID
         $user = User::find($userId);
-        dd($user);
+
+        // Validate OTP and expiration
         if ($user && $user->otp == $request->otp && Carbon::parse($user->otp_created_at)->addMinutes(10)->isFuture()) {
+            // Update user's information and clear OTP fields
             $user->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -49,18 +52,17 @@ class OtpVerificationController extends Controller
                 'otp_created_at' => null,
             ]);
 
+            // Dispatch the Registered event
             event(new Registered($user));
 
+            // Log in the user
             Auth::login($user);
 
-            // Add logging to check if it reaches here
-            Log::info('User logged in successfully', ['user_id' => $user->id]);
-
+            // Redirect to the dashboard or another appropriate route
             return redirect()->route('dashboard');
         }
 
-        Log::error('OTP validation failed or expired', ['user_id' => $userId]);
-
+        // Redirect back with error if OTP is invalid or expired
         return back()->withErrors(['otp' => 'The provided OTP is invalid or expired.']);
     }
 }

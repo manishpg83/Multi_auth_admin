@@ -76,14 +76,10 @@
                                         <h3 class="card-title">User List</h3>
                                         <div class="card-tools">
                                             <div class="input-group input-group-sm">
-
                                                 <div class="input-group-append">
-
-                                                    <!-- <button type="button" class="btn btn-block btn-outline-primary"
-                                                                            style="margin-left: 5px;" data-toggle="modal"
-                                                                            data-target="#addUserModal">
-                                                                            Add User
-                                                                        </button> -->
+                                                    <button type="button" class="btn btn-block btn-outline-primary" style="margin-left: 5px;" data-toggle="modal" data-target="#addUserModal">
+                                                        Add User
+                                                    </button> 
                                                 </div>
                                             </div>
                                         </div>
@@ -103,13 +99,12 @@
                                             <tbody>
                                                 <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                     <tr>
-                                                        <td><?php echo e($user->user_id); ?></td>
+                                                        <td><?php echo e($user->id); ?></td>
                                                         <td><?php echo e($user->first_name); ?></td>
                                                         <td><?php echo e($user->last_name); ?></td>
                                                         <td><?php echo e($user->email); ?></td>
                                                         <td>
-                                                            <span
-                                                                class="<?php echo e($user->status === 'Active' ? 'status-active' : 'status-inactive'); ?>">
+                                                            <span class="<?php echo e($user->status === 'Active' ? 'status-active' : 'status-inactive'); ?>">
                                                                 <?php echo e($user->status); ?>
 
                                                             </span>
@@ -138,9 +133,7 @@
                                             <div class="input-group input-group-sm">
 
                                                 <div class="input-group-append">
-                                                    <button type="button" class="btn btn-block btn-outline-primary"
-                                                        style="margin-left: 5px;" data-toggle="modal"
-                                                        data-target="#addFestivalModal">
+                                                    <button type="button" class="btn btn-block btn-outline-primary" style="margin-left: 5px;" data-toggle="modal" data-target="#addFestivalModal">
                                                         Add Festival
                                                     </button>
                                                 </div>
@@ -155,37 +148,31 @@
                                                     <?php echo csrf_field(); ?>
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="addFestivalModalLabel">Add Festival</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label for="name">Festival Name</label>
-                                                            <input type="text" class="form-control" id="name"
-                                                                name="name" required>
+                                                            <input type="text" class="form-control" id="name" name="name" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="date">Date</label>
-                                                            <input type="date" class="form-control" id="date"
-                                                                name="date" required>
+                                                            <input type="date" class="form-control" id="date" name="date" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="status">Status</label>
-                                                            <select class="form-control" id="status" name="status"
-                                                                required>
+                                                            <select class="form-control" id="status" name="status" required>
                                                                 <option value="active">Active</option>
                                                                 <option value="inactive">Inactive</option>
                                                             </select>
                                                         </div>
                                                         <!-- <div class="form-group">
-                                                                            <label for="email_scheduled">Email Scheduled</label>
-                                                                            <input type="text" class="form-control" id="email_scheduled"
-                                                                                name="email_scheduled">
-                                                                            </div> -->
+                                                                <label for="email_scheduled">Email Scheduled</label>
+                                                                <input type="text" class="form-control" id="email_scheduled" name="email_scheduled">
+                                                        </div> -->
                                                         <div class="form-group">
                                                             <label for="subject_line">Subject Line</label>
-                                                            <input type="text" class="form-control" id="subject_line"
-                                                                name="subject_line">
+                                                            <input type="text" class="form-control" id="subject_line" name="subject_line">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="email_body">Email Body</label>
@@ -193,10 +180,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save
-                                                            changes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -222,20 +207,13 @@
                                                         <td><?php echo e($festival->name); ?></td>
                                                         <td><?php echo e($festival->date); ?></td>
                                                         <td>
-                                                            <span
-                                                                class="<?php echo e($festival->status === 'Active' ? 'status-active' : 'status-inactive'); ?>">
-                                                                <?php echo e($festival->status); ?>
-
-                                                            </span>
+                                                            <span class="<?php echo e($festival->status === 'Active' ? 'status-active' : 'status-inactive'); ?>"> <?php echo e($festival->status); ?> </span>
                                                         </td>
                                                         <td><?php echo e($festival->subject_line); ?></td>
                                                         <td><?php echo e($festival->email_body); ?></td>
                                                         <td>
                                                             <!-- Edit Icon -->
-                                                            <a href="#"
-                                                                class="text-indigo-600 hover:text-indigo-900"
-                                                                data-toggle="modal"
-                                                                data-target="#editFestivalModal<?php echo e($festival->festival_id); ?>">
+                                                            <a href="#" class="text-indigo-600 hover:text-indigo-900" data-toggle="modal" data-target="#editFestivalModal<?php echo e($festival->festival_id); ?>">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
 
