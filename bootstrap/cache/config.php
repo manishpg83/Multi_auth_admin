@@ -475,8 +475,8 @@
       array (
         'transport' => 'smtp',
         'url' => NULL,
-        'host' => 'smtp.googlemail.com',
-        'port' => '465',
+        'host' => 'smtp.gmail.com',
+        'port' => '587',
         'encryption' => 'tls',
         'username' => 'briskbraintechnologies@gmail.com',
         'password' => 'xqahytuxfkyaziqx',

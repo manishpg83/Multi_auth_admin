@@ -114,7 +114,7 @@
 
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="<?php echo e(route('admin.profile.edit')); ?>" class="dropdown-item">
+                <a href="<?php echo e(('admin.profile.edit')); ?>" class="dropdown-item">
                     <i class="far fa-user-circle mr-2"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>

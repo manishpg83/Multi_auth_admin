@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Carbon\Carbon;
 
@@ -36,33 +37,32 @@ class OtpVerificationController extends Controller
             'plan_id' => ['required', 'integer'],
         ]);
 
-        // Find the user by ID
-        $user = User::find($userId);
+        // Find the user by ID or throw an exception if not found
+        $user = User::findOrFail($userId);
 
         // Validate OTP and expiration
-        if ($user && $user->otp == $request->otp && Carbon::parse($user->otp_created_at)->addMinutes(10)->isFuture()) {
-            // Update user's information and clear OTP fields
-            $user->update([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'password' => Hash::make($request->password),
-                'status' => $request->status,
-                'plan_id' => $request->plan_id,
-                'otp' => null,
-                'otp_created_at' => null,
-            ]);
-
-            // Dispatch the Registered event
-            event(new Registered($user));
-
-            // Log in the user
-            Auth::login($user);
-
-            // Redirect to the dashboard or another appropriate route
-            return redirect()->route('dashboard');
+        if ($user->otp != $request->otp || ! Carbon::parse($user->otp_created_at)->addMinutes(10)->isFuture()) {
+            throw ValidationException::withMessages(['otp' => 'The provided OTP is invalid or expired.']);
         }
 
-        // Redirect back with error if OTP is invalid or expired
-        return back()->withErrors(['otp' => 'The provided OTP is invalid or expired.']);
+        // Update user's information and clear OTP fields
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'password' => Hash::make($request->password),
+            'status' => $request->status,
+            'plan_id' => $request->plan_id,
+            'otp' => null,
+            'otp_created_at' => null,
+        ]);
+
+        // Dispatch the Registered event
+        event(new Registered($user));
+
+        // Log in the user
+        Auth::login($user);
+
+        // Redirect to the dashboard or another appropriate route
+        return redirect()->route('dashboard');
     }
 }
