@@ -35,12 +35,12 @@
             <img src="{{ asset('/images/logo2.jpeg') }}" alt="Logo" class="brand-image elevation-3">
         </div>
         <div class="login-logo">
-            <a href="{{ route('register') }}"><b>User</b>Register</a>
+            <a href="{{ route('register') }}"><b>User</b>Login</a>
         </div>
         <!-- /.register-logo -->
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">Register with your email</p>
+                <p class="login-box-msg">Login with your email</p>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
@@ -58,13 +58,11 @@
 
                     <div class="row">
                         <div class="col-8">
-                            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                                {{ __('Already registered?') }}
-                            </a>
+                            
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">{{ __('Register') }}</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ __('LogIn') }}</button>
                         </div>
                         <!-- /.col -->
                     </div>

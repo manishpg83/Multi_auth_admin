@@ -57,18 +57,6 @@
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
-
-                    <!-- Password -->
-                    <div class="input-group mb-3">
-                        <x-text-input id="password" class="form-control" type="password" name="password" placeholder="Password" required autocomplete="current-password" />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-
                     <!-- Remember Me -->
                     <div class="row">
                         <div class="col-8">
