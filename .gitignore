@@ -7,6 +7,7 @@
 /storage/log
 /storage/*
 /vendor
+/storage
 .env
 .env.backup
 .env.production

@@ -18,7 +18,7 @@ class OtpVerificationController extends Controller
     /**
      * Display the OTP verification view.
      */
-    public function create($userId): View
+    public function create($userId)
     {
         return view('auth.verify-otp', ['userId' => $userId]);
     }
@@ -30,11 +30,6 @@ class OtpVerificationController extends Controller
     {
         $request->validate([
             'otp' => ['required', 'integer'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'status' => ['required', 'string', 'max:255'],
-            'plan_id' => ['required', 'integer'],
         ]);
 
         // Find the user by ID or throw an exception if not found
@@ -46,12 +41,7 @@ class OtpVerificationController extends Controller
         }
 
         // Update user's information and clear OTP fields
-        $user->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'password' => Hash::make($request->password),
-            'status' => $request->status,
-            'plan_id' => $request->plan_id,
+        $user->update([       
             'otp' => null,
             'otp_created_at' => null,
         ]);
@@ -61,7 +51,7 @@ class OtpVerificationController extends Controller
 
         // Log in the user
         Auth::login($user);
-
+       
         // Redirect to the dashboard or another appropriate route
         return redirect()->route('dashboard');
     }
