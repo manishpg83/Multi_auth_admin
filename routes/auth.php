@@ -11,7 +11,7 @@ use App\Http\Controllers\Auth\OtpVerificationController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
+use App\Http\Controllers\TestEmailController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
@@ -23,6 +23,11 @@ Route::middleware('guest')->group(function () {
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
+
+    Route::get('send-otp/{userId}', [OtpVerificationController::class, 'sendOtp'])->name('send-otp');
+    
+    Route::get('otp/verify/{user}', [OtpVerificationController::class, 'create'])->name('otp.verify');
+    Route::post('otp/verify/{user}', [OtpVerificationController::class, 'store']);
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -38,14 +43,12 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
 
-    Route::get('otp/verify/{user}', [OtpVerificationController::class, 'create'])
-        ->name('otp.verify');
-
-    Route::post('otp/verify/{user}', [OtpVerificationController::class, 'store']);
+   
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['verified'])->name('dashboard');
+    Route::get('test-email', [TestEmailController::class, 'create'])->name('test.email.create');
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

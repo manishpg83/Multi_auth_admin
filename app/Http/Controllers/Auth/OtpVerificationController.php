@@ -12,9 +12,29 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Carbon\Carbon;
+use App\Mail\OtpEmail;
+use Illuminate\Support\Facades\Mail;
 
 class OtpVerificationController extends Controller
 {
+    /**
+     * Send OTP to the user's email.
+     */
+    public function sendOtp(User $user)
+    {
+         // Generate OTP
+         $otp = rand(100000, 999999);
+ 
+         // Store OTP in the database
+         $user->update([
+             'otp' => $otp,
+             'otp_created_at' => now(),
+         ]);
+ 
+         // Send OTP email
+         Mail::to($user->email)->send(new OtpEmail($otp));
+    }
+
     /**
      * Display the OTP verification view.
      */
@@ -46,8 +66,8 @@ class OtpVerificationController extends Controller
             'otp_created_at' => null,
         ]);
 
-        // Dispatch the Registered event
-        event(new Registered($user));
+        // Dispatch the Registered event (if needed)
+        // event(new Registered($user));
 
         // Log in the user
         Auth::login($user);
@@ -56,3 +76,4 @@ class OtpVerificationController extends Controller
         return redirect()->route('dashboard');
     }
 }
+

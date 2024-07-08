@@ -76,13 +76,13 @@
                                     <div class="card-header">
                                         <h3 class="card-title">User List</h3>
                                         <div class="card-tools">
-                                            <div class="input-group input-group-sm">
+                                            {{-- <div class="input-group input-group-sm">
                                                 <div class="input-group-append">
                                                     <button type="button" class="btn btn-block btn-outline-primary" style="margin-left: 5px;" data-toggle="modal" data-target="#addUserModal">
                                                         Add User
                                                     </button> 
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <!-- /.card-header -->

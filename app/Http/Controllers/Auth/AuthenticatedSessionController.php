@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -8,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Http\Controllers\Auth\OtpVerificationController;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,7 +28,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Send OTP email
+        $otpController = new OtpVerificationController();
+        $otpController->sendOtp($user);
+
+        // Redirect to OTP verification view
+        return redirect()->route('otp.verify', ['user' => $user->id]);
     }
 
     /**
