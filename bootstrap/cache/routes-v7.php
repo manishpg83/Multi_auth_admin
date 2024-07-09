@@ -90,7 +90,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Z5KBWzf4ueIYuBPp',
+            '_route' => 'generated::BUUKGEcvo94FZt8S',
           ),
           1 => NULL,
           2 => 
@@ -110,7 +110,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::luFek2mRXOwnGm86',
+            '_route' => 'generated::Us8jkiHIhtMJMNLq',
           ),
           1 => NULL,
           2 => 
@@ -219,7 +219,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::GP2UpMTiSNn9JkqC',
+            '_route' => 'generated::3CZXDB2mtHd8OKIy',
           ),
           1 => NULL,
           2 => 
@@ -255,7 +255,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::oAPLndW7NdmyQhtL',
+            '_route' => 'generated::vDXRYgXJPmn4WSKI',
           ),
           1 => NULL,
           2 => 
@@ -405,7 +405,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::l1h2uJ1iR06K2cf4',
+            '_route' => 'generated::FHhlf2y0hDDroqGp',
           ),
           1 => NULL,
           2 => 
@@ -515,7 +515,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'admin.generated::hs7tiHlWv7piG25e',
+            '_route' => 'admin.generated::wlgNDFOyEvAUCamQ',
           ),
           1 => NULL,
           2 => 
@@ -830,7 +830,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'teacher.generated::p8wNbBpbVwZW2peQ',
+            '_route' => 'teacher.generated::NCVRlvz6o8OlyGao',
           ),
           1 => NULL,
           2 => 
@@ -937,21 +937,21 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/otp/verify/([^/]++)(?|(*:62))|/verify\\-email/([^/]++)/([^/]++)(*:102)|/admin/(?|plans/([^/]++)(?|/edit(*:142)|(*:150))|festivals/([^/]++)(?|/edit(*:185)|(*:193))))/?$}sDu',
+      0 => '{^(?|/send\\-otp/([^/]++)(*:26)|/otp/verify/([^/]++)(?|(*:56))|/reset\\-password/([^/]++)(*:89)|/verify\\-email/([^/]++)/([^/]++)(*:128)|/admin/(?|plans/([^/]++)(?|/edit(*:168)|(*:176))|festivals/([^/]++)(?|/edit(*:211)|(*:219))))/?$}sDu',
     ),
     3 => 
     array (
-      32 => 
+      26 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'password.reset',
+            '_route' => 'send-otp',
           ),
           1 => 
           array (
-            0 => 'token',
+            0 => 'userId',
           ),
           2 => 
           array (
@@ -964,7 +964,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      62 => 
+      56 => 
       array (
         0 => 
         array (
@@ -990,7 +990,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::EZg78hf7VdXNl32P',
+            '_route' => 'generated::ihgFNab5nOAxRcCt',
           ),
           1 => 
           array (
@@ -1006,7 +1006,30 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      102 => 
+      89 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'password.reset',
+          ),
+          1 => 
+          array (
+            0 => 'token',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      128 => 
       array (
         0 => 
         array (
@@ -1030,7 +1053,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      142 => 
+      168 => 
       array (
         0 => 
         array (
@@ -1053,7 +1076,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      150 => 
+      176 => 
       array (
         0 => 
         array (
@@ -1095,7 +1118,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      185 => 
+      211 => 
       array (
         0 => 
         array (
@@ -1118,7 +1141,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      193 => 
+      219 => 
       array (
         0 => 
         array (
@@ -1320,7 +1343,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Z5KBWzf4ueIYuBPp' => 
+    'generated::BUUKGEcvo94FZt8S' => 
     array (
       'methods' => 
       array (
@@ -1338,8 +1361,8 @@ app('router')->setCompiledRoutes(
                     \\Illuminate\\Support\\Facades\\Event::dispatch(new \\Illuminate\\Foundation\\Events\\DiagnosingHealth);
 
                     return \\Illuminate\\Support\\Facades\\View::file(\'/var/www/html/projects/laravel-11-multi-auth/vendor/laravel/framework/src/Illuminate/Foundation/Configuration\'.\'/../resources/health-up.blade.php\');
-                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000007630000000000000000";}}',
-        'as' => 'generated::Z5KBWzf4ueIYuBPp',
+                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000003650000000000000000";}}',
+        'as' => 'generated::BUUKGEcvo94FZt8S',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1355,7 +1378,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::luFek2mRXOwnGm86' => 
+    'generated::Us8jkiHIhtMJMNLq' => 
     array (
       'methods' => 
       array (
@@ -1371,13 +1394,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:44:"function () {
     return \\view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000007660000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000003680000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::luFek2mRXOwnGm86',
+        'as' => 'generated::Us8jkiHIhtMJMNLq',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1582,7 +1605,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::GP2UpMTiSNn9JkqC' => 
+    'generated::3CZXDB2mtHd8OKIy' => 
     array (
       'methods' => 
       array (
@@ -1603,7 +1626,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::GP2UpMTiSNn9JkqC',
+        'as' => 'generated::3CZXDB2mtHd8OKIy',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1657,7 +1680,120 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::oAPLndW7NdmyQhtL' => 
+    'send-otp' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'send-otp/{userId}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'guest',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@sendOtp',
+        'controller' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@sendOtp',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'send-otp',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'otp.verify' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'otp/verify/{user}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'guest',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@create',
+        'controller' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'otp.verify',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::ihgFNab5nOAxRcCt' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'otp/verify/{user}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'guest',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@store',
+        'controller' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::ihgFNab5nOAxRcCt',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::vDXRYgXJPmn4WSKI' => 
     array (
       'methods' => 
       array (
@@ -1678,7 +1814,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::oAPLndW7NdmyQhtL',
+        'as' => 'generated::vDXRYgXJPmn4WSKI',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1829,81 +1965,6 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'password.store',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'otp.verify' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'otp/verify/{user}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'guest',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@create',
-        'controller' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@create',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'otp.verify',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'generated::EZg78hf7VdXNl32P' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'otp/verify/{user}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'guest',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@store',
-        'controller' => 'App\\Http\\Controllers\\Auth\\OtpVerificationController@store',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::EZg78hf7VdXNl32P',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2111,7 +2172,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::l1h2uJ1iR06K2cf4' => 
+    'generated::FHhlf2y0hDDroqGp' => 
     array (
       'methods' => 
       array (
@@ -2132,7 +2193,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::l1h2uJ1iR06K2cf4',
+        'as' => 'generated::FHhlf2y0hDDroqGp',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2335,7 +2396,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'admin.generated::hs7tiHlWv7piG25e' => 
+    'admin.generated::wlgNDFOyEvAUCamQ' => 
     array (
       'methods' => 
       array (
@@ -2351,7 +2412,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\Auth\\AuthenticatedSessionController@store',
         'controller' => 'App\\Http\\Controllers\\Admin\\Auth\\AuthenticatedSessionController@store',
-        'as' => 'admin.generated::hs7tiHlWv7piG25e',
+        'as' => 'admin.generated::wlgNDFOyEvAUCamQ',
         'namespace' => NULL,
         'prefix' => '/admin',
         'where' => 
@@ -3201,7 +3262,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'teacher.generated::p8wNbBpbVwZW2peQ' => 
+    'teacher.generated::NCVRlvz6o8OlyGao' => 
     array (
       'methods' => 
       array (
@@ -3217,7 +3278,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'App\\Http\\Controllers\\Teacher\\Auth\\AuthenticatedSessionController@store',
         'controller' => 'App\\Http\\Controllers\\Teacher\\Auth\\AuthenticatedSessionController@store',
-        'as' => 'teacher.generated::p8wNbBpbVwZW2peQ',
+        'as' => 'teacher.generated::NCVRlvz6o8OlyGao',
         'namespace' => NULL,
         'prefix' => '/teacher',
         'where' => 
@@ -3256,7 +3317,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:62:"function () {
         return \\view(\'teacher.dashboard\');
-    }";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000079b0000000000000000";}}',
+    }";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000075d0000000000000000";}}',
         'as' => 'teacher.dashboard',
         'namespace' => NULL,
         'prefix' => '/teacher',

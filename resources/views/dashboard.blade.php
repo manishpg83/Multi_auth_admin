@@ -90,7 +90,7 @@
                             <div class="tab-content p-0">
                                 <!-- Morris chart - Sales -->
                                 <div class="chart tab-pane active" id="revenue-chart"
-                                     style="position: relative; height: 300px;">
+                                    style="position: relative; height: 300px;">
                                     <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
                                 </div>
                                 <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
@@ -102,7 +102,7 @@
                     <!-- /.card -->
 
                     <!-- TO DO List -->
-                    
+
                     <!-- /.card -->
                 </section>
                 <!-- /.Left col -->
@@ -118,15 +118,11 @@
                             </h3>
                             <!-- card tools -->
                             <div class="card-tools">
-                                <button type="button"
-                                        class="btn btn-primary btn-sm daterange"
-                                        title="Date range">
+                                <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
                                     <i class="far fa-calendar-alt"></i>
                                 </button>
-                                <button type="button"
-                                        class="btn btn-primary btn-sm"
-                                        data-card-widget="collapse"
-                                        title="Collapse">
+                                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
+                                    title="Collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
                             </div>
@@ -170,6 +166,26 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+
+            Swal.fire({
+                title: "Complete Your Profile",
+                showClass: {
+                    popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+                `
+                },
+                hideClass: {
+                    popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+                `
+                }
+            });
+
+
             // DataTables initialization
             $('#clientTable').DataTable();
             $('#festivalTable').DataTable();
