@@ -14,7 +14,7 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        
+
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -25,7 +25,8 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                        <img src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="User Avatar"
+                            class="img-size-50 mr-3 img-circle">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 Brad Diesel
@@ -41,7 +42,8 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="{{ asset('adminlte/dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <img src="{{ asset('adminlte/dist/img/user8-128x128.jpg') }}" alt="User Avatar"
+                            class="img-size-50 img-circle mr-3">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 John Pierce
@@ -57,7 +59,8 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg') }}" alt="User Avatar"
+                            class="img-size-50 img-circle mr-3">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 Nora Silvester
@@ -105,7 +108,12 @@
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-user"></i> {{ Auth::user()->email }}
+                <i class="far fa-user"></i>
+                @if (Auth::user()->first_name)
+                    {{ Auth::user()->first_name }}
+                @else
+                    {{ Auth::user()->email }}
+                @endif
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="{{ route('profile.edit') }}" class="dropdown-item">
@@ -130,7 +138,8 @@
 
         <!-- Control Sidebar Toggle Button -->
         <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
+                role="button">
                 <i class="fas fa-th-large"></i>
             </a>
         </li>
@@ -141,10 +150,13 @@
 <!-- Responsive Navigation Menu -->
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sm:hidden">
     <div class="-mr-2 flex items-center">
-        <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+        <button @click="open = ! open"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
     </div>
@@ -167,7 +179,8 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
-                    <a href="{{ route('admin.logout') }}" class="nav-link" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</a>
+                    <a href="{{ route('admin.logout') }}" class="nav-link"
+                        onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</a>
                 </form>
             </div>
         </div>

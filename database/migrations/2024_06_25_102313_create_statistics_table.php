@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('inactive_users')->default(0);
             $table->integer('trial_users')->default(0);
             $table->decimal('total_revenue', 10, 2)->default(0.00);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

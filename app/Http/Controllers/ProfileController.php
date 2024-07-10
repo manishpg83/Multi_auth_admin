@@ -41,6 +41,22 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'Profile updated successfully.');
     }
 
+    public function updateNames(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+        ]);
+
+        $user = Auth::user();
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->save();
+
+        return Redirect::back()->with('status', 'names-updated');
+    }
+
+
     /**
      * Delete the user's account.
      */

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateEmailAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('email_type', ['Gmail', 'Office 365', 'SMTP']);
             $table->string('email_address');
             $table->text('signature')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,4 +29,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('email_accounts');
     }
-};
+}
+

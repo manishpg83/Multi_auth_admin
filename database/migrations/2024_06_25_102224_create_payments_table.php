@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('payment_mode', 100);
             $table->unsignedBigInteger('plan_id');
             $table->decimal('amount', 10, 2);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('plan_id')->references('plan_id')->on('plans')->onDelete('cascade');
             $table->timestamps();
         });

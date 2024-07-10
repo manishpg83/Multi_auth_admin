@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->enum('status', ['Active', 'Inactive', 'Unsubscribed'])->default('Active');
             $table->integer('mail_status')->default(0);
-            $table->foreign('user_id')->references('user_id')->on('user')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
