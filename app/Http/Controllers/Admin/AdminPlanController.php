@@ -47,8 +47,9 @@ class AdminPlanController extends Controller
 
         // Create the plan using validated data
         Plan::create($validatedData);
-
-        return redirect()->route('admin.plans.index')
+        flash()->option('position', 'bottom-right')
+        ->option('timeout', 3000)->success('Plan created successfully.');
+        return redirect()->back()
             ->with('success', 'Plan created successfully.');
     }
 
@@ -82,8 +83,10 @@ class AdminPlanController extends Controller
 
         // Update the plan using validated data
         $plan->update($validatedData);
-
-        return redirect()->route('admin.plans.index')
+        flash()->option('position', 'bottom-right')
+            ->option('timeout', 3000)
+            ->success('Plan updated successfully.');
+        return redirect()->back()
             ->with('success', 'Plan updated successfully.');
     }
 
@@ -96,8 +99,10 @@ class AdminPlanController extends Controller
     public function destroy(Plan $plan)
     {
         $plan->delete();
-
-        return redirect()->route('admin.plans.index')
+        flash()->option('position', 'bottom-right')
+            ->option('timeout', 3000)
+            ->success('Plan deleted successfully.');
+        return redirect()->back()
             ->with('success', 'Plan deleted successfully.');
     }
 }

@@ -55,6 +55,17 @@
       0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
   ),
+  'php-flasher/flasher-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Flasher\\Laravel\\FlasherServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Flasher' => 'Flasher\\Laravel\\Facade\\Flasher',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 

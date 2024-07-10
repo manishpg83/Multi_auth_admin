@@ -16,6 +16,7 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
         }
 
         /* Custom CSS for logo and buttons */
@@ -60,6 +61,32 @@
             max-height: 500px;
         }
 
+        /* Slider section */
+        .slider-section {
+            background-color: #ffffff;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .slider-section h2 {
+            color: #42684f;
+            margin-bottom: 30px;
+        }
+
+        .slider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            margin: 0 20px;
+            border-radius: 5px;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -89,6 +116,27 @@
 
         <!-- Full-width image section -->
         <img src="{{ asset('images/banner1.jpeg') }}" alt="Full Width Image" class="full-width-img">
+
+        <!-- Slider section -->
+        <section class="slider-section">
+            <div class="container">
+                <h2>Explore Our Features</h2>
+                <div class="slider">
+                    <img src="{{ asset('images/slider1.jpeg') }}" alt="Slider Image 1">
+                    <img src="{{ asset('images/slider2.jpeg') }}" alt="Slider Image 2">
+                    <img src="{{ asset('images/slider3.jpeg') }}" alt="Slider Image 3">
+                </div>
+            </div>
+        </section>
+
+        <!-- Another section -->
+        <section style="background-color: #42684f; color: #ffffff; padding: 50px 0; text-align: center;">
+            <div class="container">
+                <h2>Why Choose Us?</h2>
+                <p>We provide excellent service and innovative solutions.</p>
+                <a href="#" class="btn btn-outline-light btn-lg mt-3">Learn More</a>
+            </div>
+        </section>
 
         <!-- Footer section -->
         <footer class="footer">

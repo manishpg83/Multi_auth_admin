@@ -46,11 +46,40 @@ class ProfileController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
+            'website' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'skype' => 'nullable|string|max:255',
+            'telegram' => 'nullable|string|max:255',
+            'imo' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
+            'active_social' => 'nullable|string|in:skype,telegram,imo,whatsapp',
+
         ]);
 
         $user = Auth::user();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->phone = $request->phone;
+        $user->company_name = $request->company_name;
+        $user->designation = $request->designation;
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $path = $file->store('logos', 'public'); // Save file to 'storage/app/public/logos' directory
+            $user->logo = $path;
+        }
+        $user->website = $request->website;
+        $user->address = $request->address;
+        $user->skype = $request->skype;
+        $user->telegram = $request->telegram;
+        $user->imo = $request->imo;
+        $user->whatsapp = $request->whatsapp;
+        $user->active_social = $request->active_social;
+
+
         $user->save();
 
         return Redirect::back()->with('status', 'names-updated');

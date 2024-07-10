@@ -15,10 +15,20 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('user_id'); // Use 'user_id' as the primary key
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('name')->nullable();
             $table->string('email')->unique();
+            $table->string('phone')->nullable();
             $table->string('otp')->nullable();
             $table->string('otp_created_at')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('designation')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('website')->nullable();
+            $table->string('address')->nullable();
+            $table->string('skype')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('imo')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('active_social')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

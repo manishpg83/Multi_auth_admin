@@ -28,10 +28,19 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
-        'name',
         'email',
-        'password',
+        'phone',
         'otp',
+        'company_name',
+        'designation',
+        'logo', // Add this line
+        'website',
+        'address',
+        'skype',
+        'telegram',
+        'imo',
+        'whatsapp',
+        'active_social',
     ];
 
     /**

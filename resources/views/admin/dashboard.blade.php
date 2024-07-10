@@ -94,21 +94,15 @@
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
                                                     <th>Email</th>
-                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($users as $user)
                                                     <tr>
-                                                        <td>{{ $user->id }}</td>
+                                                        <td>{{ $user->user_id }}</td>
                                                         <td>{{ $user->first_name }}</td>
                                                         <td>{{ $user->last_name }}</td>
                                                         <td>{{ $user->email }}</td>
-                                                        <td>
-                                                            <span class="{{ $user->status === 'Active' ? 'status-active' : 'status-inactive' }}">
-                                                                {{ $user->status }}
-                                                            </span>
-                                                        </td>
                                                     </tr>
                                                 @empty
                                                     <tr>
@@ -166,10 +160,13 @@
                                                                 <option value="inactive">Inactive</option>
                                                             </select>
                                                         </div>
-                                                        <!-- <div class="form-group">
+                                                        <div class="form-group">
                                                                 <label for="email_scheduled">Email Scheduled</label>
-                                                                <input type="text" class="form-control" id="email_scheduled" name="email_scheduled">
-                                                        </div> -->
+                                                                <select class="form-control" id="email_scheduled" name="email_scheduled" required>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                </select>
+                                                        </div>
                                                         <div class="form-group">
                                                             <label for="subject_line">Subject Line</label>
                                                             <input type="text" class="form-control" id="subject_line" name="subject_line">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Flasher\Prime\FlasherInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Festival;
@@ -38,8 +39,12 @@ class AdminFestivalController extends Controller
         $festival = Festival::create($validatedData);
 
         if ($festival) {
-            return redirect()->route('admin.festivals.index')->with('success', 'Festival created successfully.');
+            flash()->option('position', 'bottom-right')
+                ->option('timeout', 3000)->success('Festival created successfully.');
+            return redirect()->back()->with('success', 'Festival created successfully.');
         } else {
+            flash()->option('position', 'bottom-right')
+                ->option('timeout', 3000)->error('Failed to create festival.');
             return redirect()->back()->with('error', 'Failed to create festival.');
         }
     }
@@ -57,13 +62,22 @@ class AdminFestivalController extends Controller
 
         $festival->update($validatedData);
 
-        return redirect()->route('admin.festivals.index')->with('success', 'Festival updated successfully.');
+        flash()->option('position', 'bottom-right')
+            ->option('timeout', 3000)
+            ->success('Festival updated successfully.');
+
+        return redirect()->back()->with('success', 'Festival updated successfully.');
     }
+
 
     public function destroy(Festival $festival)
     {
         $festival->delete();
 
-        return redirect()->route('admin.festivals.index')->with('success', 'Festival deleted successfully.');
+        flash()->option('position', 'bottom-right')
+            ->option('timeout', 3000)
+            ->success('Festival deleted successfully.');
+
+        return redirect()->back()->with('success', 'Festival deleted successfully.');
     }
 }

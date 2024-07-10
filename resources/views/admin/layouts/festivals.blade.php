@@ -48,6 +48,13 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="email_scheduled">Email Scheduled</label>
+                                            <select class="form-control" id="email_scheduled" name="email_scheduled" required>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                    </div>
+                                        <div class="form-group">
                                             <label for="subject_line">Subject Line</label>
                                             <input type="text" class="form-control" id="subject_line"
                                                 name="subject_line">
