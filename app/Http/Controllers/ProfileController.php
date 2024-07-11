@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +69,7 @@ class ProfileController extends Controller
         $user->designation = $request->designation;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
-            $path = $file->store('logos', 'public'); // Save file to 'storage/app/public/logos' directory
+            $path = $file->store('logos', 'public');
             $user->logo = $path;
         }
         $user->website = $request->website;

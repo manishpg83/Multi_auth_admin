@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('imo')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('active_social')->nullable();
+            $table->enum('status', ['Active', 'Inactive'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

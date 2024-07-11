@@ -51,28 +51,18 @@ class OtpVerificationController extends Controller
         $request->validate([
             'otp' => ['required', 'integer'],
         ]);
-
-        // Find the user by ID or throw an exception if not found
         $user = User::findOrFail($userId);
-
-        // Validate OTP and expiration
         if ($user->otp != $request->otp || ! Carbon::parse($user->otp_created_at)->addMinutes(10)->isFuture()) {
             throw ValidationException::withMessages(['otp' => 'The provided OTP is invalid or expired.']);
         }
-
-        // Update user's information and clear OTP fields
         $user->update([       
             'otp' => null,
             'otp_created_at' => null,
         ]);
-
-        // Dispatch the Registered event (if needed)
-        // event(new Registered($user));
-
-        // Log in the user
         Auth::login($user);
-       
-        // Redirect to the dashboard or another appropriate route
+        if ($user->first_name) {
+            notyf()->success('Welcome, ' . $user->first_name);
+        }
         return redirect()->route('dashboard');
     }
 }

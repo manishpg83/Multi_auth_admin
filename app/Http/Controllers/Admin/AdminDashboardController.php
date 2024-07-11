@@ -22,7 +22,9 @@ class AdminDashboardController extends Controller
     public function showUsers()
     {
         $users = User::paginate(10);
-        return view('admin.layouts.user', compact('users'));
+        $festivals = Festival::all();
+        $plans = Plan::all();
+        return view('admin.layouts.user', compact('users', 'festivals', 'plans'));
     }
 
     public function showFestivals()

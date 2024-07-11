@@ -66,6 +66,17 @@
       'Flasher' => 'Flasher\\Laravel\\Facade\\Flasher',
     ),
   ),
+  'php-flasher/flasher-notyf-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Notyf' => 'Flasher\\Notyf\\Laravel\\Facade\\Notyf',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 

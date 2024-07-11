@@ -38,7 +38,8 @@
 
                 <div class="mb-3">
                     <label for="logo" class="form-label">{{ __('Logo') }}</label>
-                    <input id="logo" name="logo" type="file" class="form-control">
+                    <input id="logo" name="logo" type="file" class="form-control" onchange="previewImage(this)">
+                    <img id="logo-preview" src="{{ $user->logo ? asset('storage/' . $user->logo) : '' }}" alt="Logo Preview" style="max-width: 100px; margin-top: 10px;">
                     @error('logo')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -163,3 +164,14 @@
         });
     </script>
 @endif
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#logo-preview').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
