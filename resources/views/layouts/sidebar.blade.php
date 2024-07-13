@@ -5,7 +5,7 @@
                 <img src="{{ Auth::user()->logo ? asset('storage/' . Auth::user()->logo) : asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="#" class="d-block">{{ Auth::user()->first_name }}</a>
             </div>
         </div>
 

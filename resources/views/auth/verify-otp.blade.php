@@ -104,7 +104,7 @@
         }
 
         button {
-            margin-top: 50px;
+            margin-top: 30px;
             width: 100%;
             background-color: #ffffff;
             color: #080710;
@@ -113,6 +113,27 @@
             font-weight: 600;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .resend-btn {
+            display: none; /* Initially hide the resend button */
+            margin-top: 20px;
+            width: 100%;
+            background-color: #f09819;
+            color: #ffffff;
+            padding: 10px 0;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .countdown {
+            margin-top: 10px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -131,6 +152,8 @@
         <input type="text" id="otp" name="otp" placeholder="Enter OTP" required />
 
         <button type="submit">Verify</button>
+        <div class="resend-btn" id="resend-otp">Resend OTP</div>
+        <div class="countdown" id="countdown"></div>
     </form>
 
     <!-- jQuery -->
@@ -139,6 +162,51 @@
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+    let countdown;
+    let seconds = 10;
+
+    function startCountdown() {
+        countdown = setInterval(function() {
+            if (seconds > 0) {
+                $('#countdown').text('Resend OTP in ' + seconds + ' seconds');
+                seconds--;
+            } else {
+                clearInterval(countdown);
+                $('#countdown').text('');
+                $('#resend-otp').fadeIn(); // Show resend button
+            }
+        }, 1000);
+    }
+
+    $('#resend-otp').on('click', function() {
+        $(this).text('Resending...').prop('disabled', true);
+        $.ajax({
+            url: '{{ route("otp.resend", ["user" => $userId]) }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                alert(response.message);
+                seconds = 10; // Reset countdown timer
+                startCountdown();
+                $('#resend-otp').fadeOut(); // Hide resend button
+            },
+            error: function(xhr) {
+                alert('An error occurred. Please try again.');
+                $('#resend-otp').text('Resend OTP').prop('disabled', false);
+            }
+        });
+    });
+
+    // Start countdown initially
+    startCountdown();
+});
+
+    </script>
 </body>
 
 </html>

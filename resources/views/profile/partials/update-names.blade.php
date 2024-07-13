@@ -13,72 +13,58 @@
         @csrf
         @method('patch')
 
+        <div class="mb-3">
+            <label for="first_name" class="form-label">{{ __('First Name') }}</label>
+            <input id="first_name" name="first_name" type="text" class="form-control" value="{{ old('first_name', $user->first_name) }}" required autofocus autocomplete="first_name">
+            @error('first_name')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
+            <input id="last_name" name="last_name" type="text" class="form-control" value="{{ old('last_name', $user->last_name) }}" required autofocus autocomplete="last_name">
+            @error('last_name')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ __('Email') }}</label>
+            <input id="email" name="email" type="email" class="form-control" value="{{ $user->email }}" required readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="company_name" class="form-label">{{ __('Company Name') }}</label>
+            <input id="company_name" name="company_name" type="text" class="form-control" value="{{ old('company_name', $user->company_name) }}" required autocomplete="company_name">
+            @error('company_name')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="d-flex align-items-center gap-4 justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+        </div>
+    </form>
+</section>
+<hr>
+<section class="mt-8">
+    <header>
+        <h2 class="text-xl font-medium text-gray-900">
+            {{ __('Additional Information') }}
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-600">
+            {{ __('Update additional profile information.') }}
+        </p>
+    </header>
+
+    <form method="post" action="{{ route('profile.update.details') }}" class="mt-6" enctype="multipart/form-data">
+        @csrf
+        @method('patch')
+
         <div class="row">
             <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="first_name" class="form-label">{{ __('First Name') }}</label>
-                    <input id="first_name" name="first_name" type="text" class="form-control" value="{{ old('first_name', $user->first_name) }}" required autofocus autocomplete="first_name">
-                    @error('first_name')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">{{ __('Email') }}</label>
-                    <input id="email" name="email" type="email" class="form-control" value="{{ $user->email }}" required readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="company_name" class="form-label">{{ __('Company Name') }}</label>
-                    <input id="company_name" name="company_name" type="text" class="form-control" value="{{ old('company_name', $user->company_name) }}" autocomplete="company_name">
-                    @error('company_name')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="logo" class="form-label">{{ __('Logo') }}</label>
-                    <input id="logo" name="logo" type="file" class="form-control" onchange="previewImage(this)">
-                    <img id="logo-preview" src="{{ $user->logo ? asset('storage/' . $user->logo) : '' }}" alt="Logo Preview" style="max-width: 100px; margin-top: 10px;">
-                    @error('logo')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="address" class="form-label">{{ __('Address') }}</label>
-                    <input id="address" name="address" type="text" class="form-control" value="{{ old('address', $user->address) }}" autocomplete="address">
-                    @error('address')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="telegram" class="form-label">{{ __('Telegram') }}</label>
-                    <input id="telegram" name="telegram" type="text" class="form-control" value="{{ old('telegram', $user->telegram) }}" autocomplete="telegram">
-                    @error('telegram')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="whatsapp" class="form-label">{{ __('Whatsapp') }}</label>
-                    <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="{{ old('whatsapp', $user->whatsapp) }}" autocomplete="whatsapp">
-                    @error('whatsapp')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
-                    <input id="last_name" name="last_name" type="text" class="form-control" value="{{ old('last_name', $user->last_name) }}" required autofocus autocomplete="last_name">
-                    @error('last_name')
-                        <div class="text-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 <div class="mb-3">
                     <label for="phone" class="form-label">{{ __('Phone') }}</label>
                     <input id="phone" name="phone" type="text" class="form-control" value="{{ old('phone', $user->phone) }}" autocomplete="phone">
@@ -99,6 +85,40 @@
                     <label for="website" class="form-label">{{ __('Website') }}</label>
                     <input id="website" name="website" type="text" class="form-control" value="{{ old('website', $user->website) }}" autocomplete="website">
                     @error('website')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="logo" class="form-label">{{ __('Logo') }}</label>
+                    <input id="logo" name="logo" type="file" class="form-control" onchange="previewImage(this)">
+                    <img id="logo-preview" src="{{ $user->logo ? asset('storage/' . $user->logo) : '' }}" alt="Logo Preview" style="max-width: 100px; margin-top: 10px;">
+                    @error('logo')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="address" class="form-label">{{ __('Address') }}</label>
+                    <input id="address" name="address" type="text" class="form-control" value="{{ old('address', $user->address) }}" autocomplete="address">
+                    @error('address')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="telegram" class="form-label">{{ __('Telegram') }}</label>
+                    <input id="telegram" name="telegram" type="text" class="form-control" value="{{ old('telegram', $user->telegram) }}" autocomplete="telegram">
+                    @error('telegram')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="whatsapp" class="form-label">{{ __('Whatsapp') }}</label>
+                    <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="{{ old('whatsapp', $user->whatsapp) }}" autocomplete="whatsapp">
+                    @error('whatsapp')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
@@ -157,7 +177,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Profile Updated',
-                text: 'Your Profile have been updated successfully!',
+                text: 'Your Profile has been updated successfully!',
                 showConfirmButton: false,
                 timer: 2000
             });

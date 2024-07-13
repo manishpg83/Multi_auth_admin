@@ -25,6 +25,7 @@ Route::middleware('guest')->group(function () {
         ->name('login');
 
     Route::get('send-otp/{userId}', [OtpVerificationController::class, 'sendOtp'])->name('send-otp');
+    Route::post('otp/resend/{user}', [OtpVerificationController::class, 'resendOtp'])->name('otp.resend');
 
     Route::get('otp/verify/{user}', [OtpVerificationController::class, 'create'])->name('otp.verify');
     Route::post('otp/verify/{user}', [OtpVerificationController::class, 'store']);
@@ -48,7 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['verified'])->name('dashboard');
     Route::get('/profile/update-names', [ProfileController::class, 'editNames'])->name('profile.update.names.form');
     Route::patch('/profile/update-names', [ProfileController::class, 'updateNames'])->name('profile.update.names');
-
+    Route::patch('/profile/update/details', [ProfileController::class, 'updateDetails'])
+    ->name('profile.update.details');
     Route::get('test-email', [TestEmailController::class, 'create'])->name('test.email.create');
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');

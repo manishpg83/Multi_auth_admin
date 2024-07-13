@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_smtp', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('smtp_host');
             $table->string('smtp_username');
             $table->string('smtp_password');
@@ -21,6 +22,9 @@ return new class extends Migration
             $table->string('smtp_from_email');
             $table->enum('mailer_type', ['Gmail', 'Brevo', 'GetResponse']);
             $table->timestamps();
+
+            // Add foreign key constraint
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -29,6 +33,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('user_smtp', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('user_smtp');
     }
 };

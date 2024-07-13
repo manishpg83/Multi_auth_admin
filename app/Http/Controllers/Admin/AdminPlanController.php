@@ -47,7 +47,6 @@ class AdminPlanController extends Controller
 
         // Create the plan using validated data
         Plan::create($validatedData);
-        notyf()->success('Plan created successfully.');
         return redirect()->back()
             ->with('success', 'Plan created successfully.');
     }

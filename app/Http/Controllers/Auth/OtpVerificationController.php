@@ -35,6 +35,8 @@ class OtpVerificationController extends Controller
          Mail::to($user->email)->send(new OtpEmail($otp));
     }
 
+
+
     /**
      * Display the OTP verification view.
      */
@@ -42,6 +44,26 @@ class OtpVerificationController extends Controller
     {
         return view('auth.verify-otp', ['userId' => $userId]);
     }
+
+    public function resendOtp(Request $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        // Generate OTP
+        $otp = rand(100000, 999999);
+
+        // Store OTP in the database
+        $user->update([
+            'otp' => $otp,
+            'otp_created_at' => now(),
+        ]);
+
+        // Send OTP email
+        Mail::to($user->email)->send(new OtpEmail($otp));
+
+        return response()->json(['message' => 'OTP resent successfully.']);
+    }
+
 
     /**
      * Handle OTP verification and complete user registration.

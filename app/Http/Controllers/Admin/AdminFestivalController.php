@@ -15,13 +15,17 @@ class AdminFestivalController extends Controller
             $festivals = Festival::select(['festival_id', 'name', 'date', 'status', 'subject_line', 'email_body']);
             return DataTables::of($festivals)
                 ->addColumn('actions', function ($festival) {
-                    return '<a href="#" class="btn btn-sm btn-primary edit-btn" data-festival-id="' . $festival->festival_id . '">Edit</a> | 
-                             <a href="#" class="btn btn-sm btn-danger delete-btn" data-festival-id="' . $festival->festival_id . '">Delete</a>';
+                    return '<a href="#" class="text-indigo-600 hover:text-indigo-900 edit-btn" data-festival-id="' . $festival->festival_id . '">                        <i class="fas fa-edit"></i>
+</a> | 
+                             <a href="#" class="text-red-600 hover:text-red-900 delete-btn" data-festival-id="' . $festival->festival_id . '">                        <i class="fas fa-trash-alt"></i>
+</a>';
                 })
                 ->editColumn('status', function ($festival) {
-                    return ucfirst($festival->status);
+                    $status = ucfirst($festival->status);
+                    $colorClass = $festival->status === 'Active' ? 'text-green-600' : 'text-red-600';
+                    return '<span class="' . $colorClass . '">' . $status . '</span>';
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['actions', 'status'])
                 ->make(true);
         }
         return view('admin.layouts.festivals');
