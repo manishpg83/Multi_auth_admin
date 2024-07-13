@@ -41,8 +41,7 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'Profile updated successfully.');
     }
-
-    public function updateNames(Request $request): RedirectResponse
+    public function updateNames(Request $request)
     {
         $request->validate([
             'first_name' => 'required|string|max:255',
@@ -54,11 +53,18 @@ class ProfileController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->company_name = $request->company_name;
-
         $user->save();
 
-        return Redirect::back()->with('status', 'names-updated');
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully',
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'company_name' => $user->company_name,
+        ]);
     }
+
+
 
     public function updateDetails(Request $request)
     {

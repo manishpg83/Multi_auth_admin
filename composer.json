@@ -10,6 +10,7 @@
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.5",
         "php-flasher/flasher-notyf-laravel": "^2.0",
         "yajra/laravel-datatables-oracle": "^11.1"
     },
@@ -32,9 +33,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "App\\Http\\Livewire\\": "app/Http/Livewire/"
         }
     },
+
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

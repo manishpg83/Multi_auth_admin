@@ -58,6 +58,7 @@
             border-radius: 5px;
         }
     </style>
+     @livewireStyles
 </head>
 
 <body class="font-sans antialiased">
@@ -70,7 +71,7 @@
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
@@ -78,7 +79,7 @@
 
             <!-- Main Content -->
             <main>
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
                     @yield('content')
                 </div>
             </main>
@@ -86,10 +87,10 @@
 
         <!-- Footer -->
     </div>
-    <footer class="main-footer text-center">
+    <footer class="text-center main-footer">
         <strong>&copy; 2024.</strong> All rights reserved.
     </footer>
-
+  
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
@@ -103,6 +104,7 @@
 
     <!-- Custom Scripts -->
     @yield('scripts')
+    @livewireScripts
     <script>
         $(document).ready(function() {
             // Initialize DataTables
