@@ -25,4 +25,13 @@ class Festival extends Model
     {
         return $this->hasMany(UserFestival::class, 'festival_id', 'festival_id');
     }
+    public function getStatusAttribute($value)
+    {
+        return ucfirst(strtolower($value));
+    }
+
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = ucfirst(strtolower($value));
+    }
 }

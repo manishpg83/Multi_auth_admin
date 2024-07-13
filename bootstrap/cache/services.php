@@ -34,7 +34,8 @@
     30 => 'Flasher\\Laravel\\FlasherServiceProvider',
     31 => 'Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider',
     32 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    33 => 'App\\Providers\\AppServiceProvider',
+    33 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    34 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -56,7 +57,8 @@
     15 => 'Flasher\\Laravel\\FlasherServiceProvider',
     16 => 'Flasher\\Notyf\\Laravel\\FlasherNotyfServiceProvider',
     17 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    18 => 'App\\Providers\\AppServiceProvider',
+    18 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    19 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
