@@ -57,6 +57,22 @@
             color: red;
             border-radius: 5px;
         }
+         /* Ensure middle content scrolls */
+        .content-wrapper {
+            overflow-y: auto;
+            height: calc(100vh - 100px); /* Adjust as necessary to fit your layout */
+            /* 100px is the combined height of navbar and footer */
+        }
+
+        /* Adjust footer position */
+        .main-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa; /* Adjust background color as needed */
+            padding: 10px 0;
+            text-align: center;
+        }
     </style>
      @livewireStyles
 </head>

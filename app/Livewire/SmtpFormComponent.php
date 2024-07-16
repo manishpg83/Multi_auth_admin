@@ -4,6 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\UserSmtp;
+use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class SmtpFormComponent extends Component
@@ -18,10 +21,10 @@ class SmtpFormComponent extends Component
 
     public function mount()
     {
-        // Fetch existing SMTP settings for the authenticated user, if any
         $user = Auth::user();
         if ($user) {
-            $smtpSettings = $user->smtpSettings; // Assuming you have a relationship defined
+            $user->load('smtpSettings');
+            $smtpSettings = $user->smtpSettings;
             if ($smtpSettings) {
                 $this->smtp_host = $smtpSettings->smtp_host;
                 $this->smtp_username = $smtpSettings->smtp_username;
@@ -30,7 +33,11 @@ class SmtpFormComponent extends Component
                 $this->smtp_from_name = $smtpSettings->smtp_from_name;
                 $this->smtp_from_email = $smtpSettings->smtp_from_email;
                 $this->mailer_type = $smtpSettings->mailer_type;
+            } else {
+                Log::info('No SMTP Settings found for user ID ' . $user->id);
             }
+        } else {
+            Log::info('No authenticated user found');
         }
     }
 
@@ -46,12 +53,10 @@ class SmtpFormComponent extends Component
             'mailer_type' => 'required|string|in:Gmail,Brevo,GetResponse',
         ]);
 
-        // Get the authenticated user's ID
         $user_id = Auth::id();
 
-        // Update or create SMTP settings for the user
         UserSmtp::updateOrCreate(
-            ['user_id' => $user_id], // Use authenticated user's ID
+            ['user_id' => $user_id],
             [
                 'smtp_host' => $this->smtp_host,
                 'smtp_username' => $this->smtp_username,
@@ -62,12 +67,25 @@ class SmtpFormComponent extends Component
                 'mailer_type' => $this->mailer_type,
             ]
         );
+        notyf()->success('SMTP updated successfully.');
 
-        // Flash success message
-        notyf()->success('SMTP settings updated successfully.');
+        $this->dispatch('smtp-saved');
+    }
 
-        // Redirect or refresh the component
-        $this->dispatch('saved');
+    public function sendTestEmail()
+    {
+        $details = [
+            'title' => 'Test Email',
+            'body' => 'This is a test email to verify your SMTP settings.'
+        ];
+
+        try {
+            Mail::to($this->smtp_from_email)->send(new TestEmail($details));
+            notyf()->success('email-sent successfully.');
+            $this->dispatch('email-sent');
+        } catch (\Exception $e) {
+            Log::error('Failed to send test email: ' . $e->getMessage());
+        }
     }
 
     public function render()

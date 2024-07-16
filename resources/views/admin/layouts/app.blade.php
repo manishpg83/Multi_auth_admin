@@ -53,56 +53,72 @@
             color: red;
             border-radius: 5px;
         }
+
+        /* Adjustments for fixed navbar, sidebar, and footer */
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        nav.navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030; /* Ensure navbar is above other content */
+        }
+
+        .sidebar {
+            position: fixed;
+        }
+
+        .content-wrapper {
+            margin-left: 250px; /* Ensure content does not overlap sidebar */
+            padding-top: 56px; /* Height of the fixed navbar */
+            padding-bottom: 60px; /* Height of the fixed footer */
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .main-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #ffffff; /* Example background color */
+            color: #000000; /* Example text color */
+            padding: 10px 0;
+        }
+
+        /* Additional styles for scrollable content area */
+        .scrollable-content {
+            padding: 10px; /* Example padding */
+        }
     </style>
 </head>
 
 <body class="font-sans antialiased">
     @include('admin.layouts.navigation')
     @include('admin.layouts.sidebar')
-    <div class="min-h-screen bg-gray-100" style="">
-        <div class="content-wrapper">
+
+    <div class="content-wrapper">
+        <div class="scrollable-content">
             @yield('content')
         </div>
-        <center>
-            <footer class="main-footer">
-                <strong>&copy; 2024.</strong>
-                All rights reserved.
-            </footer>
-        </center>
     </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2024. All rights reserved.</p>
+        </div>
+    </footer>
 
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- Sparkline -->
-    <script src="{{ asset('adminlte/plugins/sparklines/sparkline.js') }}"></script>
-    <!-- JQVMap -->
-    <script src="{{ asset('adminlte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ asset('adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-    <!-- daterangepicker -->
-    <script src="{{ asset('adminlte/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- Summernote -->
-    <script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
-    <!-- overlayScrollbars -->
-    <script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script>
-    <!-- Chart.js -->
-    <script src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <!-- SweetAlert2 JS -->
@@ -110,6 +126,7 @@
 
     <!-- Custom Scripts -->
     @yield('scripts')
+
     <script>
         $(document).ready(function() {
             $('#clientTable').DataTable();

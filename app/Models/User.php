@@ -64,4 +64,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function smtpSettings()
+    {
+        return $this->hasOne(UserSmtp::class, 'user_id', 'user_id');
+    }
+
 }
