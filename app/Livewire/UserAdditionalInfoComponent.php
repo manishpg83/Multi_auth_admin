@@ -7,7 +7,6 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-
 class UserAdditionalInfoComponent extends Component
 {
     use WithFileUploads;
@@ -21,7 +20,8 @@ class UserAdditionalInfoComponent extends Component
     public $whatsapp;
     public $skype;
     public $imo;
-    public $active_social;
+    public $active_social  = [];
+    public $active_fields = [];
     public $newLogo;
 
     public function mount()
@@ -36,8 +36,8 @@ class UserAdditionalInfoComponent extends Component
         $this->whatsapp = $user->whatsapp;
         $this->skype = $user->skype;
         $this->imo = $user->imo;
-        $this->active_social = $user->active_social;
-
+        $this->active_fields = is_string($user->active_fields) ? json_decode($user->active_fields, true) : [];
+        $this->active_social = is_string($user->active_social) ? json_decode($user->active_social, true) : [];
     }
 
     public function updateAdditionalInfo()
@@ -52,7 +52,9 @@ class UserAdditionalInfoComponent extends Component
             'whatsapp' => 'nullable|string|max:255',
             'skype' => 'nullable|string|max:255',
             'imo' => 'nullable|string|max:255',
-            'active_social' => 'nullable|string|in:skype,telegram,imo,whatsapp',
+            'active_fields' => 'nullable|array',
+            'active_social' => 'nullable|array',
+            'active_social.*' => 'in:skype,telegram,imo,whatsapp',
         ]);
 
         $user = Auth::user();
@@ -64,7 +66,8 @@ class UserAdditionalInfoComponent extends Component
         $user->whatsapp = $this->whatsapp;
         $user->skype = $this->skype;
         $user->imo = $this->imo;
-        $user->active_social = $this->active_social;
+        $user->active_fields = json_encode($this->active_fields);
+        $user->active_social = json_encode($this->active_social);
 
         if ($this->newLogo) {
             $path = $this->newLogo->store('logos', 'public');
@@ -80,6 +83,7 @@ class UserAdditionalInfoComponent extends Component
         notyf()->success('Additional information updated successfully.');
         $this->dispatch('saved');
     }
+
     public function removeNewLogo()
     {
         $this->newLogo = null;
@@ -94,6 +98,7 @@ class UserAdditionalInfoComponent extends Component
         $user->save();
         $this->logo = null;
     }
+
     public function render()
     {
         return view('livewire.user-additional-info-component');

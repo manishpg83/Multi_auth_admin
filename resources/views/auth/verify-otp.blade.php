@@ -3,7 +3,8 @@
 
 <head>
     <!-- Design by foolishdeveloper.com -->
-    <title>Glassmorphism OTP Verification Form</title>
+    <title>LttrSnd | OTP Verification Form</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('icon.png') }}" />
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
