@@ -1,22 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Mail;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 
-class TestEmailController extends Controller
+class TestEmail extends Mailable
 {
-    public function create()
+    use Queueable, SerializesModels;
+
+    public $details;
+
+    public function __construct($details)
     {
-        // Replace with your email creation logic.
-        $details = [
-            'title' => 'Test Email from Laravel',
-            'body' => 'This is a test email generated for testing purposes.'
-        ];
+        $this->details = $details;
+    }
 
-        Mail::to('devanshu.briskbrain@gmail.com')->send(new \App\Mail\TestEmail($details));
-
-        return response()->json(['message' => 'Test email has been sent.']);
+    public function build()
+    {
+        return $this->subject('Test Email')
+                    ->view('emails.test-email');
     }
 }

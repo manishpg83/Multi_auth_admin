@@ -276,8 +276,8 @@
                                                                             <select class="form-control"
                                                                                 id="status{{ $festival->festival_id }}"
                                                                                 name="status" required>
-                                                                                <option value="active"
-                                                                                    {{ $festival->status === 'active' ? 'selected' : '' }}>
+                                                                                <option value="Active"
+                                                                                    {{ $festival->status === 'Active' ? 'selected' : '' }}>
                                                                                     Active</option>
                                                                                 <option value="inactive"
                                                                                     {{ $festival->status === 'inactive' ? 'selected' : '' }}>

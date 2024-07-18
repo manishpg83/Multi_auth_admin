@@ -18,14 +18,14 @@
            </div>
            <div class="col-md-6 mt-2">
                <label for="smtp_username">SMTP Username</label>
-               <input wire:model.defer="smtp_username" type="text" class="form-control" id="smtp_username" readonly required>
+               <input wire:model.defer="smtp_username" type="text" class="form-control" id="smtp_username" required>
                @error('smtp_username')
                    <span class="text-danger">{{ $message }}</span>
                @enderror
            </div>
         <div class="col-md-6 mt-2">
             <label for="smtp_password">SMTP Password</label>
-            <input wire:model.defer="smtp_password" type="password" class="form-control" id="smtp_password" readonly required>
+            <input wire:model.defer="smtp_password" type="password" class="form-control" id="smtp_password" required>
             @error('smtp_password')
                 <span class="text-danger">{{ $message }}</span>
             @enderror

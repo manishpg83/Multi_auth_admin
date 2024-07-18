@@ -5,114 +5,188 @@
     <section class="content">
         <div class="container-fluid mt-2">
             <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-                            <p>Clients</p>
+            <livewire:dashboard />
+            <!-- /.row -->
+
+            <!-- Festivals Table -->
+            <div class="py-4 container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Festival Management</h3>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-block btn-outline-primary"
+                                                style="margin-left: 5px;" data-toggle="modal" data-target="#addFestivalModal">
+                                                Add Festival
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="addFestivalModal" tabindex="-1" aria-labelledby="addFestivalModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form id="addFestivalForm" action="{{ route('admin.festivals.store') }}" method="POST">
+                                            @csrf
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addFestivalModalLabel">Add Festival</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="name">Festival Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="date">Date</label>
+                                                    <input type="date" class="form-control" id="date" name="date"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <select class="form-control" id="status" name="status" required>
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email_scheduled">Email Scheduled</label>
+                                                    <select class="form-control" id="email_scheduled" name="email_scheduled"
+                                                        required>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="subject_line">Subject Line</label>
+                                                    <input type="text" class="form-control" id="subject_line"
+                                                        name="subject_line">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email_body">Email Body</label>
+                                                    <textarea class="form-control" id="email_body" name="email_body"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Add this just before the closing </div> of the card -->
+                            <!-- Edit Festival Modal -->
+                            <div class="modal fade" id="editFestivalModal" tabindex="-1" aria-labelledby="editFestivalModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form id="editFestivalForm" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editFestivalModalLabel">Edit Festival</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="editName">Festival Name</label>
+                                                    <input type="text" class="form-control" id="editName" name="name"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editDate">Date</label>
+                                                    <input type="date" class="form-control" id="editDate" name="date"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editStatus">Status</label>
+                                                    <select class="form-control" id="editStatus" name="status" required>
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editEmailScheduled">Email Scheduled</label>
+                                                    <select class="form-control" id="editEmailScheduled" name="email_scheduled"
+                                                        required>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editSubjectLine">Subject Line</label>
+                                                    <input type="text" class="form-control" id="editSubjectLine"
+                                                        name="subject_line">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editEmailBody">Email Body</label>
+                                                    <textarea class="form-control" id="editEmailBody" name="email_body"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-0 card-body table-responsive">
+                                <table class="table table-hover text-nowrap" id="festivalTable1" style="width: 100% !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Festival</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Subject Line</th>
+                                            <th>Email Body</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
-                        <div class="icon">
-                            <i class="fas fa-user-friends"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-                            <p>Email Sent</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-                            <p>Email Opened</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-envelope-open"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-                            <p>Email Replied</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-reply"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
             </div>
-            <!-- Example Table -->
-            <table id="clientTable" class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <!-- Other headers -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>John Doe</td>
-                        <td>john.doe@example.com</td>
-                        <!-- Other data -->
-                    </tr>
-                    <tr>
-                        <td>Jane Smith</td>
-                        <td>jane.smith@example.com</td>
-                        <!-- Other data -->
-                    </tr>
-                    <!-- Add more rows as needed -->
-                </tbody>
-            </table>
-            
 
-            <!-- Example Table -->
-            <table id="festivalTable" class="table" style="margin-top: 15px;">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <!-- Other headers -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Summer Festival</td>
-                        <td>2024-08-15</td>
-                        <!-- Other data -->
-                    </tr>
-                    <tr>
-                        <td>Spring Festival</td>
-                        <td>2024-05-20</td>
-                        <!-- Other data -->
-                    </tr>
-                    <!-- Add more rows as needed -->
-                </tbody>
-            </table>
-            
-
+            <!-- Clients Table -->
+            <div class="py-4 container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Client Data</h3>
+                            </div>
+                            <div class="p-0 card-body table-responsive">
+                                <table class="table table-hover text-nowrap" id="clientTable" style="width: 100% !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Company Name</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -121,66 +195,33 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
-            // Check if first name is empty or null
-            var firstName = "{{ Auth::user()->first_name }}";
-            if (!firstName) {
-                Swal.fire({
-                    title: "Complete Your Profile",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: false, // Disable cancel button
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Complete Profile",
-                    allowOutsideClick: false // Prevent clicking outside the modal to close
-                }).then((result) => {
-                    // Redirect to edit profile page when confirmed
-                    window.location.href =
-                        "{{ route('profile.edit') }}"; // Replace 'profile.edit' with your actual route name
-                });
-            }
-
-            // DataTables initialization
-            $('#clientTable').DataTable();
-            $('#festivalTable').DataTable();
-
-            // Clear form fields when the modal is opened
-            $('#addFestivalModal').on('show.bs.modal', function(event) {
-                $('#name').val('');
-                $('#date').val('');
-                $('#status').val('active'); // Set default status if needed
-                $('#email_scheduled').val('');
-                $('#subject_line').val('');
-                $('#email_body').val('');
+            $('#festivalTable1').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('festivals.index') }}", // Adjust the route name as per your route configuration
+                columns: [
+                    { data: 'festival_id', name: 'festival_id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'date', name: 'date' },
+                    { data: 'status', name: 'status' },
+                    { data: 'subject_line', name: 'subject_line' },
+                    { data: 'email_body', name: 'email_body' },
+                    // Add more columns as needed
+                ]
             });
-        });
 
-        $(document).ready(function() {
-            // Edit plan modal handling
-            $('.edit-plan-btn').on('click', function() {
-                var planId = $(this).data('id');
-                var planType = $(this).data('type');
-                var planName = $(this).data('name');
-                var amount = $(this).data('amount');
-                var description = $(this).data('description');
-
-                $('#editPlanModal #edit_plan_type').val(planType);
-                $('#editPlanModal #edit_plan_name').val(planName);
-                $('#editPlanModal #edit_amount').val(amount);
-                $('#editPlanModal #edit_plan_description').val(description);
-
-                var editUrl = $('#editPlanForm').attr('action').replace(':plan_id', planId);
-                $('#editPlanForm').attr('action', editUrl);
-            });
-        });
-
-        $(document).ready(function() {
-            // Clear form fields when the modal is opened
-            $('#addPlanModal').on('show.bs.modal', function(event) {
-                $('#plan_type').val('');
-                $('#plan_name').val('');
-                $('#amount').val('');
-                $('#plan_description').val('');
+            // Initialize client table
+            $('#clientTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('client.list') }}", // Adjust the route name as per your client routes
+                columns: [
+                    { data: 'client_id', name: 'client_id' },
+                    { data: 'first_name', name: 'first_name' },
+                    { data: 'last_name', name: 'last_name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'company_name', name: 'company_name' },
+                ]
             });
         });
     </script>

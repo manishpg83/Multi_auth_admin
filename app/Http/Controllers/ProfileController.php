@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Client;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -103,6 +104,30 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->back()->with('status', 'details-updated');
+    }
+
+    public function upload()
+    {
+        $this->validate();
+
+        try {
+            $client = Client::create([
+                'user_id' => Auth::id(),
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'company_name' => $this->company_name,
+            ]);
+
+            if ($client) {
+                $this->reset(['first_name', 'last_name', 'email', 'company_name']);
+                session()->flash('message', 'Client uploaded successfully.');
+            } else {
+                session()->flash('error', 'Failed to create client.');
+            }
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error: ' . $e->getMessage());
+        }
     }
 
 

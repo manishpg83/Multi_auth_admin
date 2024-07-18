@@ -2,12 +2,15 @@
 
 namespace App\Livewire;
 
+use App\Mail\TestEmail;
 use Livewire\Component;
 use App\Models\UserSmtp;
-use App\Mail\TestEmail;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use App\Models\EmailTracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Config;  // Add this line
 
 class SmtpFormComponent extends Component
 {
@@ -74,17 +77,44 @@ class SmtpFormComponent extends Component
 
     public function sendTestEmail()
     {
+        $user = Auth::user();
+        if (!$user || !$user->smtpSettings) {
+            notyf()->error('SMTP settings not found.');
+            return;
+        }
+
+        $smtpSettings = $user->smtpSettings;
+
+        // Configure mail settings dynamically
+        Config::set('mail.mailers.smtp.host', $smtpSettings->smtp_host);
+        Config::set('mail.mailers.smtp.port', $smtpSettings->smtp_port);
+        Config::set('mail.mailers.smtp.username', $smtpSettings->smtp_username);
+        Config::set('mail.mailers.smtp.password', $smtpSettings->smtp_password);
+        Config::set('mail.from.address', $smtpSettings->smtp_from_email);
+        Config::set('mail.from.name', $smtpSettings->smtp_from_name);
+
         $details = [
             'title' => 'Test Email',
             'body' => 'This is a test email to verify your SMTP settings.'
         ];
 
+        $trackingId = Str::uuid();
+
         try {
-            Mail::to($this->smtp_from_email)->send(new TestEmail($details));
-            notyf()->success('email-sent successfully.');
+            Mail::to($smtpSettings->smtp_from_email)->send(new TestEmail($details, $trackingId));
+
+            EmailTracking::create([
+                'user_id' => $user->user_id,
+                'email' => $smtpSettings->smtp_from_email,
+                'tracking_id' => $trackingId,
+                'sent_at' => now(),
+            ]);
+
+            notyf()->success('Test email sent successfully.');
             $this->dispatch('email-sent');
         } catch (\Exception $e) {
             Log::error('Failed to send test email: ' . $e->getMessage());
+            notyf()->error('Failed to send test email: ' . $e->getMessage());
         }
     }
 
