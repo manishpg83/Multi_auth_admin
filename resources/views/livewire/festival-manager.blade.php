@@ -1,8 +1,8 @@
 <div>
-    <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+    <section class="bg-gray-50  ">
+        <div class="mx-auto max-w-screen-xl">
             <!-- Start coding here -->
-            <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+            <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                 <div
                     class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
@@ -10,28 +10,29 @@
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <input wire:model.live="search" type="text" id="simple-search"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Search Festival..." required>
                             </div>
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
                         <button wire:click="create"
-                            class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="bg-yellow-400 text-white px-2 py-1 text-md rounded-md shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                             Add Festival
                         </button>
-                        <select wire:model="statusFilter" class="ml-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+
+                        {{-- <select wire:model="statusFilter" class="ml-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:focus:border-primary-500">
                             <option value="">All Statuses</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </select>
-                        <p>Current Filter: {{ $statusFilter }}</p>
-                        
+                        <p>Current Filter: {{ $statusFilter }}</p> --}}
+
                     </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('festival_id')">ID</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('name')">Festival</th>
@@ -40,9 +41,7 @@
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('subject_line')">Subject Line
                                 </th>
                                 <th scope="col" class="px-4 py-3">Email Body</th>
-                                <th scope="col" class="px-4 py-3">
-                                    <span class="sr-only">Actions</span>
-                                </th>
+                                <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,7 +51,7 @@
                                     <td class="px-4 py-3">{{ $festival->name }}</td>
                                     <td class="px-4 py-3">{{ $festival->date }}</td>
                                     <td class="px-4 py-3">
-                                        <div class="custom-control custom-switch">
+                                        <div class="custom-control custom-switch custom-switch-zindex">
                                             <input type="checkbox" class="custom-control-input"
                                                 id="status{{ $festival->festival_id }}"
                                                 wire:click="toggleStatus({{ $festival->festival_id }})"
@@ -63,11 +62,15 @@
                                     </td>
                                     <td class="px-4 py-3">{{ $festival->subject_line }}</td>
                                     <td class="px-4 py-3">{{ Str::limit($festival->email_body, 50) }}</td>
-                                    <td class="px-4 py-3 flex items-center justify-end">
+                                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
                                         <button wire:click="edit({{ $festival->festival_id }})"
-                                            class="btn btn-sm btn-primary">Edit</button>
+                                            class="text-blue-500 hover:text-blue-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
                                         <button wire:click="delete({{ $festival->festival_id }})"
-                                            class="btn btn-sm btn-danger">Delete</button>
+                                            class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

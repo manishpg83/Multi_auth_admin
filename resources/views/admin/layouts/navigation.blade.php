@@ -14,7 +14,7 @@
 
     <!-- Right navbar links -->
     <ul class="ml-auto navbar-nav">
-        
+
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -64,8 +64,7 @@
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 Nora Silvester
-                                <span class="float-right text-sm text-warning"><i
-                                        class="fas fa-star"></i></span>
+                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
                             </h3>
                             <p class="text-sm">The subject goes here</p>
                             <p class="text-sm text-muted"><i class="mr-1 far fa-clock"></i> 4 Hours Ago</p>
@@ -113,7 +112,7 @@
                 <i class="far fa-user"></i> {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="{{ ('admin.profile.edit') }}" class="dropdown-item">
+                <a href="{{ 'admin.profile.edit' }}" class="dropdown-item">
                     <i class="mr-2 far fa-user-circle"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
@@ -135,7 +134,8 @@
 
         <!-- Control Sidebar Toggle Button -->
         <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
+                role="button">
                 <i class="fas fa-th-large"></i>
             </a>
         </li>

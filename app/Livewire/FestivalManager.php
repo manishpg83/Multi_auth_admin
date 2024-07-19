@@ -16,7 +16,7 @@ class FestivalManager extends Component
     public $editingFestivalId;
     public $isModalOpen = false;
     public $search = '';
-    public $sortField = 'name';
+    public $sortField = 'festival_id';
     public $sortDirection = 'asc';
     public $statusFilter = '';
 
@@ -54,7 +54,7 @@ class FestivalManager extends Component
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortDirection = 'asc';
-        }
+        }   
         $this->sortField = $field;
     }
 
@@ -77,7 +77,7 @@ class FestivalManager extends Component
             'email_body' => $this->email_body,
         ]);
 
-        session()->flash('message', 'Festival created successfully.');
+        notyf()->success('Festival Created successfully.');
         $this->closeModal();
         $this->resetInputFields();
         $this->dispatch('refreshComponent');
@@ -111,7 +111,7 @@ class FestivalManager extends Component
             'email_body' => $this->email_body,
         ]);
 
-        session()->flash('message', 'Festival updated successfully.');
+        notyf()->success('Festival updated successfully.');
         $this->closeModal();
         $this->resetInputFields();
         $this->dispatch('refreshComponent');
@@ -120,7 +120,7 @@ class FestivalManager extends Component
     public function delete($id)
     {
         Festival::find($id)->delete();
-        session()->flash('message', 'Festival deleted successfully.');
+        notyf()->success('Festival Deletd successfully.');
         $this->dispatch('refreshComponent');
     }
 

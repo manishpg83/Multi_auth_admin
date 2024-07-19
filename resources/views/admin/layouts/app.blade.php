@@ -19,15 +19,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+        rel="stylesheet">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <!-- SweetAlert2 CSS -->
@@ -35,8 +38,11 @@
 
     <!-- Bootstrap Switch CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-switch-button@5.3.0-alpha1/dist/bootstrap-switch-button.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-switch-button@5.3.0-alpha1/dist/bootstrap-switch-button.min.css"
+        rel="stylesheet">
 
+    <!-- Include Notyf CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <!-- AdminLTE -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
@@ -59,21 +65,17 @@
             border-radius: 5px;
         }
 
-        / Ensure middle content scrolls /
         .content-wrapper {
             overflow-y: auto;
             height: calc(100vh - 100px);
-            / Adjust as necessary to fit your layout /
-            / 100px is the combined height of navbar and footer /
+
         }
 
-        / Adjust footer position /
         .main-footer {
             position: fixed;
             bottom: 0;
             width: 100%;
             background-color: #f8f9fa;
-            / Adjust background color as needed /
             padding: 10px 0;
             text-align: center;
         }
@@ -122,8 +124,11 @@
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-switch-button@5.3.0-alpha1/dist/bootstrap-switch-button.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-switch-button@5.3.0-alpha1/dist/bootstrap-switch-button.min.js">
+    </script>
 
+    <!-- Include Notyf JS -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <!-- Custom Scripts -->
     @yield('scripts')
     @livewireScripts
@@ -151,6 +156,20 @@
                         document.getElementById('delete-form-' + festivalId).submit();
                     }
                 })
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('notify', message => {
+                const notyf = new Notyf({
+                    duration: 5000,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                });
+                notyf.success(message.message);
             });
         });
     </script>

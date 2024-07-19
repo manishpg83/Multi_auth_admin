@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
 
 @section('content')
-@livewire('festival-manager')   
+    @livewire('festival-manager')
 @endsection
