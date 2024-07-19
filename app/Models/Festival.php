@@ -34,4 +34,12 @@ class Festival extends Model
     {
         $this->attributes['status'] = ucfirst(strtolower($value));
     }
+    public function scopeSearch($query, $term)
+    {
+        return $query->where(function ($query) use ($term) {
+            $query->where('name', 'like', '%' . $term . '%')
+                ->orWhere('subject_line', 'like', '%' . $term . '%')
+                ->orWhere('email_body', 'like', '%' . $term . '%');
+        });
+    }
 }
