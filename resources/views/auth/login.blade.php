@@ -34,7 +34,7 @@
             <img src="{{ asset('/images/logo2.jpeg') }}" alt="Logo" class="brand-image elevation-3">
         </div>
         <div class="login-logo">
-            <a href="{{ route('login') }}"><b>User</b>Login</a>
+            <a href="{{ route('register') }}"><b>User</b>Login</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

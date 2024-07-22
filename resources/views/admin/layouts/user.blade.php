@@ -38,7 +38,7 @@
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ $festivals->count() }}</h3>
-                            <p>Inactive Usersl</p>
+                            <p>Inactive Users</p>
                         </div>
                         <div class="icon">
                             <i class="far fa-calendar-alt"></i>

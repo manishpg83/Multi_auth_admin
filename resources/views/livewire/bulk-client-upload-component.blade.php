@@ -4,7 +4,9 @@
         <input type="file" id="csv_file" wire:model="csv_file" class="form-control">
         @error('csv_file') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
-    <button type="submit" class="btn btn-primary">Upload</button>
+    <div class="gap-4 mt-4 d-flex align-items-center justify-content-end">
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
 </form>
 
 @if (session('status') === 'bulk-clients-uploaded')

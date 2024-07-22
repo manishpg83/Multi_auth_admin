@@ -18,7 +18,7 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>{{ $emailsSent }}</h3>
+                <h3>#</h3>
                 <p>Emails Sent</p>
             </div>
             <div class="icon">

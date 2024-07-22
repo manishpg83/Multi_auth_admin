@@ -63,14 +63,25 @@
                                     <td class="px-4 py-3">{{ $festival->subject_line }}</td>
                                     <td class="px-4 py-3">{{ Str::limit($festival->email_body, 50) }}</td>
                                     <td class="px-4 py-3 flex items-center justify-end space-x-2">
-                                        <button wire:click="edit({{ $festival->festival_id }})"
-                                            class="text-blue-500 hover:text-blue-700">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="delete({{ $festival->festival_id }})"
-                                            class="text-red-500 hover:text-red-700">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        @if ($festival->trashed())
+                                            <button wire:click="restore({{ $festival->festival_id }})"
+                                                class="text-green-500 hover:text-green-700">
+                                                <i class="fas fa-undo"></i>
+                                            </button>
+                                            <button wire:click="forceDelete({{ $festival->festival_id }})"
+                                                class="text-red-500 hover:text-red-700">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        @else
+                                            <button wire:click="edit({{ $festival->festival_id }})"
+                                                class="text-blue-500 hover:text-blue-700">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button wire:click="delete({{ $festival->festival_id }})"
+                                                class="text-red-500 hover:text-red-700">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

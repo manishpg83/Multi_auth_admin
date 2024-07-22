@@ -32,16 +32,33 @@ class FestivalManager extends Component
     public function render()
     {
         return view('livewire.festival-manager', [
-            'festivals' => Festival::where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('subject_line', 'like', '%' . $this->search . '%');
-            })
+            'festivals' => Festival::withTrashed() // Include soft deleted records
+                ->where(function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('subject_line', 'like', '%' . $this->search . '%');
+                })
                 ->when($this->statusFilter, function ($query) {
                     $query->where('status', $this->statusFilter);
                 })
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10)
         ]);
+    }
+
+    public function restore($id)
+    {
+        $festival = Festival::withTrashed()->findOrFail($id);
+        $festival->restore();
+        notyf()->success('Festival restored successfully.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function forceDelete($id)
+    {
+        $festival = Festival::withTrashed()->findOrFail($id);
+        $festival->forceDelete();
+        notyf()->success('Festival permanently deleted.');
+        $this->dispatch('refreshComponent');
     }
     public function updatedStatusFilter($value)
     {
@@ -119,8 +136,9 @@ class FestivalManager extends Component
 
     public function delete($id)
     {
-        Festival::find($id)->delete();
-        notyf()->success('Festival Deletd successfully.');
+        $festival = Festival::findOrFail($id);
+        $festival->delete();
+        notyf()->success('Festival deleted successfully.');
         $this->dispatch('refreshComponent');
     }
 

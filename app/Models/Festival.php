@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\UserFestival;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Festival extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
 
     protected $table = 'festivals';
     protected $primaryKey = 'festival_id';
