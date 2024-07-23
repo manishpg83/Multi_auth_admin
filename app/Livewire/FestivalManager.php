@@ -2,9 +2,15 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
+use App\Models\Admin;
 use Livewire\Component;
 use App\Models\Festival;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewFestivalForApproval;
 
 class FestivalManager extends Component
 {
@@ -31,17 +37,27 @@ class FestivalManager extends Component
 
     public function render()
     {
+        $isAdmin = $this->isAdmin();
+
+        $festivalsQuery = Festival::withTrashed()
+            ->where(function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('subject_line', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->statusFilter, function ($query) {
+                $query->where('status', $this->statusFilter);
+            });
+
+        if (!$isAdmin) {
+            $festivalsQuery->where('approved', true);
+        }
+
+        $festivals = $festivalsQuery->orderBy($this->sortField, $this->sortDirection)
+            ->paginate(10);
+
         return view('livewire.festival-manager', [
-            'festivals' => Festival::withTrashed() // Include soft deleted records
-                ->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('subject_line', 'like', '%' . $this->search . '%');
-                })
-                ->when($this->statusFilter, function ($query) {
-                    $query->where('status', $this->statusFilter);
-                })
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10)
+            'festivals' => $festivals,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -81,23 +97,68 @@ class FestivalManager extends Component
         $this->openModal();
     }
 
+    private function isAdmin()
+    {
+        if (Auth::guard('web')->check()) {
+            return false; // Regular users are not admins
+        } elseif (Auth::guard('admin')->check()) {
+            return true; // All authenticated admins are considered admins
+        }
+        return false; // Default case
+    }
+
+
     public function store()
     {
         $this->validate();
 
-        Festival::create([
+        $isAdmin = $this->isAdmin();
+
+        $festival = Festival::create([
             'name' => $this->name,
             'date' => $this->date,
-            'status' => $this->status,
+            'status' => $isAdmin ? $this->status : 'Inactive',
             'email_scheduled' => $this->email_scheduled,
             'subject_line' => $this->subject_line,
             'email_body' => $this->email_body,
+            'approved' => $isAdmin,
+            'submitted_by' => Auth::id(),
         ]);
 
-        notyf()->success('Festival Created successfully.');
+        if (!$isAdmin) {
+            // Send notification to admin
+            Admin::all()->each(function ($admin) use ($festival) {
+                $admin->notify(new NewFestivalForApproval($festival));
+            });
+            notyf()->success('Festival submitted for approval.');
+        } else {
+            notyf()->success('Festival created successfully.');
+        }
+
         $this->closeModal();
         $this->resetInputFields();
         $this->dispatch('refreshComponent');
+    }
+
+    public function approveFestival($id)
+    {
+        if ($this->isAdmin()) {
+            $festival = Festival::findOrFail($id);
+            $festival->update([
+                'approved' => true,
+                'status' => 'Active'
+            ]);
+            notyf()->success('Festival approved successfully.');
+        }
+    }
+
+    public function rejectFestival($id)
+    {
+        if ($this->isAdmin()) {
+            $festival = Festival::findOrFail($id);
+            $festival->delete();
+            notyf()->success('Festival rejected and deleted.');
+        }
     }
 
     public function edit($id)

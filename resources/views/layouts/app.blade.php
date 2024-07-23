@@ -160,6 +160,10 @@
                 })
             });
         });
+
+        $(document).ready(function () {
+        $('[data-widget="treeview"]').Treeview('init');
+        });
     </script>
 </body>
 

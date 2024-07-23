@@ -41,6 +41,7 @@ class User extends Authenticatable
         'imo',
         'whatsapp',
         'active_social',
+        'role',  // Add this line
     ];
 
     /**
@@ -67,6 +68,11 @@ class User extends Authenticatable
     public function smtpSettings()
     {
         return $this->hasOne(UserSmtp::class, 'user_id', 'user_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 
 }

@@ -16,7 +16,7 @@
                     </div>
                     <div class="w-full md:w-1/2 text-right">
                         <button wire:click="create"
-                            class="bg-blue-500 text-white px-2 py-1 text-md rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="bg-blue-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Add User
                         </button>
                     </div>

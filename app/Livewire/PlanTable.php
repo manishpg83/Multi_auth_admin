@@ -19,11 +19,16 @@ class PlanTable extends Component
     public $amount;
     public $description;
 
+    protected $listeners = [
+        'planDeleted' => '$refresh',
+    ];
+
     public function render()
     {
         $plans = Plan::query()
             ->where('plan_name', 'like', "%{$this->search}%")
             ->orWhere('plan_type', 'like', "%{$this->search}%")
+            ->withTrashed() // Include trashed plans
             ->paginate(10);
 
         return view('livewire.plan-table', compact('plans'));
@@ -38,7 +43,7 @@ class PlanTable extends Component
 
     public function edit($id)
     {
-        $plan = Plan::find($id);
+        $plan = Plan::withTrashed()->find($id);
         $this->planId = $plan->plan_id;
         $this->planName = $plan->plan_name;
         $this->planType = $plan->plan_type;
@@ -76,6 +81,23 @@ class PlanTable extends Component
     {
         Plan::find($id)->delete();
         notyf()->success('Plan deleted successfully.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function restore($id)
+    {
+        $plan = Plan::withTrashed()->findOrFail($id);
+        $plan->restore();
+        notyf()->success('Plan restored successfully.');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function forceDelete($id)
+    {
+        $plan = Plan::withTrashed()->findOrFail($id);
+        $plan->forceDelete();
+        notyf()->success('Plan permanently deleted.');
+        $this->dispatch('refreshComponent');
     }
 
     private function resetFields()

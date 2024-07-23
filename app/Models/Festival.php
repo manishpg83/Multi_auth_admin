@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\UserFestival;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,6 +25,7 @@ class Festival extends Model
         'email_scheduled',
         'subject_line',
         'email_body',
+        'approved',
     ];
 
     public function userFestivals()
@@ -44,6 +47,15 @@ class Festival extends Model
             $query->where('name', 'like', '%' . $term . '%')
                 ->orWhere('subject_line', 'like', '%' . $term . '%')
                 ->orWhere('email_body', 'like', '%' . $term . '%');
+        });
+    }
+
+    public function up()
+    {
+        Schema::table('festivals', function (Blueprint $table) {
+            $table->boolean('approved')->default(false);
+            $table->unsignedBigInteger('submitted_by')->nullable();
+            $table->foreign('submitted_by')->references('id')->on('users');
         });
     }
 }

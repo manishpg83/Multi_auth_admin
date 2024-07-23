@@ -64,7 +64,8 @@ class UserTable extends Component
     public function delete($id)
     {
         User::find($id)->delete();
-        session()->flash('message', 'User deleted successfully!');
+        notyf()->success('User deleted successfully!');
+
     }
 
     private function resetFields()

@@ -14,8 +14,7 @@
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
-                        <button wire:click="create"
-                            class="bg-blue-400 text-white px-2 py-1 text-md rounded-md shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        <button type="button" class="bg-blue-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-500" data-bs-toggle="modal" data-bs-target="#clientModal">
                             Add Client
                         </button>
                     </div>
@@ -52,14 +51,25 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 flex items-center justify-end space-x-2">
-                                        <button wire:click="edit({{ $client->client_id }})"
-                                            class="text-blue-500 hover:text-blue-700">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="delete({{ $client->client_id }})"
-                                            class="text-red-500 hover:text-red-700">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        @if ($client->trashed())
+                                            <button wire:click="restore({{ $client->client_id }})"
+                                                class="text-green-500 hover:text-green-700">
+                                                <i class="fas fa-undo"></i>
+                                            </button>
+                                            <button wire:click="forceDelete({{ $client->client_id }})"
+                                                class="text-red-500 hover:text-red-700">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        @else
+                                            <button wire:click="edit({{ $client->client_id }})"
+                                                class="text-blue-500 hover:text-blue-700">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button wire:click="delete({{ $client->client_id }})"
+                                                class="text-red-500 hover:text-red-700">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -72,4 +82,19 @@
             </div>
         </div>
     </section>
+    <!-- Modal -->
+<div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clientModalLabel">Add Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @livewire('client-form-component')
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>

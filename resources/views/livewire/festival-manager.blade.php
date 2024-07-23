@@ -13,21 +13,20 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Search Festival..." required>
                             </div>
+                            {{-- <select wire:model="statusFilter" class="ml-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:focus:border-primary-500">
+                                <option value="">All Statuses</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>  --}}                                                       
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
+                        
+                        
                         <button wire:click="create"
-                            class="bg-yellow-400 text-white px-2 py-1 text-md rounded-md shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            class="bg-yellow-400 text-black px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                             Add Festival
                         </button>
-
-                        {{-- <select wire:model="statusFilter" class="ml-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:focus:border-primary-500">
-                            <option value="">All Statuses</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                        <p>Current Filter: {{ $statusFilter }}</p> --}}
-
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -81,6 +80,23 @@
                                                 class="text-red-500 hover:text-red-700">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+                                        @endif
+                                    </td>
+                                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
+                                        @if ($isAdmin)
+                                            @if (!$festival->approved)
+                                                <button wire:click="approveFestival({{ $festival->festival_id }})"
+                                                    class="text-green-500 hover:text-green-700">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button wire:click="rejectFestival({{ $festival->festival_id }})"
+                                                    class="text-red-500 hover:text-red-700">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            @endif
+                                        @else
+                                            <!-- Show limited actions for non-admin users -->
+                                            <span>{{ $festival->approved ? 'Approved' : 'Pending Approval' }}</span>
                                         @endif
                                     </td>
                                 </tr>

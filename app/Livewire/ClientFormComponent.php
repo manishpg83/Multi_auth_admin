@@ -34,7 +34,7 @@ class ClientFormComponent extends Component
             'company_name' => $this->company_name,
         ]);
 
-        session()->flash('status', 'client-uploaded');
+        notyf()->success('Client Uploaded');
         return redirect()->route('dashboard'); // Redirect as necessary
     }
 

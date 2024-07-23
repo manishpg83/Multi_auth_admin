@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('mail_status')->default(0);
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes(); // Add this line for soft deletes
         });
     }
 

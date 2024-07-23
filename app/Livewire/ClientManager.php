@@ -12,7 +12,7 @@ class ClientManager extends Component
 
     protected $listeners = ['deleteClient' => 'delete', 'refreshComponent' => '$refresh'];
 
-    public $first_name, $last_name, $email, $company_name;
+    public $first_name, $last_name, $email, $company_name, $status;
     public $editingClientId;
     public $isModalOpen = false;
     public $search = '';
@@ -30,7 +30,7 @@ class ClientManager extends Component
     public function render()
     {
         return view('livewire.client-manager', [
-            'clients' => Client::where(function ($query) {
+            'clients' => Client::withTrashed()->where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->search . '%')
                     ->orWhere('last_name', 'like', '%' . $this->search . '%');
             })
@@ -75,14 +75,13 @@ class ClientManager extends Component
 
     public function edit($id)
     {
-        $client = Client::findOrFail($id);
+        $client = Client::withTrashed()->findOrFail($id);
         $this->editingClientId = $id;
         $this->first_name = $client->first_name;
         $this->last_name = $client->last_name;
         $this->email = $client->email;
         $this->company_name = $client->company_name;
         $this->status = $client->status;
-
 
         $this->openModal();
     }
@@ -91,7 +90,7 @@ class ClientManager extends Component
     {
         $this->validate();
 
-        $client = Client::find($this->editingClientId);
+        $client = Client::withTrashed()->find($this->editingClientId);
         $client->update([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -108,7 +107,7 @@ class ClientManager extends Component
 
     public function toggleStatusClient($id)
     {
-        $client = Client::find($id);
+        $client = Client::withTrashed()->find($id);
         $client->status = $client->status === 'Active' ? 'Inactive' : 'Active';
         $client->save();
         $this->dispatch('refreshComponent');
@@ -116,9 +115,38 @@ class ClientManager extends Component
 
     public function delete($id)
     {
-        Client::find($id)->delete();
-        notyf()->success('Client Deleted successfully.');
-        $this->dispatch('refreshComponent');
+        $client = Client::find($id);
+        if ($client) {
+            $client->delete();
+            notyf()->success('Client Deleted successfully.');
+            $this->dispatch('refreshComponent');
+        } else {
+            notyf()->error('Client not found.');
+        }
+    }
+
+    public function restore($id)
+    {
+        $client = Client::withTrashed()->find($id);
+        if ($client) {
+            $client->restore();
+            notyf()->success('Client Restored successfully.');
+            $this->dispatch('refreshComponent');
+        } else {
+            notyf()->error('Client not found.');
+        }
+    }
+
+    public function forceDelete($id)
+    {
+        $client = Client::withTrashed()->find($id);
+        if ($client) {
+            $client->forceDelete();
+            notyf()->success('Client Permanently Deleted.');
+            $this->dispatch('refreshComponent');
+        } else {
+            notyf()->error('Client not found.');
+        }
     }
 
     public function openModal()

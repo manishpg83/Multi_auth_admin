@@ -34,21 +34,24 @@
 @section('scripts')
     <script>
         var firstName = "{{ Auth::user()->first_name }}";
-            if (!firstName) {
-                Swal.fire({
-                    title: "Complete Your Profile",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: false, // Disable cancel button
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Complete Profile",
-                    allowOutsideClick: false // Prevent clicking outside the modal to close
-                }).then((result) => {
-                    // Redirect to edit profile page when confirmed
-                    window.location.href =
-                    "{{ route('profile.edit') }}"; // Replace 'profile.edit' with your actual route name
-                });
-            }
+        var lastName = "{{ Auth::user()->last_name }}";
+        var companyName = "{{ Auth::user()->company_name }}";
+
+        if (!firstName || !lastName || !companyName) {
+            Swal.fire({
+                title: "Complete Your Profile",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: false, // Disable cancel button
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Complete Profile",
+                allowOutsideClick: false // Prevent clicking outside the modal to close
+            }).then((result) => {
+                // Redirect to edit profile page when confirmed
+                window.location.href = "{{ route('profile.edit') }}"; // Replace 'profile.edit' with your actual route name
+            });
+        }
+
         $(document).ready(function() {
             $('#festivalTable1').DataTable({
                 processing: true,

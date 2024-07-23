@@ -46,4 +46,9 @@ class Admin extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function isAdmin()
+    {
+        return true; // Since this is the Admin model, we can assume all instances are admins
+    }
 }

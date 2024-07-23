@@ -16,7 +16,7 @@
                     </div>
                     <div class="w-full md:w-1/2 text-right">
                         <button wire:click="create"
-                            class="bg-red-500 text-white px-2 py-1 text-md rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            class="bg-red-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             data-bs-toggle="modal" data-bs-target="#addPlanModal">
                             Add Plan
                         </button>
@@ -44,16 +44,27 @@
                                     <td class="px-4 py-3">{{ $plan->amount }}</td>
                                     <td class="px-4 py-3">{{ $plan->plan_description }}</td>
                                     <td class="px-4 py-3 flex items-center justify-end space-x-2">
-                                        <button wire:click="edit({{ $plan->plan_id }})"
-                                            class="text-blue-500 hover:text-blue-700" data-bs-toggle="modal"
-                                            data-bs-target="#editPlanModal">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="delete({{ $plan->plan_id }})"
-                                            class="text-red-500 hover:text-red-700">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
+                                        @if ($plan->trashed())
+                                            <button wire:click="restore({{ $plan->plan_id }})"
+                                                class="text-green-500 hover:text-green-700">
+                                                <i class="fas fa-undo"></i>
+                                            </button>
+                                            <button wire:click="forceDelete({{ $plan->plan_id }})"
+                                                class="text-red-500 hover:text-red-700">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        @else
+                                            <button wire:click="edit({{ $plan->plan_id }})"
+                                                class="text-blue-500 hover:text-blue-700" data-bs-toggle="modal"
+                                                data-bs-target="#editPlanModal">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button wire:click="delete({{ $plan->plan_id }})"
+                                                class="text-red-500 hover:text-red-700">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
+                                    </td>                                    
                                 </tr>
                             @endforeach
                         </tbody>
