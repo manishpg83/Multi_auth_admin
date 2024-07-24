@@ -4,6 +4,7 @@ use App\Livewire\SmtpFormComponent;
 use App\Livewire\BulkUploadComponent;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\SingleUploadComponent;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FestivalController;
 use App\Http\Controllers\DashboardController;
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/festivals', [DashboardController::class, 'index'])->name('festivals.index');
     Route::get('/client', [DashboardController::class, 'client_list'])->name('client.list');
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
     Route::get('/festivals', [FestivalController::class, 'index'])->name('festivals.index');
     Route::get('/festivals/{festival}', [FestivalController::class, 'show'])->name('festivals.show');
     Route::get('/festivals/{festival}/participation', [FestivalController::class, 'userParticipation'])->name('festivals.participation');
