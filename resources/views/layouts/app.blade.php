@@ -88,7 +88,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-white">
         @include('layouts.navigation')
         @include('layouts.sidebar')
 
@@ -114,7 +114,7 @@
         <!-- Footer -->
     </div>
     <footer class="text-center main-footer">
-        <strong>&copy; 2024.</strong> All rights reserved.
+        <strong>&copy; lttrsnd 2024.</strong> All rights reserved.
     </footer>
 
     <!-- jQuery -->

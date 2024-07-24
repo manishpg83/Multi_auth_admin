@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-info">
+                        <div class="small-box bg-cyan-500">
                             <div class="inner">
                                 <h3>{{ $users->count() }}</h3>
                                 <p>Total User</p>
@@ -22,7 +22,7 @@
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-success">
+                        <div class="small-box bg-yellow-400">
                             <div class="inner">
                                 <h3>53<sup style="font-size: 20px">%</sup></h3>
                                 <p>Email sent ratio</p>
@@ -37,7 +37,7 @@
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-warning">
+                        <div class="small-box bg-lime-500">
                             <div class="inner">
                                 <h3>{{ $festivals->count() }}</h3>
                                 <p>Total Festival</p>
@@ -52,7 +52,7 @@
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-orange-400">
                             <div class="inner">
                                 <h3>{{ $plans->count() }}</h3>
                                 <p>Total Plans</p>

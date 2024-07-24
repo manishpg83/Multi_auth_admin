@@ -2,8 +2,9 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use Carbon\Carbon;
 use App\Models\Client;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class ClientManager extends Component
@@ -19,6 +20,12 @@ class ClientManager extends Component
     public $sortField = 'client_id';
     public $sortDirection = 'asc';
 
+    // Statistics properties
+    public $totalClients = 0;
+    public $activeClients = 0;
+    public $inactiveClients = 0;
+    public $newClientsThisMonth = 0;
+
     protected $rules = [
         'first_name' => 'required|string|max:255',
         'last_name' => 'required|string|max:255',
@@ -27,8 +34,15 @@ class ClientManager extends Component
         'status' => 'required|in:Active,Inactive',
     ];
 
+    public function mount()
+    {
+        $this->updateClientStats();
+    }
+
     public function render()
     {
+        $this->updateClientStats();
+
         return view('livewire.client-manager', [
             'clients' => Client::withTrashed()->where(function ($query) {
                 $query->where('first_name', 'like', '%' . $this->search . '%')
@@ -37,6 +51,16 @@ class ClientManager extends Component
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10)
         ]);
+    }
+
+    public function updateClientStats()
+    {
+        $this->totalClients = Client::count();
+        $this->activeClients = Client::where('status', 'Active')->count();
+        $this->inactiveClients = Client::where('status', 'Inactive')->count();
+        $this->newClientsThisMonth = Client::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
     }
 
     public function sortBy($field)
@@ -70,6 +94,7 @@ class ClientManager extends Component
         notyf()->success('Client Created successfully.');
         $this->closeModal();
         $this->resetInputFields();
+        $this->updateClientStats();
         $this->dispatch('refreshComponent');
     }
 
@@ -102,6 +127,7 @@ class ClientManager extends Component
         notyf()->success('Client Updated successfully.');
         $this->closeModal();
         $this->resetInputFields();
+        $this->updateClientStats();
         $this->dispatch('refreshComponent');
     }
 

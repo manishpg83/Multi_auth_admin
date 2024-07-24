@@ -6,7 +6,7 @@
             <div class=" custom-small-box-row">
                 <div class="small-box-container">
                     <!-- small box -->
-                    <div class="small-box bg-info">
+                    <div class="small-box bg-cyan-500">
                         <div class="inner">
                             <h3>{{ $users->count() }}</h3>
                             <p>Total User</p>
@@ -21,7 +21,7 @@
                 <!-- ./col -->
                 <div class="small-box-container">
                     <!-- small box -->
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-lime-400">
                         <div class="inner">
                             <h3>53<sup style="font-size: 20px">%</sup></h3>
                             <p>Active Users</p>
@@ -35,7 +35,7 @@
                 <!-- ./col -->
                 <div class="small-box-container">
                     <!-- small box -->
-                    <div class="small-box bg-warning">
+                    <div class="small-box bg-rose-500">
                         <div class="inner">
                             <h3>{{ $festivals->count() }}</h3>
                             <p>Inactive Users</p>
@@ -50,7 +50,7 @@
                 <!-- ./col -->
                 <div class="small-box-container">
                     <!-- small box -->
-                    <div class="small-box bg-danger">
+                    <div class="small-box bg-orange-400">
                         <div class="inner">
                             <h3>{{ $plans->count() }}</h3>
                             <p>Trial Users</p>
@@ -64,7 +64,7 @@
                 <!-- ./col -->
                 <div class="small-box-container">
                     <!-- small box -->
-                    <div class="small-box bg-primary">
+                    <div class="small-box bg-emerald-500">
                         <div class="inner">
                             <h3>5</h3>
                             <p>Revenue</p>

@@ -1,8 +1,9 @@
 <div>
-    <section class="bg-gray-50  ">
+    <section class="bg-gray-50 ">
         <div class="mx-auto max-w-screen-xl">
             <!-- Start coding here -->
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Festival Table</h3>
                 <div
                     class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
@@ -31,7 +32,7 @@
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('festival_id')">ID</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('name')">Festival</th>
@@ -45,7 +46,7 @@
                         </thead>
                         <tbody>
                             @foreach ($festivals as $festival)
-                                <tr class="border-b dark:border-gray-700">
+                                <tr class="border-b dark:border-gray-700 text-gray-600">
                                     <td class="px-4 py-3">{{ $festival->festival_id }}</td>
                                     <td class="px-4 py-3">{{ $festival->name }}</td>
                                     <td class="px-4 py-3">{{ $festival->date }}</td>

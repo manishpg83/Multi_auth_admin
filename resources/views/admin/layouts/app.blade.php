@@ -110,7 +110,7 @@
         <!-- Footer -->
     </div>
     <footer class="text-center main-footer">
-        <strong>&copy; 2024.</strong> All rights reserved.
+        <strong>&copy; lttrsnd 2024.</strong> All rights reserved.
     </footer>
 
     <!-- jQuery -->

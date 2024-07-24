@@ -2,7 +2,9 @@
     <section class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Clients Table</h3>
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
@@ -14,27 +16,30 @@
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
-                        <button type="button" class="bg-blue-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-500" data-bs-toggle="modal" data-bs-target="#clientModal">
+                        <button type="button"
+                            class="bg-blue-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                            data-bs-toggle="modal" data-bs-target="#clientModal">
                             Add Client
                         </button>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('client_id')">ID</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">First Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('last_name')">Last Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('company_name')">Company Name</th>
+                                <th scope="col" class="px-4 py-3" wire:click="sortBy('company_name')">Company Name
+                                </th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('status')">Status</th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($clients as $client)
-                                <tr class="border-b">
+                                <tr class="border-b text-gray-600">
                                     <td class="px-4 py-3">{{ $client->client_id }}</td>
                                     <td class="px-4 py-3">{{ $client->first_name }}</td>
                                     <td class="px-4 py-3">{{ $client->last_name }}</td>
@@ -83,18 +88,18 @@
         </div>
     </section>
     <!-- Modal -->
-<div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="clientModalLabel">Add Client</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @livewire('client-form-component')
+    <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clientModalLabel">Add Client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @livewire('client-form-component')
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>

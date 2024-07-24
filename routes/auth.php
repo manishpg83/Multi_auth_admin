@@ -47,6 +47,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/festivals', [DashboardController::class, 'index'])->name('festivals.index');
     Route::get('/client', [DashboardController::class, 'client_list'])->name('client.list');
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/clients', function () {
+        return view('layouts.clients');
+    })->name('clients.index');
     Route::get('/festivals', [FestivalController::class, 'index'])->name('festivals.index');
     Route::get('/festivals/{festival}', [FestivalController::class, 'show'])->name('festivals.show');
     Route::get('/festivals/{festival}/participation', [FestivalController::class, 'userParticipation'])->name('festivals.participation');

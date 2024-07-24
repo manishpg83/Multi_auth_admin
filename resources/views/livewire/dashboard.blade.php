@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-cyan-500">
             <div class="inner">
                 <h3>{{ $clients }}</h3>
                 <p>Clients</p>
@@ -16,7 +16,7 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-success">
+        <div class="small-box bg-yellow-400">
             <div class="inner">
                 <h3>#</h3>
                 <p>Emails Sent</p>
@@ -30,7 +30,7 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-warning">
+        <div class="small-box bg-lime-500">
             <div class="inner">
                 <h3>{{ $emailsOpened }}</h3>
                 <p>Emails Opened</p>
@@ -44,7 +44,7 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-danger">
+        <div class="small-box bg-orange-400">
             <div class="inner">
                 <h3>65</h3>
                 <p>Email Replied</p>

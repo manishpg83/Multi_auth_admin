@@ -2,6 +2,7 @@
     <section class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Plans Table</h3>
                 <div
                     class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
@@ -16,7 +17,7 @@
                     </div>
                     <div class="w-full md:w-1/2 text-right">
                         <button wire:click="create"
-                            class="bg-red-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            class="bg-orange-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             data-bs-toggle="modal" data-bs-target="#addPlanModal">
                             Add Plan
                         </button>
@@ -24,7 +25,7 @@
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('plan_id')">ID</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('plan_name')">Plan Name</th>
@@ -37,37 +38,40 @@
                         </thead>
                         <tbody>
                             @foreach ($plans as $plan)
-                                <tr class="border-b">
+                                <tr class="border-b text-gray-600">
                                     <td class="px-4 py-3">{{ $plan->plan_id }}</td>
                                     <td class="px-4 py-3">{{ $plan->plan_name }}</td>
                                     <td class="px-4 py-3">{{ $plan->plan_type }}</td>
                                     <td class="px-4 py-3">{{ $plan->amount }}</td>
                                     <td class="px-4 py-3">{{ $plan->plan_description }}</td>
-                                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
-                                        @if ($plan->trashed())
-                                            <button wire:click="restore({{ $plan->plan_id }})"
-                                                class="text-green-500 hover:text-green-700">
-                                                <i class="fas fa-undo"></i>
-                                            </button>
-                                            <button wire:click="forceDelete({{ $plan->plan_id }})"
-                                                class="text-red-500 hover:text-red-700">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        @else
-                                            <button wire:click="edit({{ $plan->plan_id }})"
-                                                class="text-blue-500 hover:text-blue-700" data-bs-toggle="modal"
-                                                data-bs-target="#editPlanModal">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button wire:click="delete({{ $plan->plan_id }})"
-                                                class="text-red-500 hover:text-red-700">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        @endif
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex justify-center space-x-2">
+                                            @if ($plan->trashed())
+                                                <button wire:click="restore({{ $plan->plan_id }})"
+                                                    class="text-green-500 hover:text-green-700">
+                                                    <i class="fas fa-undo"></i>
+                                                </button>
+                                                <button wire:click="forceDelete({{ $plan->plan_id }})"
+                                                    class="text-red-500 hover:text-red-700">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            @else
+                                                <button wire:click="edit({{ $plan->plan_id }})"
+                                                    class="text-blue-500 hover:text-blue-700" data-bs-toggle="modal"
+                                                    data-bs-target="#editPlanModal">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button wire:click="delete({{ $plan->plan_id }})"
+                                                    class="text-red-500 hover:text-red-700">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            @endif
+                                        </div>
                                     </td>                                    
                                 </tr>
                             @endforeach
                         </tbody>
+                        
                     </table>
                 </div>
                 <div class="p-4">
