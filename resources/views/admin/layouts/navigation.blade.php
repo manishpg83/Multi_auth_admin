@@ -112,9 +112,9 @@
                 <i class="far fa-user"></i> {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="{{ 'admin.profile.edit' }}" class="dropdown-item">
+                <a href="{{ route('admin.profile.edit') }}" class="dropdown-item">
                     <i class="mr-2 far fa-user-circle"></i> Profile
-                </a>
+                </a>                
                 <div class="dropdown-divider"></div>
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf

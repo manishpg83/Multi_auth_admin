@@ -8,7 +8,7 @@
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
-                                <input wire:model="search" type="text" id="simple-search"
+                                <input wire:model.debounce.300ms="search" type="text" id="simple-search"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                                     placeholder="Search Plans..." required>
                             </div>

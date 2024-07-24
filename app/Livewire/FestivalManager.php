@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewFestivalForApproval;
+use App\Notifications\FestivalApproved;
+
 
 class FestivalManager extends Component
 {
@@ -113,6 +115,7 @@ class FestivalManager extends Component
         $this->validate();
 
         $isAdmin = $this->isAdmin();
+        $userId = Auth::id();
 
         $festival = Festival::create([
             'name' => $this->name,
@@ -122,7 +125,8 @@ class FestivalManager extends Component
             'subject_line' => $this->subject_line,
             'email_body' => $this->email_body,
             'approved' => $isAdmin,
-            'submitted_by' => Auth::id(),
+            'submitted_by' => $userId,
+            'user_id' => $userId, // Add this line
         ]);
 
         if (!$isAdmin) {
@@ -148,7 +152,19 @@ class FestivalManager extends Component
                 'approved' => true,
                 'status' => 'Active'
             ]);
-            notyf()->success('Festival approved successfully.');
+
+            // Send notification to the user who submitted the festival
+            $user = User::find($festival->user_id);
+            if ($user) {
+                try {
+                    $user->notify(new FestivalApproved($festival));
+                    notyf()->success('Festival approved successfully and notification sent to the user.');
+                } catch (\Exception $e) {
+                    notyf()->error('Festival approved but failed to send notification: ' . $e->getMessage());
+                }
+            } else {
+                notyf()->warning('Festival approved but user not found for notification.');
+            }
         }
     }
 

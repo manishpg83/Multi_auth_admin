@@ -26,12 +26,19 @@ class PlanTable extends Component
     public function render()
     {
         $plans = Plan::query()
-            ->where('plan_name', 'like', "%{$this->search}%")
-            ->orWhere('plan_type', 'like', "%{$this->search}%")
+            ->where(function ($query) {
+                $query->where('plan_name', 'like', "%{$this->search}%")
+                    ->orWhere('plan_type', 'like', "%{$this->search}%");
+            })
             ->withTrashed() // Include trashed plans
             ->paginate(10);
 
         return view('livewire.plan-table', compact('plans'));
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function create()

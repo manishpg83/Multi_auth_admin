@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}">
+                            <a href="{{ route('clients.index') }}" class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}">
                                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                                 <p>Clients</p>
                             </a>
