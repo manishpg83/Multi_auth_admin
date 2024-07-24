@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('subject_line')->nullable();
             $table->text('email_body')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
