@@ -67,13 +67,27 @@ class FestivalManager extends Component
         return view('livewire.festival-manager', [
             'festivals' => $festivals,
             'isAdmin' => $isAdmin,
-            'isLoading' => $this->isLoading, // Add this line
+            'isLoading' => $this->isLoading,
         ]);
     }
 
     public function updatedSelectAll($value)
     {
-        $this->selectedFestivalIds = $value ? Festival::pluck('festival_id')->toArray() : [];
+        if ($value) {
+            $this->selectAllFestivals();
+        } else {
+            $this->selectedFestivalIds = [];
+        }
+    }
+
+    public function selectAllFestivals()
+    {
+        $this->selectedFestivalIds = Festival::pluck('festival_id')->map(fn($id) => (string) $id)->toArray();
+    }
+
+    public function updatedSelectedFestivalIds()
+    {
+        $this->selectAll = count($this->selectedFestivalIds) === Festival::count();
     }
 
     public function restore($id)
