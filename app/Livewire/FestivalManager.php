@@ -4,29 +4,36 @@ namespace App\Livewire;
 
 use App\Models\User;
 use App\Models\Admin;
-use Livewire\Component;
 use App\Models\Festival;
+use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\NewFestivalForApproval;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FestivalNotification;
+use App\Models\Client;
 use App\Notifications\FestivalApproved;
-
+use App\Notifications\NewFestivalForApproval;
 
 class FestivalManager extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['deleteFestival' => 'delete', 'refreshComponent' => '$refresh'];
+    protected $listeners = [
+        'deleteFestival' => 'delete',
+        'refreshComponent' => '$refresh'
+    ];
 
-    public $name, $date, $status, $email_scheduled, $subject_line, $email_body;
-    public $editingFestivalId;
-    public $isModalOpen = false;
     public $search = '';
-    public $sortField = 'festival_id';
-    public $sortDirection = 'asc';
     public $statusFilter = '';
+    public $selectAll = false;
+    public $selectedFestivalIds = [];
+    public $selectedFestivalId = '';
+    public $isLoading = false;
+    public $isModalOpen = false;
+    public $sortDirection = 'asc';
+    public $sortField = 'festival_id';
+    public $editingFestivalId;
+    public $name, $date, $status, $subject_line, $email_body, $email_scheduled;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -60,7 +67,13 @@ class FestivalManager extends Component
         return view('livewire.festival-manager', [
             'festivals' => $festivals,
             'isAdmin' => $isAdmin,
+            'isLoading' => $this->isLoading, // Add this line
         ]);
+    }
+
+    public function updatedSelectAll($value)
+    {
+        $this->selectedFestivalIds = $value ? Festival::pluck('festival_id')->toArray() : [];
     }
 
     public function restore($id)
@@ -78,10 +91,6 @@ class FestivalManager extends Component
         notyf()->success('Festival permanently deleted.');
         $this->dispatch('refreshComponent');
     }
-    public function updatedStatusFilter($value)
-    {
-        dd($value); // Check if this is fired and shows the correct value
-    }
 
     public function sortBy($field)
     {
@@ -89,7 +98,7 @@ class FestivalManager extends Component
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortDirection = 'asc';
-        }   
+        }
         $this->sortField = $field;
     }
 
@@ -101,14 +110,8 @@ class FestivalManager extends Component
 
     private function isAdmin()
     {
-        if (Auth::guard('web')->check()) {
-            return false; // Regular users are not admins
-        } elseif (Auth::guard('admin')->check()) {
-            return true; // All authenticated admins are considered admins
-        }
-        return false; // Default case
+        return Auth::guard('admin')->check();
     }
-
 
     public function store()
     {
@@ -126,11 +129,10 @@ class FestivalManager extends Component
             'email_body' => $this->email_body,
             'approved' => $isAdmin,
             'submitted_by' => $userId,
-            'user_id' => $userId, // Add this line
+            'user_id' => $userId,
         ]);
 
         if (!$isAdmin) {
-            // Send notification to admin
             Admin::all()->each(function ($admin) use ($festival) {
                 $admin->notify(new NewFestivalForApproval($festival));
             });
@@ -153,7 +155,6 @@ class FestivalManager extends Component
                 'status' => 'Active'
             ]);
 
-            // Send notification to the user who submitted the festival
             $user = User::find($festival->user_id);
             if ($user) {
                 try {
@@ -167,6 +168,53 @@ class FestivalManager extends Component
             }
         }
     }
+
+    public function selectFestivalForEmail($festivalId)
+    {
+        if (in_array($festivalId, $this->selectedFestivalIds)) {
+            $this->selectedFestivalIds = array_diff($this->selectedFestivalIds, [$festivalId]);
+        } else {
+            $this->selectedFestivalIds[] = $festivalId;
+        }
+    }
+
+    public function sendSelectedFestivalsEmail()
+    {
+        if (empty($this->selectedFestivalIds)) {
+            $this->addError('email', 'No festivals selected for email.');
+            return;
+        }
+
+        $festivals = Festival::whereIn('festival_id', $this->selectedFestivalIds)
+            ->where('status', 'Active')
+            ->get();
+
+        if ($festivals->isEmpty()) {
+            $this->addError('email', 'No active festivals selected for email.');
+            return;
+        }
+
+        $clients = Client::where('status', 'Active')->get();
+
+        if ($clients->isEmpty()) {
+            $this->addError('email', 'No active clients found.');
+            return;
+        }
+
+        foreach ($clients as $client) {
+            foreach ($festivals as $festival) {
+                try {
+                    Mail::to($client->email)->send(new FestivalNotification($festival));
+                } catch (\Exception $e) {
+                    $this->addError('email', 'Failed to send email to ' . $client->email . ': ' . $e->getMessage());
+                }
+            }
+        }
+
+        $this->selectedFestivalIds = []; // Reset the selection
+        notyf()->success('Festival emails sent successfully for active festivals.');
+    }
+
 
     public function rejectFestival($id)
     {

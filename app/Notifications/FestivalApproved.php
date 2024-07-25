@@ -18,7 +18,7 @@ class FestivalApproved extends Notification
     {
         $this->festival = $festival;
     }
-
+  
     public function via($notifiable)
     {
         return ['mail'];
@@ -30,6 +30,7 @@ class FestivalApproved extends Notification
                     ->line('Your festival has been approved!')
                     ->line('Festival Name: ' . $this->festival->name)
                     ->line('Festival Date: ' . $this->festival->date)
+                    ->line('Discription: ' . $this->festival->email_body)
                     ->action('View Festival', url('/festivals/' . $this->festival->id))
                     ->line('Thank you for using our application!');
     }
