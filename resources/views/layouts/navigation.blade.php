@@ -108,7 +108,9 @@
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-                <img src="{{ Auth::user()->logo ? asset('storage/' . Auth::user()->logo) : asset('download.png') }}" class="user-icon img-circle elevation-2" alt="User Image" style="width: 20px; height: 20px; border-radius: 50%;">
+                <img src="{{ Auth::user()->logo ? asset('storage/' . Auth::user()->logo) : asset('download.png') }}"
+                    class="user-icon img-circle elevation-2" alt="User Image"
+                    style="width: 20px; height: 20px; border-radius: 50%;">
                 <span class="ml-2" style="font-size: 1.1em; font-weight: bold;">
                     @if (Auth::user()->first_name)
                         {{ Auth::user()->first_name }}

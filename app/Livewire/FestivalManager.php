@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Client;
 use Livewire\Component;
 use App\Models\Festival;
+use App\Models\EmailTask;
 use Livewire\WithPagination;
 use App\Mail\FestivalNotification;
 use Illuminate\Support\Facades\Auth;
@@ -26,10 +27,6 @@ class FestivalManager extends Component
 
     public $search = '';
     public $statusFilter = '';
-    public $totalFestivals = 0;
-    public $activeFestivals = 0;
-    public $inactiveFestivals = 0;
-    public $newFestivalsThisMonth = 0;
     public $selectAll = false;
     public $selectedFestivalIds = [];
     public $selectedFestivalId = '';
@@ -246,19 +243,53 @@ class FestivalManager extends Component
             return;
         }
 
-        foreach ($clients as $client) {
-            foreach ($festivals as $festival) {
-                try {
-                    Mail::to($client->email)->send(new FestivalNotification($festival));
-                } catch (\Exception $e) {
-                    $this->addError('email', 'Failed to send email to ' . $client->email . ': ' . $e->getMessage());
-                }
+        foreach ($festivals as $festival) {
+            foreach ($clients as $client) {
+                EmailTask::create([
+                    'festival_id' => $festival->festival_id,
+                    'client_id' => $client->client_id,
+                    'status' => 'pending',
+                ]);
             }
         }
 
         $this->selectedFestivalIds = []; // Reset the selection
-        notyf()->success('Festival emails sent successfully for active festivals.');
+        notyf()->success('Festival emails scheduled successfully for active festivals.');
     }
+
+    public function scheduleSelectedFestivalsEmail()
+    {
+        if (empty($this->selectedFestivalIds)) {
+            notyf()->info('No festivals selected for email scheduling.');
+            return;
+        }
+
+        $festivals = Festival::whereIn('festival_id', $this->selectedFestivalIds)
+            ->where('status', 'Active')
+            ->get();
+
+        if ($festivals->isEmpty()) {
+            notyf()->info('No active festivals selected for email scheduling.');
+            return;
+        }
+
+        $clients = Client::where('status', 'Active')->get();
+
+        foreach ($festivals as $festival) {
+            foreach ($clients as $client) {
+                EmailTask::create([
+                    'festival_id' => $festival->festival_id,
+                    'client_id' => $client->client_id,
+                    'status' => 'pending',
+                    'scheduled_at' => now()->addMinutes(5), // Schedule for 5 minutes from now
+                ]);
+            }
+        }
+
+        $this->selectedFestivalIds = []; // Reset the selection
+        notyf()->success('Festival emails scheduled successfully for active festivals.');
+    }
+
 
 
     public function rejectFestival($id)

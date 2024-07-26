@@ -4,7 +4,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class FestivalNotification extends Mailable
 {
@@ -17,14 +17,15 @@ class FestivalNotification extends Mailable
      * Create a new message instance.
      *
      * @param  \App\Models\Festival  $festival
+     * @param  \App\Models\User|null $user
      * @return void
      */
-    public function __construct($festival)
+    public function __construct($festival, User $user = null)
     {
         $this->festival = $festival;
 
         // Fetch additional user info
-        $user = Auth::user();
+        $user = $user ?? auth()->user();
         $this->userAdditionalInfo = [
             'phone' => $user->phone ?? 'N/A',
             'designation' => $user->designation ?? 'N/A',
@@ -34,8 +35,7 @@ class FestivalNotification extends Mailable
             'whatsapp' => $user->whatsapp ?? 'N/A',
             'skype' => $user->skype ?? 'N/A',
             'imo' => $user->imo ?? 'N/A',
-            'active_fields' => is_string($user->active_fields) ? json_decode($user->active_fields, true) : [],
-            'active_social' => is_string($user->active_social) ? json_decode($user->active_social, true) : [],
+            
         ];
     }
 
@@ -53,5 +53,3 @@ class FestivalNotification extends Mailable
                     ]);
     }
 }
-
-

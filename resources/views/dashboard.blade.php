@@ -17,7 +17,7 @@
                 </div>
             </div>
             <!-- Clients Table -->
-            <div class="row mb-10"> 
+            <div class="row mb-10">
                 <div class="col-12">
                     <div class="card">
                         @livewire('client-manager')
@@ -48,7 +48,8 @@
                 allowOutsideClick: false // Prevent clicking outside the modal to close
             }).then((result) => {
                 // Redirect to edit profile page when confirmed
-                window.location.href = "{{ route('profile.edit') }}"; // Replace 'profile.edit' with your actual route name
+                window.location.href =
+                "{{ route('profile.edit') }}"; // Replace 'profile.edit' with your actual route name
             });
         }
 
