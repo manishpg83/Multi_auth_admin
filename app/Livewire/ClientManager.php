@@ -169,6 +169,12 @@ class ClientManager extends Component
 
     public function deleteSelected()
     {
+        if (empty($this->selectedClients)) {
+            // Show an error message if no clients are selected
+            notyf()->info('Please select clients to delete.');
+            return;
+        }
+
         $clients = Client::whereIn('client_id', $this->selectedClients)->get();
         foreach ($clients as $client) {
             $client->status = 'Inactive';

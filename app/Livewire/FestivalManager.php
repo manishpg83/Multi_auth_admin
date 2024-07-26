@@ -2,15 +2,16 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Admin;
-use App\Models\Festival;
+use App\Models\Client;
 use Livewire\Component;
+use App\Models\Festival;
 use Livewire\WithPagination;
+use App\Mail\FestivalNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\FestivalNotification;
-use App\Models\Client;
 use App\Notifications\FestivalApproved;
 use App\Notifications\NewFestivalForApproval;
 
@@ -25,6 +26,10 @@ class FestivalManager extends Component
 
     public $search = '';
     public $statusFilter = '';
+    public $totalFestivals = 0;
+    public $activeFestivals = 0;
+    public $inactiveFestivals = 0;
+    public $newFestivalsThisMonth = 0;
     public $selectAll = false;
     public $selectedFestivalIds = [];
     public $selectedFestivalId = '';
@@ -52,10 +57,11 @@ class FestivalManager extends Component
             ->where(function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('subject_line', 'like', '%' . $this->search . '%');
-            })
-            ->when($this->statusFilter, function ($query) {
-                $query->where('status', $this->statusFilter);
             });
+
+        if ($this->statusFilter !== '') {
+            $festivalsQuery->where('status', $this->statusFilter);
+        }
 
         if (!$isAdmin) {
             $festivalsQuery->where('approved', true);
@@ -64,11 +70,35 @@ class FestivalManager extends Component
         $festivals = $festivalsQuery->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
+        $this->updateFestivalStats();
+
         return view('livewire.festival-manager', [
             'festivals' => $festivals,
             'isAdmin' => $isAdmin,
             'isLoading' => $this->isLoading,
         ]);
+    }
+
+    public function updateFestivalStats()
+    {
+        $query = Festival::query();
+        
+        if ($this->statusFilter !== '') {
+            $query->where('status', $this->statusFilter);
+        }
+
+        $this->totalFestivals = $query->count();
+        $this->activeFestivals = Festival::where('status', 'Active')->count();
+        $this->inactiveFestivals = Festival::where('status', 'Inactive')->count();
+        $this->newFestivalsThisMonth = Festival::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+    }
+
+    public function updatedStatusFilter()
+    {
+        $this->resetPage();
+        $this->updateFestivalStats();
     }
 
     public function updatedSelectAll($value)
@@ -157,6 +187,7 @@ class FestivalManager extends Component
 
         $this->closeModal();
         $this->resetInputFields();
+        $this->updateFestivalStats();
         $this->dispatch('refreshComponent');
     }
 
@@ -195,7 +226,7 @@ class FestivalManager extends Component
     public function sendSelectedFestivalsEmail()
     {
         if (empty($this->selectedFestivalIds)) {
-            $this->addError('email', 'No festivals selected for email.');
+            notyf()->info('No festivals selected for email.');
             return;
         }
 
@@ -204,14 +235,14 @@ class FestivalManager extends Component
             ->get();
 
         if ($festivals->isEmpty()) {
-            $this->addError('email', 'No active festivals selected for email.');
+            notyf()->info('No active festivals selected for email.');
             return;
         }
 
         $clients = Client::where('status', 'Active')->get();
 
         if ($clients->isEmpty()) {
-            $this->addError('email', 'No active clients found.');
+            notyf()->info('No active clients found.');
             return;
         }
 
@@ -270,6 +301,7 @@ class FestivalManager extends Component
         notyf()->success('Festival updated successfully.');
         $this->closeModal();
         $this->resetInputFields();
+        $this->updateFestivalStats();
         $this->dispatch('refreshComponent');
     }
 
@@ -279,6 +311,7 @@ class FestivalManager extends Component
         $festival->delete();
         notyf()->success('Festival deleted successfully.');
         $this->dispatch('refreshComponent');
+        $this->updateFestivalStats();
     }
 
     public function toggleStatus($id)
@@ -287,6 +320,7 @@ class FestivalManager extends Component
         $festival->status = $festival->status === 'Active' ? 'Inactive' : 'Active';
         $festival->save();
         $this->dispatch('refreshComponent');
+        $this->updateFestivalStats();
     }
 
     public function openModal()

@@ -3,7 +3,12 @@
         <div class="mx-auto max-w-screen-xl">
             <!-- Start coding here -->
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Festival Table</h3>
+                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">
+                    Festival Table
+                    @if ($statusFilter !== '')
+                         (Showing {{ ucfirst($statusFilter) }} Festivals)
+                    @endif
+                </h3>
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
@@ -13,6 +18,11 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Search Festival..." required>
                             </div>
+                            <select wire:model.live="statusFilter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm ml-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 w-44">
+                                <option value="">All Statuses</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right flex items-center justify-between space-x-2">

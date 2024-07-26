@@ -10,44 +10,40 @@
                 </h3>
                 <div
                     class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                    <div class="mb-4 p-4 bg-gray-100 rounded-lg shadow-sm">
-                        <div
-                            class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4">
-                            <div class="w-full md:w-1/2">
-                                <label for="simple-search" class="block mb-2 text-sm font-medium text-gray-700">Search
-                                    Clients</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
+                    <div class="rounded-lg">
+                        <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4">
+                            <div class="w-full">
+                                <form class="flex items-center">
+                                    <label for="client-search" class="sr-only">Search</label>
+                                    <div class="relative w-full">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <input wire:model.live="search" type="text" id="client-search"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Search Client..." required>
                                     </div>
-                                    <input wire:model.live="search" type="text" id="simple-search"
-                                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                                        placeholder="Search Client..." required>
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/2">
-                                <label for="statusFilter" class="block mb-2 text-sm font-medium text-gray-700">Filter by
-                                    Status</label>
-                                <select wire:model.live="statusFilter" id="statusFilter"
-                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option value="">All Statuses</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
+                                    <select wire:model.live="statusFilter" 
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm ml-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-44">
+                                        <option value="">All Statuses</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
-                        <button type="button"
+                        {{-- <button type="button"
                             class="bg-blue-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                             data-bs-toggle="modal" data-bs-target="#clientModal">
                             Add Client
-                        </button>
+                        </button> --}}
                         @if ($clients->whereNotNull('deleted_at')->count() > 0)
                             <button wire:click="restoreSelected"
                                 class="bg-green-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 ml-2">
@@ -117,10 +113,10 @@
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         @else
-                                            <button wire:click="edit({{ $client->client_id }})"
+                                            {{-- <button wire:click="edit({{ $client->client_id }})"
                                                 class="text-blue-500 hover:text-blue-700">
                                                 <i class="fas fa-edit"></i>
-                                            </button>
+                                            </button> --}}
                                             <button wire:click="delete({{ $client->client_id }})"
                                                 class="text-red-500 hover:text-red-700">
                                                 <i class="fas fa-trash"></i>
