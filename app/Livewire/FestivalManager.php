@@ -83,13 +83,6 @@ class FestivalManager extends Component
         if ($this->statusFilter !== '') {
             $query->where('status', $this->statusFilter);
         }
-
-        $this->totalFestivals = $query->count();
-        $this->activeFestivals = Festival::where('status', 'Active')->count();
-        $this->inactiveFestivals = Festival::where('status', 'Inactive')->count();
-        $this->newFestivalsThisMonth = Festival::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->count();
     }
 
     public function updatedStatusFilter()

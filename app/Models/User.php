@@ -10,7 +10,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-
     /**
      * The primary key associated with the table.
      *
@@ -33,7 +32,7 @@ class User extends Authenticatable
         'otp',
         'company_name',
         'designation',
-        'logo', // Add this line
+        'logo',
         'website',
         'address',
         'skype',
@@ -41,7 +40,7 @@ class User extends Authenticatable
         'imo',
         'whatsapp',
         'active_social',
-        'role',  // Add this line
+        'role',
     ];
 
     /**
@@ -75,4 +74,25 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    /**
+     * Get all clients associated with the user.
+     */
+    // In User model
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class, 'client_user', 'user_id', 'client_id')
+                    ->withPivot('is_subscribed')
+                    ->withTimestamps();
+    }
+
+
+    /**
+     * Get only the subscribed clients for the user.
+     */
+    public function subscribedClients()
+    {
+        return $this->belongsToMany(Client::class, 'client_user', 'user_id', 'client_id')
+                    ->wherePivot('is_subscribed', true)
+                    ->withTimestamps();
+    }
 }

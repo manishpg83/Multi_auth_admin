@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Carbon\Carbon;
 use App\Models\Client;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -44,7 +45,7 @@ class ClientManager extends Component
 
     public function render()
     {
-        $query = Client::withTrashed()->where(function ($query) {
+        $query = User::find(auth()->id())->clients()->withTrashed()->where(function ($query) {
             $query->where('first_name', 'like', '%' . $this->search . '%')
                 ->orWhere('last_name', 'like', '%' . $this->search . '%');
         });
@@ -99,22 +100,35 @@ class ClientManager extends Component
 
     public function store()
     {
-        $this->validate();
+        $this->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'company_name' => 'nullable|string|max:255',
+            'status' => 'required|in:Active,Inactive',
+        ]);
 
-        Client::create([
+        // Check if client exists and retrieve it, or create a new one
+        $client = Client::firstOrNew(['email' => $this->email]);
+        $client->fill([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'email' => $this->email,
             'company_name' => $this->company_name,
             'status' => $this->status,
         ]);
+        $client->save();
 
-        notyf()->success('Client Created successfully.');
+        // Attach the client to the user without detaching other users
+        $user = User::find(auth()->id());
+        $user->clients()->syncWithoutDetaching([$client->client_id => ['is_subscribed' => true]]);
+
+        notyf()->success('Client added successfully.');
         $this->closeModal();
         $this->resetInputFields();
         $this->updateClientStats();
         $this->dispatch('refreshComponent');
     }
+
 
     public function edit($id)
     {
