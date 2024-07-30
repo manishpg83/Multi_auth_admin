@@ -18,6 +18,7 @@ class Plan extends Model
         'plan_name',
         'amount',
         'plan_description',
+        'client_limit',
     ];
     protected $dates = ['deleted_at'];
 
@@ -30,4 +31,6 @@ class Plan extends Model
     {
         return $this->hasMany(Payment::class, 'plan_id', 'plan_id');
     }
+
+   
 }

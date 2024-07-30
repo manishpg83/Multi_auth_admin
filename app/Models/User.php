@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Plan;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -41,6 +42,7 @@ class User extends Authenticatable
         'whatsapp',
         'active_social',
         'role',
+        'plan_id',
     ];
 
     /**
@@ -77,14 +79,12 @@ class User extends Authenticatable
     /**
      * Get all clients associated with the user.
      */
-    // In User model
     public function clients()
     {
         return $this->belongsToMany(Client::class, 'client_user', 'user_id', 'client_id')
                     ->withPivot('is_subscribed')
                     ->withTimestamps();
     }
-
 
     /**
      * Get only the subscribed clients for the user.
@@ -94,5 +94,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Client::class, 'client_user', 'user_id', 'client_id')
                     ->wherePivot('is_subscribed', true)
                     ->withTimestamps();
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
     }
 }

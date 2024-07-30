@@ -31,10 +31,13 @@ class CreateUsersTable extends Migration
             $table->string('active_social')->nullable();
             $table->json('active_fields')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->nullable();
+            $table->unsignedBigInteger('plan_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
+           
+            $table->foreign('plan_id')->references('plan_id')->on('plans')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

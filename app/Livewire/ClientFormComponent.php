@@ -2,10 +2,11 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-use App\Models\Client;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Client;
+use Livewire\Component;
+use App\Traits\ChecksClientLimits;
+use Illuminate\Support\Facades\Auth;
 
 class ClientFormComponent extends Component
 {
@@ -15,7 +16,7 @@ class ClientFormComponent extends Component
     public $company_name;
     public $status = 'Active';
     public $mail_status = 0;
-
+    use ChecksClientLimits;
     protected $rules = [
         'first_name' => 'required|string|max:100',
         'last_name' => 'required|string|max:100',
@@ -26,14 +27,18 @@ class ClientFormComponent extends Component
     public function submit()
     {
         $this->validate();
-
-        // Create a new client without user_id
+        
+        if (!$this->checkClientLimit()) {
+            notyf()->error('You have reached your client limit. Please upgrade your plan.');
+            return;
+        }
+        // Create a new client with user_id
         $client = Client::create([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
             'company_name' => $this->company_name,
-            'status' => 'Active', // Add default status or handle as needed
+            'status' => 'Active',
             'user_id' => auth()->id(),
         ]);
 
@@ -42,7 +47,7 @@ class ClientFormComponent extends Component
         $user->clients()->syncWithoutDetaching([$client->client_id => ['is_subscribed' => true]]);
 
         notyf()->success('Client Uploaded');
-        return redirect()->route('dashboard'); // Redirect as necessary
+        return redirect()->route('dashboard');
     }
 
 

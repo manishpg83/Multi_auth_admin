@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('plan_name');
             $table->decimal('amount', 10, 2);
             $table->text('plan_description');
+            $table->integer('client_limit')->default(20);
             $table->timestamps();
             $table->softDeletes(); // Add this line for soft deletes
         });
