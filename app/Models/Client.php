@@ -21,6 +21,7 @@ class Client extends Model
         'company_name',
         'status',
         'mail_status',
+        'user_id'
     ];
 
     // In Client model
