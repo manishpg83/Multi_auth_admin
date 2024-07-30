@@ -54,9 +54,10 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
                                 <th scope="col" class="px-4 py-3">
-                                    <input type="checkbox"
-                                        class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
-                                        wire:model="selectAll" wire:click="selectAllClients">
+                                        <input type="checkbox"
+                                            class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                                            wire:model="selectAll"
+                                            wire:click="selectAllClients">
                                 </th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('client_id')">ID</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">First Name</th>
@@ -73,8 +74,9 @@
                                 <tr class="border-b text-gray-600">
                                     <td class="px-4 py-3">
                                         <input type="checkbox"
-                                            class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
-                                            wire:model="selectedClients" value="{{ $client->client_id }}">
+                                        class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                                        wire:model="selectedClients"
+                                        value="{{ $client->client_id }}">                                 
                                     </td>
                                     <td class="px-4 py-3">{{ $client->client_id }}</td>
                                     <td class="px-4 py-3">{{ $client->first_name }}</td>

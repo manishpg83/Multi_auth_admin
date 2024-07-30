@@ -53,8 +53,7 @@ class BulkClientUploadComponent extends Component
             // Associate the client with the current user via the pivot table
             $user->clients()->syncWithoutDetaching([$client->client_id => ['is_subscribed' => true]]);
         }
-
-        session()->flash('status', 'bulk-clients-uploaded');
+        notyf()->success('bulk-clients-uploaded');
         return redirect()->route('dashboard');
     }
 

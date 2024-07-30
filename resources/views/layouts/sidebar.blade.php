@@ -1,29 +1,23 @@
-<style>
-    .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active.parent-menu {
-        background-color: transparent !important;
-        color: #c2c7d0 !important;
-    }
-    
-    .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active.parent-menu:hover {
-        background-color: #ffffff !important;
-    }
-    
+<style>   
     .bg-white .nav-treeview > .nav-item > .nav-link.active,
     .bg-white .nav-treeview > .nav-item > .nav-link.active:hover {
-        background-color: rgba(33, 214, 205, 0.9);
+        background-color: rgba(148, 163, 184, 0.9);
         color: #343a40;
         border-radius: 5px;
     }
 </style>
-<aside class="main-sidebar bg-white	 elevation-4">
+<aside class="main-sidebar bg-slate-300	 elevation-4">
     <div class="sidebar">
-        <div class="user-panel mt-3 pb-1 items-center mb-1 d-flex">
+        <div class="user-panel mt-3 pb-1 mb-1 d-flex">
             <div class="image">
                 <img src="{{ Auth::user()->logo ? asset('storage/' . Auth::user()->logo) : asset('download.png') }}" class="img-circle elevation-2" alt="User Image">
             </div>
-            <div class="info">
-                <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->first_name }}</a>
+            <div class="info bg-gray-200 py-0.5 px-2 ml-2 rounded-lg shadow-md">
+                <a href="{{ route('profile.edit') }}" class="block text-slate-500 hover:text-blue-800 font-semibold text-md mt-0.5">
+                    {{ Auth::user()->first_name }}
+                </a>
             </div>
+            
         </div>
         <hr class="bg-black">
         <nav class="mt-2">

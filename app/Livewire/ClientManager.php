@@ -181,6 +181,7 @@ class ClientManager extends Component
         }
     }
 
+
     public function deleteSelected()
     {
         if (empty($this->selectedClients)) {
@@ -203,19 +204,22 @@ class ClientManager extends Component
 
     public function restoreSelected()
     {
-        Client::whereIn('client_id', $this->selectedClients)->restore();
+        if (empty($this->selectedClients)) {
+            notyf()->info('Please select clients to restore.');
+            return;
+        }
+
+        $clients = Client::withTrashed()->whereIn('client_id', $this->selectedClients)->get();
+        foreach ($clients as $client) {
+            $client->restore();
+        }
+        
         $this->selectedClients = [];
         $this->selectAll = false;
-        notyf()->success('Selected clients restored successfully (status remains Inactive).');
+        notyf()->success('Selected clients restored successfully.');
         $this->dispatch('refreshComponent');
     }
-    public function toggleStatusClient($id)
-    {
-        $client = Client::withTrashed()->find($id);
-        $client->status = $client->status === 'Active' ? 'Inactive' : 'Active';
-        $client->save();
-        $this->dispatch('refreshComponent');
-    }
+
 
     public function delete($id)
     {

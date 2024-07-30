@@ -19,12 +19,21 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Search Festival..." required>
                             </div>
-                            <select wire:model.live="statusFilter"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm ml-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 w-44">
-                                <option value="">All Statuses</option>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
+                            <div wire:model.live="statusFilter" class="relative inline-block text-left ml-1">
+                                <button type="button" class="inline-flex w-full justify-center rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500" id="dropdownButton">
+                                  <span>Status</span>
+                                  <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 10.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                  </svg>
+                                </button>
+                                <div id="dropdownMenu" class="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden">
+                                  <div class="py-1">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-value="">All Statuses</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-value="Active">Active</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-value="Inactive">Inactive</a>
+                                  </div>
+                                </div>
+                              </div>
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right flex items-center justify-between space-x-2">
@@ -261,4 +270,35 @@
             </div>
         </div>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownButton = document.getElementById('dropdownButton');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+    
+            // Toggle dropdown visibility
+            dropdownButton.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('hidden');
+            });
+    
+            // Hide dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+    
+            // Handle status selection
+            dropdownMenu.addEventListener('click', function(event) {
+                const target = event.target;
+                if (target.tagName === 'A') {
+                    const value = target.getAttribute('data-value');
+                    dropdownButton.querySelector('span').textContent = target.textContent;
+                    @this.set('statusFilter', value);
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    
 </div>

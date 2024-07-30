@@ -26,7 +26,7 @@ class Festival extends Model
         'subject_line',
         'email_body',
         'approved',
-        'user_id', // Make sure this is included
+        'user_id',
     ];
 
     public function userFestivals()

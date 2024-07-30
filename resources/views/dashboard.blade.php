@@ -25,8 +25,8 @@
                 </div>
             </div>
             <!-- /.card -->
-            <!-- /.card -->
-        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 @endsection
@@ -42,14 +42,13 @@
                 title: "Complete Your Profile",
                 text: "You won't be able to revert this!",
                 icon: "warning",
-                showCancelButton: false, // Disable cancel button
+                showCancelButton: false, 
                 confirmButtonColor: "#3085d6",
                 confirmButtonText: "Complete Profile",
-                allowOutsideClick: false // Prevent clicking outside the modal to close
+                allowOutsideClick: false 
             }).then((result) => {
-                // Redirect to edit profile page when confirmed
                 window.location.href =
-                "{{ route('profile.edit') }}"; // Replace 'profile.edit' with your actual route name
+                "{{ route('profile.edit') }}";
             });
         }
 
@@ -57,7 +56,7 @@
             $('#festivalTable1').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('festivals.index') }}", // Adjust the route name as per your route configuration
+                ajax: "{{ route('festivals.index') }}", 
                 columns: [{
                         data: 'festival_id',
                         name: 'festival_id'
@@ -82,15 +81,13 @@
                         data: 'email_body',
                         name: 'email_body'
                     },
-                    // Add more columns as needed
                 ]
             });
 
-            // Initialize client table
             $('#clientTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('client.list') }}", // Adjust the route name as per your client routes
+                ajax: "{{ route('client.list') }}", 
                 columns: [{
                         data: 'client_id',
                         name: 'client_id'
