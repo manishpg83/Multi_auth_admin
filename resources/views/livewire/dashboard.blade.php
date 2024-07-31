@@ -8,7 +8,7 @@
                 <p>Clients</p>
             </div>
             <div class="icon">
-                <i class="fas fa-user-friends"></i>
+                <i class="fas fa-id-badge"></i>
             </div>
             <a href="{{ route('clients.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -22,7 +22,7 @@
                 <p>Emails Sent</p>
             </div>
             <div class="icon">
-                <i class="fas fa-envelope"></i>
+                <i class="fas fa-paper-plane"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -36,7 +36,7 @@
                 <p>Emails Opened</p>
             </div>
             <div class="icon">
-                <i class="fas fa-envelope-open"></i>
+                <i class="fas fa-eye"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -50,7 +50,7 @@
                 <p>Email Replied</p>
             </div>
             <div class="icon">
-                <i class="fas fa-reply"></i>
+                <i class="fas fa-reply-all"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>

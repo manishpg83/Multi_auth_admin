@@ -3,7 +3,7 @@
 @section('content')
     <div class="row mt-2">
         <div class="col-12">
-            <div class=" custom-small-box-row">
+            <div class="custom-small-box-row">
                 <div class="small-box-container">
                     <!-- small box -->
                     <div class="small-box bg-cyan-500">
@@ -12,7 +12,7 @@
                             <p>Total User</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fas fa-user"></i>
                         </div>
                         <a href="{{ route('admin.users.index') }}" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
@@ -27,7 +27,7 @@
                             <p>Active Users</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="fas fa-check-circle"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -41,7 +41,7 @@
                             <p>Inactive Users</p>
                         </div>
                         <div class="icon">
-                            <i class="far fa-calendar-alt"></i>
+                            <i class="fas fa-times-circle"></i>
                         </div>
                         <a href="{{ route('admin.festivals.index') }}" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
@@ -56,7 +56,7 @@
                             <p>Trial Users</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-clipboard"></i>
+                            <i class="fas fa-hourglass-half"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -79,6 +79,7 @@
             </div>
         </div>
     </div>
+
     <div class="card">
         @livewire('user-table')
     </div>

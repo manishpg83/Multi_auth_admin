@@ -19,24 +19,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        /* Schema::create('client_user', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('user_id');
-            $table->boolean('is_subscribed')->default(true);
-            $table->timestamps();
-
-            $table->foreign('client_id')->references('client_id')->on('clients')->onDelete('cascade');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-
-            $table->unique(['client_id', 'user_id']);
-        }); */
     }
 
     public function down(): void
     {
-/*         Schema::dropIfExists('client_user');
- */        Schema::dropIfExists('clients');
+       Schema::dropIfExists('clients');
     }
 };

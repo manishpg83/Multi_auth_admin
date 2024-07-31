@@ -21,7 +21,7 @@ class Dashboard extends Component
     public function updateStats()
     {
         $user = Auth::user();
-        $this->clients = Client::where('user_id', $user->user_id)->count();
+        $this->clients = Client::where('client_id', $user->user_id)->count();
         $this->emailsSent = EmailTracking::where('user_id', $user->user_id)->count();
         $this->emailsOpened = EmailTracking::where('user_id', $user->user_id)->where('opened', true)->count();
     }

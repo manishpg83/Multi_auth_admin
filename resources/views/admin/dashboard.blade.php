@@ -13,7 +13,7 @@
                                 <p>Total User</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                                <i class="fas fa-user"></i>
                             </div>
                             <a href="{{ route('admin.users.index') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -28,7 +28,7 @@
                                 <p>Email sent ratio</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
+                                <i class="fas fa-chart-line"></i>
                             </div>
                             <a href="#" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -43,7 +43,7 @@
                                 <p>Total Festival</p>
                             </div>
                             <div class="icon">
-                                <i class="far fa-calendar-alt"></i>
+                                <i class="fas fa-calendar-week"></i>
                             </div>
                             <a href="{{ route('admin.festivals.index') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -58,7 +58,7 @@
                                 <p>Total Plans</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-clipboard"></i>
+                                <i class="fas fa-list-alt"></i>
                             </div>
                             <a href="{{ route('admin.plans.index') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
