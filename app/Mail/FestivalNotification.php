@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -35,7 +36,6 @@ class FestivalNotification extends Mailable
             'whatsapp' => $user->whatsapp ?? 'N/A',
             'skype' => $user->skype ?? 'N/A',
             'imo' => $user->imo ?? 'N/A',
-            
         ];
     }
 
@@ -47,9 +47,9 @@ class FestivalNotification extends Mailable
     public function build()
     {
         return $this->view('emails.festival_notification')
-                    ->with([
-                        'festival' => $this->festival,
-                        'userAdditionalInfo' => $this->userAdditionalInfo,
-                    ]);
+            ->with([
+                'festival' => $this->festival,
+                'userAdditionalInfo' => $this->userAdditionalInfo,
+            ]);
     }
 }

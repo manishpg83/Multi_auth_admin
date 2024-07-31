@@ -10,7 +10,8 @@
             <div class="icon">
                 <i class="fas fa-id-badge"></i>
             </div>
-            <a href="{{ route('clients.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('clients.index') }}" class="small-box-footer">More info <i
+                    class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->

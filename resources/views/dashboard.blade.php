@@ -42,13 +42,13 @@
                 title: "Complete Your Profile",
                 text: "You won't be able to revert this!",
                 icon: "warning",
-                showCancelButton: false, 
+                showCancelButton: false,
                 confirmButtonColor: "#3085d6",
                 confirmButtonText: "Complete Profile",
-                allowOutsideClick: false 
+                allowOutsideClick: false
             }).then((result) => {
                 window.location.href =
-                "{{ route('profile.edit') }}";
+                    "{{ route('profile.edit') }}";
             });
         }
 
@@ -56,7 +56,7 @@
             $('#festivalTable1').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('festivals.index') }}", 
+                ajax: "{{ route('festivals.index') }}",
                 columns: [{
                         data: 'festival_id',
                         name: 'festival_id'
@@ -87,7 +87,7 @@
             $('#clientTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('client.list') }}", 
+                ajax: "{{ route('client.list') }}",
                 columns: [{
                         data: 'client_id',
                         name: 'client_id'

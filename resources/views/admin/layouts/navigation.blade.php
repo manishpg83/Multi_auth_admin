@@ -9,13 +9,12 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ route('admin.dashboard') }}" class="nav-link">Admin Dashboard</a>
         </li>
-        <!-- Add more left navbar links as needed -->
     </ul>
 
     <!-- Right navbar links -->
     <ul class="ml-auto navbar-nav">
 
-        <!-- Messages Dropdown Menu -->
+        {{-- <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
@@ -78,7 +77,6 @@
         </li>
 
         <!-- Notifications Dropdown Menu -->
-        <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
@@ -104,7 +102,7 @@
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
-        </li>
+        </li> --}}
 
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
@@ -114,7 +112,7 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="{{ route('admin.profile.edit') }}" class="dropdown-item">
                     <i class="mr-2 far fa-user-circle"></i> Profile
-                </a>                
+                </a>
                 <div class="dropdown-divider"></div>
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
