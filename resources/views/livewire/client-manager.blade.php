@@ -21,22 +21,26 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full  p-2.5 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Search Client..." required>
                                     </div>
-                                    <select wire:model.live="statusFilter"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm ml-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-44">
-                                        <option value="">All Statuses</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
-                                    </select>
+                                    <div x-data="{ open: false }" class="relative inline-block text-left ml-1">
+                                        <button @click="open = !open" type="button" class="inline-flex w-full justify-center rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500" id="dropdownButton">
+                                            <span>{{ $statusFilter === '' ? 'Statuses' : ucfirst($statusFilter) }}</span>
+                                            <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 10.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                            <div class="py-1">
+                                                <a wire:click="$set('statusFilter', '')" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">All Statuses</a>
+                                                <a wire:click="$set('statusFilter', 'Active')" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Active</a>
+                                                <a wire:click="$set('statusFilter', 'Inactive')" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Inactive</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
-                        {{-- <button type="button"
-                            class="bg-blue-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                            data-bs-toggle="modal" data-bs-target="#clientModal">
-                            Add Client
-                        </button> --}}
                         @if ($clients->whereNotNull('deleted_at')->count() > 0)
                             <button wire:click="restoreSelected"
                                 class="bg-green-500 text-white font-bold px-3 py-1 text-md rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 ml-2">
@@ -63,8 +67,7 @@
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">First Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('last_name')">Last Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('company_name')">Company Name
-                                </th>
+                                <th scope="col" class="px-4 py-3" wire:click="sortBy('company_name')">Company Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('status')">Status</th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
@@ -108,10 +111,6 @@
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         @else
-                                            {{-- <button wire:click="edit({{ $client->client_id }})"
-                                                class="text-blue-500 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button> --}}
                                             <button wire:click="delete({{ $client->client_id }})"
                                                 class="text-red-500 hover:text-red-700">
                                                 <i class="fas fa-trash"></i>
@@ -129,18 +128,34 @@
             </div>
         </div>
     </section>
-    <!-- Modal -->
-    <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="clientModalLabel">Add Client</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @livewire('client-form-component')
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownButton = document.getElementById('dropdownButton');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+    
+            // Toggle dropdown visibility
+            dropdownButton.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('hidden');
+            });
+    
+            // Hide dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+    
+            // Handle status selection
+            dropdownMenu.addEventListener('click', function(event) {
+                const target = event.target;
+                if (target.tagName === 'A') {
+                    const value = target.getAttribute('data-value');
+                    dropdownButton.querySelector('span').textContent = target.textContent;
+                    @this.set('statusFilter', value);
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </div>
