@@ -6,12 +6,12 @@
         border-radius: 5px;
     }
 </style>
-<aside class="main-sidebar bg-slate-300	 elevation-4">
+<aside class="main-sidebar bg-slate-300	 elevation-2">
     <div class="sidebar">
         <div class="user-panel mt-3 pb-1 mb-1 d-flex">
             <div class="image">
                 <img src="{{ Auth::user()->logo ? asset('storage/' . Auth::user()->logo) : asset('download.png') }}"
-                    class="img-circle elevation-2" alt="User Image">
+                    class="img-circle" alt="User Image">
             </div>
             <div class="info bg-gray-200 py-0.5 px-2 ml-2 rounded-lg shadow-md">
                 <a href="{{ route('profile.edit') }}"

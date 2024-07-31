@@ -16,7 +16,7 @@
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <input wire:model.live="search" type="text" id="simple-search"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:ring-2 focus:border-cyan-500 block w-full pl-10 p-2 dark:focus:ring-cyan-500 dark:focus:border-cyan-500"
                                     placeholder="Search Festival..." required>
                             </div>
                             <div x-data="{ open: false }" class="relative inline-block text-left ml-1">
@@ -32,7 +32,7 @@
                                     </svg>
                                 </button>
                                 <div x-show="open" @click.away="open = false"
-                                    class="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    class="absolute right-0 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-1 focus:outline-none">
                                     <div class="py-1">
                                         <a wire:click="$set('statusFilter', '')" href="#"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -99,7 +99,7 @@
                                     <td class="px-4 py-3">{{ $festival->name }}</td>
                                     <td class="px-4 py-3">{{ $festival->date }}</td>
                                     <td class="px-4 py-3">
-                                        <div class="custom-control custom-switch custom-switch-zindex">
+                                        <div class="custom-switch">
                                             <input type="checkbox" class="custom-control-input"
                                                 id="status{{ $festival->festival_id }}"
                                                 wire:click="toggleStatus({{ $festival->festival_id }})"
