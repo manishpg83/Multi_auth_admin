@@ -55,7 +55,7 @@
                             style="max-width: 100px; margin-top: 10px;">
                         <button wire:click.prevent="removeNewLogo" class="btn btn-sm btn-danger">Remove</button>
                     @elseif ($logo)
-                        <img src="{{ asset('storage/' . $logo) }}" alt="Current Logo"
+                        <img src="{{ asset('public/storage/' . $logo) }}" alt="Current Logo"
                             style="max-width: 100px; margin-top: 10px;">
                         <button wire:click.prevent="removeLogo" class="btn btn-sm btn-danger"
                             style="padding: 3px 6px; font-size: 10px;">Remove</button>

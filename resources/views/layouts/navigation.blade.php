@@ -108,7 +108,7 @@
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
-                <img src="{{ Auth::user()->logo ? asset('storage/' . Auth::user()->logo) : asset('download.png') }}"
+                <img src="{{ Auth::user()->logo ? asset('public/storage/' . Auth::user()->logo) : asset('download.png') }}"
                     class="user-icon img-circle" alt="User Image"
                     style="width: 30px; height: 30px; border-radius: 50%;">
                 <span class="ml-2 text-cyan-950" style="font-size: 1.2em; font-weight: bold;">
