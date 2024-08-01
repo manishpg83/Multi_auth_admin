@@ -7,17 +7,12 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# Admin / Teacher / User (Login, Register and Dashboard page) 
-
-![alt text](https://github.com/ajayyadavexpo/laravel-11-multi-auth/blob/main/image.png?raw=true)
-
-
-## YouTube Video (https://www.youtube.com/watch?v=LtzPygnIqn4)
+# Admin / User (Login, Register and Dashboard page) 
 
 
 ## Laravel + Tailwind Css Starter Project with Multi-Auth (Admin / User )
 - Admin login ( http://localhost:8000/admin/login )
-- User login and register page (http://localhost:8000/login )
+- User login and register page (http://localhost:8000/register )
 
 
 
