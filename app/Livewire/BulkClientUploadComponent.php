@@ -28,7 +28,7 @@ class BulkClientUploadComponent extends Component
 
         // Process CSV file
         $data = array_map('str_getcsv', file(storage_path('app/' . $path)));
-       // $data = $this->getCSVData();
+        // $data = $this->getCSVData();
         $numberOfClients = count($data);
 
         if (!$this->canAddClients($numberOfClients)) {
@@ -40,13 +40,12 @@ class BulkClientUploadComponent extends Component
         foreach ($data as $row) {
             // Create or update the client
             $client = Client::updateOrCreate(
-                ['email' => $row[2]], 
+                ['email' => $row[2]],
                 [
                     'first_name' => $row[0],
                     'last_name' => $row[1],
                     'company_name' => $row[3],
-                    'status' => 'Active', 
-                    'user_id' => auth()->id(),
+                    'status' => 'Active',
                 ]
             );
 

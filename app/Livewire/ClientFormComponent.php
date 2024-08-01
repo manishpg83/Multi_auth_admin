@@ -39,7 +39,6 @@ class ClientFormComponent extends Component
             'email' => $this->email,
             'company_name' => $this->company_name,
             'status' => 'Active',
-            'user_id' => auth()->id(),
         ]);
 
         // Associate the client with the current user via the pivot table
