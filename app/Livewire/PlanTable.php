@@ -12,12 +12,12 @@ class PlanTable extends Component
 
     public $search = '';
     public $isModalOpen = false;
-    public $isEditing = false;
     public $planId;
     public $planName;
     public $planType;
     public $amount;
     public $description;
+    public $client_limit;
 
     protected $listeners = [
         'planDeleted' => '$refresh',
@@ -44,7 +44,6 @@ class PlanTable extends Component
     public function create()
     {
         $this->resetFields();
-        $this->isEditing = false;
         $this->isModalOpen = true;
     }
 
@@ -56,7 +55,7 @@ class PlanTable extends Component
         $this->planType = $plan->plan_type;
         $this->amount = $plan->amount;
         $this->description = $plan->plan_description;
-        $this->isEditing = true;
+        $this->client_limit = $plan->client_limit;
         $this->isModalOpen = true;
     }
 
@@ -67,6 +66,7 @@ class PlanTable extends Component
             'planType' => 'required|string|max:255',
             'amount' => 'required|numeric',
             'description' => 'nullable|string',
+            'client_limit' => 'nullable|integer',
         ]);
 
         Plan::updateOrCreate(
@@ -75,7 +75,8 @@ class PlanTable extends Component
                 'plan_name' => $this->planName,
                 'plan_type' => $this->planType,
                 'amount' => $this->amount,
-                'plan_description' => $this->description
+                'plan_description' => $this->description,
+                'client_limit' => $this->client_limit
             ]
         );
 
@@ -107,6 +108,11 @@ class PlanTable extends Component
         $this->dispatch('refreshComponent');
     }
 
+    public function closeModal()
+    {
+        $this->isModalOpen = false;
+    }
+
     private function resetFields()
     {
         $this->planId = null;
@@ -114,5 +120,6 @@ class PlanTable extends Component
         $this->planType = '';
         $this->amount = '';
         $this->description = '';
+        $this->client_limit = '';
     }
 }
