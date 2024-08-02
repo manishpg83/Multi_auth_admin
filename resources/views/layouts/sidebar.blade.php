@@ -1,12 +1,4 @@
-<style>
-    .bg-white .nav-treeview>.nav-item>.nav-link.active,
-    .bg-white .nav-treeview>.nav-item>.nav-link.active:hover {
-        background-color: rgba(148, 163, 184, 0.9);
-        color: #343a40;
-        border-radius: 5px;
-    }
-</style>
-<aside class="main-sidebar bg-slate-300	 elevation-2">
+<aside class="main-sidebar bg-slate-50 elevation-2">
     <div class="sidebar">
         <div class="user-panel mt-3 pb-1 mb-1 d-flex">
             <div class="image">
@@ -19,37 +11,26 @@
                     {{ Auth::user()->first_name }}
                 </a>
             </div>
-
         </div>
         <hr class="bg-black">
         <nav class="mt-2">
-            <ul class="nav nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li
-                    class="nav-item {{ request()->routeIs('festivals.*') || request()->routeIs('clients.*') ? 'menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link text-black parent-menu {{ request()->routeIs('festivals.*') || request()->routeIs('clients.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            Manage
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
+            <ul class="nav nav-sidebar flex flex-col">
+                <!-- Festivals Link -->
+                <li class="nav-item">
+                    <a href="{{ route('festivals.index') }}"
+                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('festivals.*') ? 'bg-blue-400 text-white' : 'text-black hover:bg-blue-100' }}">
+                        <i class="fa fa-gift {{ request()->routeIs('festivals.*') ? 'text-white' : 'text-black' }} mr-2"></i>
+                        <p>Festivals</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('festivals.index') }}"
-                                class="nav-link {{ request()->routeIs('festivals.*') ? 'active' : '' }}">
-                                <i class="fa fa-gift text-black" aria-hidden="true"></i>
-                                <p class="text-black">Festivals</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('clients.index') }}"
-                                class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}">
-                                <i class="fa fa-list-alt text-black" aria-hidden="true"></i>
-                                <p class="text-black">Clients</p>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                
+                <!-- Clients Link -->
+                <li class="nav-item">
+                    <a href="{{ route('clients.index') }}"
+                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('clients.*') ? 'bg-blue-400 text-white' : 'text-black hover:bg-blue-100' }}">
+                        <i class="fa fa-list-alt {{ request()->routeIs('clients.*') ? 'text-white' : 'text-black' }} mr-2"></i>
+                        <p>Clients</p>
+                    </a>
                 </li>
             </ul>
         </nav>
