@@ -42,7 +42,7 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth','check.profile', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/festivals', [DashboardController::class, 'index'])->name('festivals.index');
     Route::get('/client', [DashboardController::class, 'client_list'])->name('client.list');
