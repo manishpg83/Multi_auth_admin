@@ -76,6 +76,7 @@ class FestivalManager extends Component
         ]);
     }
 
+
     public function updateFestivalStats()
     {
         $query = Festival::query();
@@ -150,10 +151,10 @@ class FestivalManager extends Component
     public function store()
     {
         $this->validate();
-
+    
         $isAdmin = $this->isAdmin();
         $userId = Auth::id();
-
+    
         $festival = Festival::create([
             'name' => $this->name,
             'date' => $this->date,
@@ -161,11 +162,11 @@ class FestivalManager extends Component
             'email_scheduled' => $this->email_scheduled,
             'subject_line' => $this->subject_line,
             'email_body' => $this->email_body,
-            'approved' => $isAdmin,
+            'approved' => !$isAdmin, // Set to true if not an admin, false if an admin
             'submitted_by' => $userId,
             'user_id' => $userId,
         ]);
-
+    
         if (!$isAdmin) {
             Admin::all()->each(function ($admin) use ($festival) {
                 $admin->notify(new NewFestivalForApproval($festival));
@@ -174,12 +175,13 @@ class FestivalManager extends Component
         } else {
             notyf()->success('Festival created successfully.');
         }
-
+    
         $this->closeModal();
         $this->resetInputFields();
         $this->updateFestivalStats();
         $this->dispatch('refreshComponent');
     }
+    
 
     public function approveFestival($id)
     {
@@ -231,7 +233,7 @@ class FestivalManager extends Component
 
         $clients = Client::where('status', 'Active')->get();
 
-        if ($clients->isEmpty()) {
+        if ($clients->isEmpty()) {  
             notyf()->info('No active clients found.');
             return;
         }

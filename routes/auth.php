@@ -22,6 +22,11 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
 
+function isProfileComplete() {
+    $user = auth()->user();
+    return $user && $user->first_name && $user->last_name && $user->company_name;
+}
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
@@ -59,7 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile/update-names', [ProfileController::class, 'editNames'])->name('profile.update.names.form');
     Route::patch('/profile/update-names', [ProfileController::class, 'updateNames'])->name('profile.update.names');
     Route::get('/profile/client-upload', [ProfileController::class, 'upload'])->name('client.upload');
-
+    
     Route::get('smtp-settings', SmtpFormComponent::class)->name('smtp-settings');
     //::get('test-email', [TestEmailController::class, 'create'])->name('test.email.create');
     Route::get('email-track/{id}', [EmailTrackingController::class, 'track'])->name('email.track');

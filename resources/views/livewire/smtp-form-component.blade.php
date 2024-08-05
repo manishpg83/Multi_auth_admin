@@ -56,7 +56,8 @@
             </div>
             <div class="col-md-6 mt-2">
                 <label for="mailer_type">Mailer Type</label>
-                <select wire:model="mailer_type" class="form-control" id="mailer_type" required>
+                <select wire:model="mailer_type" class="form-control @error('mailer_type') is-invalid @enderror" id="mailer_type" required>
+                    <option value="" selected>Select Mailer Type</option> <!-- Default option -->
                     <option value="Gmail">Gmail</option>
                     <option value="Brevo">Brevo</option>
                     <option value="GetResponse">GetResponse</option>

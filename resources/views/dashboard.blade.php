@@ -40,15 +40,16 @@
         if (!firstName || !lastName || !companyName) {
             Swal.fire({
                 title: "Complete Your Profile",
-                text: "You won't be able to revert this!",
+                text: "You need to complete your profile before accessing other pages.",
                 icon: "warning",
                 showCancelButton: false,
                 confirmButtonColor: "#3085d6",
                 confirmButtonText: "Complete Profile",
                 allowOutsideClick: false
             }).then((result) => {
-                window.location.href =
-                    "{{ route('profile.edit') }}";
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('profile.edit') }}";
+                }
             });
         }
 

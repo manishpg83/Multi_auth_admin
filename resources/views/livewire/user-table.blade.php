@@ -16,10 +16,10 @@
                         </form>
                     </div>
                     <div class="w-full md:w-1/2 text-right">
-                        <button wire:click="create"
+                        {{-- <button wire:click="create"
                             class="bg-cyan-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Add User
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -41,10 +41,10 @@
                                     <td class="px-4 py-3">{{ $user->last_name }}</td>
                                     <td class="px-4 py-3">{{ $user->email }}</td>
                                     <td class="px-4 py-3 flex items-center justify-center space-x-2">
-                                        <button wire:click="edit({{ $user->user_id }})"
+                                        {{-- <button wire:click="edit({{ $user->user_id }})"
                                             class="text-blue-500 hover:text-blue-700">
                                             <i class="fas fa-edit"></i>
-                                        </button>
+                                        </button> --}}
                                         <button onclick="confirmDelete({{ $user->user_id }})"
                                             class="text-red-500 hover:text-red-700">
                                             <i class="fas fa-trash"></i>
