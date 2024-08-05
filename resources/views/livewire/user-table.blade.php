@@ -27,8 +27,7 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('user_id')">ID</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">First Name</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('last_name')">Last Name</th>
+                                <th scope="col" class="px-4 py-3" wire:click="sortBy('name')">User Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
@@ -37,8 +36,7 @@
                             @foreach ($users as $user)
                                 <tr class="border-b text-gray-600">
                                     <td class="px-4 py-3">{{ $user->user_id }}</td>
-                                    <td class="px-4 py-3">{{ $user->first_name }}</td>
-                                    <td class="px-4 py-3">{{ $user->last_name }}</td>
+                                    <td class="px-4 py-3">{{ $user->first_name }} {{ $user->last_name }}</td> <!-- Combined cell -->
                                     <td class="px-4 py-3">{{ $user->email }}</td>
                                     <td class="px-4 py-3 flex items-center justify-center space-x-2">
                                         {{-- <button wire:click="edit({{ $user->user_id }})"

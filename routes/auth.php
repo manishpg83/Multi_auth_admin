@@ -1,25 +1,28 @@
 <?php
 
-use App\Livewire\SmtpFormComponent;
-use App\Livewire\BulkUploadComponent;
-use Illuminate\Support\Facades\Route;
-use App\Livewire\SingleUploadComponent;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FestivalController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TestEmailController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\EmailTrackingController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\OtpVerificationController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\OtpVerificationController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailTrackingController;
+use App\Http\Controllers\FestivalController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SmtpController;
+use App\Http\Controllers\TestEmailController;
+use App\Http\Controllers\UploadClientController;
+use App\Livewire\BulkUploadComponent;
+use App\Livewire\SingleUploadComponent;
+use App\Livewire\SmtpFormComponent;
+use Illuminate\Support\Facades\Route;
+
 
 
 function isProfileComplete() {
@@ -64,8 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile/update-names', [ProfileController::class, 'editNames'])->name('profile.update.names.form');
     Route::patch('/profile/update-names', [ProfileController::class, 'updateNames'])->name('profile.update.names');
     Route::get('/profile/client-upload', [ProfileController::class, 'upload'])->name('client.upload');
-    
-    Route::get('smtp-settings', SmtpFormComponent::class)->name('smtp-settings');
+    Route::get('/smtp-settings', [SmtpController::class, 'index'])->name('smtp-settings');
+    Route::get('/upload-client', [UploadClientController::class, 'index'])->name('upload-client');
+
+
     //::get('test-email', [TestEmailController::class, 'create'])->name('test.email.create');
     Route::get('email-track/{id}', [EmailTrackingController::class, 'track'])->name('email.track');
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');

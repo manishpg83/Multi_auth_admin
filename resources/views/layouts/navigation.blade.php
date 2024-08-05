@@ -118,6 +118,7 @@
                         {{ Auth::user()->email }}
                     @endif
                 </span>
+                <i class="fas fa-chevron-down ml-1"></i> <!-- Added arrow icon -->
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="{{ route('profile.edit') }}" class="dropdown-item">

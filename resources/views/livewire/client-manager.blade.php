@@ -2,14 +2,14 @@
     <section class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">
+                <h3 class="text-2xl font-semibold text-gray-500 ml-6">
                     Clients Table
                     @if ($statusFilter !== '')
                         (Showing {{ ucfirst($statusFilter) }} Clients)
                     @endif
                 </h3>
                 <div
-                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
                     <div class="rounded-lg">
                         <div
                             class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4">
@@ -69,49 +69,31 @@
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
-                                <th scope="col" class="px-4 py-3">
+                                <th scope="col" class="px-4 py-1">
                                     <input type="checkbox"
                                         class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
                                         wire:model="selectAll" wire:click="selectAllClients">
                                 </th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('client_id')">ID</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">First Name</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('last_name')">Last Name</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('company_name')">Company Name
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('name')">Client Name</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('email')">Email</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('company_name')">Company Name
                                 </th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('status')">Status</th>
-                                <th scope="col" class="px-4 py-3">Actions</th>
+                                <th scope="col" class="px-4 py-1">Actions</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('status')">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($clientsPaginated as $client)
                                 <tr class="border-b text-gray-600">
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-1">
                                         <input type="checkbox"
                                             class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
                                             wire:model="selectedClients" value="{{ $client->client_id }}">
                                     </td>
-                                    <td class="px-4 py-3">{{ $client->client_id }}</td>
-                                    <td class="px-4 py-3">{{ $client->first_name }}</td>
-                                    <td class="px-4 py-3">{{ $client->last_name }}</td>
-                                    <td class="px-4 py-3">{{ $client->email }}</td>
-                                    <td class="px-4 py-3">{{ $client->company_name }}</td>
-                                    <td class="px-4 py-3">
-                                        @if ($client->trashed())
-                                            <span class="text-red-500">Inactive (Deleted)</span>
-                                        @else
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input"
-                                                    id="client_status{{ $client->client_id }}"
-                                                    wire:click="toggleStatusClient({{ $client->client_id }})"
-                                                    {{ $client->status === 'Active' ? 'checked' : '' }}>
-                                                <label class="custom-control-label"
-                                                    for="client_status{{ $client->client_id }}"></label>
-                                            </div>
-                                        @endif
-                                    </td>
-                                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
+                                    <td class="px-4 py-3">{{ $client->first_name }} {{ $client->last_name }}</td> <!-- Combined cell -->
+                                    <td class="px-4 py-1">{{ $client->email }}</td>
+                                    <td class="px-4 py-1">{{ $client->company_name }}</td>
+                                    <td class="px-4 py-1 flex items-center justify-end space-x-2">
                                         @if ($client->trashed())
                                             <button wire:click="restore({{ $client->client_id }})"
                                                 class="text-green-500 hover:text-green-700">
@@ -126,6 +108,20 @@
                                                 class="text-red-500 hover:text-red-700">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+                                        @endif
+                                    </td>
+                                    <td class="px-4 py-1">
+                                        @if ($client->trashed())
+                                            <span class="text-red-500">Inactive (Deleted)</span>
+                                        @else
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="client_status{{ $client->client_id }}"
+                                                    wire:click="toggleStatusClient({{ $client->client_id }})"
+                                                    {{ $client->status === 'Active' ? 'checked' : '' }}>
+                                                <label class="custom-control-label"
+                                                    for="client_status{{ $client->client_id }}"></label>
+                                            </div>
                                         @endif
                                     </td>
                                 </tr>

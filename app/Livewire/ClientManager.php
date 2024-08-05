@@ -259,6 +259,17 @@ class ClientManager extends Component
         }
     }
 
+    public function toggleStatusClient($clientId)
+    {
+        $client = Client::find($clientId);
+
+        if ($client) {
+            $client->status = $client->status === 'Active' ? 'Inactive' : 'Active';
+            $client->save();
+        }
+    }
+
+
     public function openModal()
     {
         $this->isModalOpen = true;

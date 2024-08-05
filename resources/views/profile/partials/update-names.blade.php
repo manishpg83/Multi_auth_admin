@@ -7,18 +7,6 @@
         <a class="nav-link" id="additional-info-tab" data-toggle="tab" href="#additional-info" role="tab"
             aria-controls="additional-info" aria-selected="false">Additional Information</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" id="smtp-tab" data-toggle="tab" href="#smtp-settings" role="tab" aria-controls="smtp-settings"
-            aria-selected="false">SMTP Settings</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="upload-client-tab" data-toggle="tab" href="#upload-client" role="tab"
-            aria-controls="upload-client" aria-selected="false">Upload Client</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="bulk-upload-client-tab" data-toggle="tab" href="#bulk-upload-client" role="tab"
-            aria-controls="bulk-upload-client" aria-selected="false">Bulk Upload Client</a>
-    </li>
 </ul>
 
 <div class="tab-content">
@@ -27,15 +15,6 @@
     </div>
     <div class="tab-pane fade" id="additional-info" role="tabpanel" aria-labelledby="additional-info-tab">
         @livewire('user-additional-info-component')
-    </div>
-    <div class="tab-pane fade" id="smtp-settings" role="tabpanel" aria-labelledby="smtp-tab">
-        @livewire('smtp-form-component')
-    </div>
-    <div class="tab-pane fade" id="upload-client" role="tabpanel" aria-labelledby="upload-client-tab">
-        @livewire('client-form-component')
-    </div>
-    <div class="tab-pane fade" id="bulk-upload-client" role="tabpanel" aria-labelledby="bulk-upload-client-tab">
-        @livewire('bulk-client-upload-component')
     </div>
 </div>
 

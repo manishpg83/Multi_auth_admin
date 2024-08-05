@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\EmailTracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Config;  // Add this line
 
@@ -63,7 +64,7 @@ class SmtpFormComponent extends Component
             [
                 'smtp_host' => $this->smtp_host,
                 'smtp_username' => $this->smtp_username,
-                'smtp_password' => $this->smtp_password,
+                'smtp_password' => Hash::make($this->smtp_password), // Hash the password
                 'smtp_port' => $this->smtp_port,
                 'smtp_from_name' => $this->smtp_from_name,
                 'smtp_from_email' => $this->smtp_from_email,

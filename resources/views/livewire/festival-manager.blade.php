@@ -3,14 +3,14 @@
         <div class="mx-auto max-w-screen-xl">
             <!-- Start coding here -->
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">
+                <h3 class="text-2xl font-semibold text-gray-500 ml-6">
                     Festival Table
                     @if ($statusFilter !== '')
                         (Showing {{ ucfirst($statusFilter) }} Festivals)
                     @endif
                 </h3>
                 <div
-                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
@@ -64,7 +64,7 @@
                             </span>
                         </button>
                         <button wire:click="create"
-                            class="bg-yellow-300 text-slate-950 px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                            class="bg-yellow-300 text-slate-950 px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" title="Add Festival">
                             Add Festival
                         </button>
                     </div>
@@ -73,44 +73,25 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
-                                <th scope="col" class="px-4 py-3">
-                                    <input type="checkbox" wire:model="selectAll" wire:click="$toggle('selectAll')"
-                                        class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer" />
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('name')">Festival</th>
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('date')">Date</th>
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('subject_line')">
+                                    Subject Line
                                 </th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('festival_id')">ID</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('name')">Festival</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('date')">Date</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('status')">Status</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('subject_line')">Subject Line
-                                </th>
-                                <th scope="col" class="px-4 py-3">Email Body</th>
-                                <th scope="col" class="px-4 py-3">Actions</th>
+                                <th scope="col" class="px-4 py-1 font-bold">Email Body</th>
+                                <th scope="col" class="px-4 py-1 font-bold">Actions</th>
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('status')">Status</th>
+                                <th scope="col" class="px-4 py-1 font-bold"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($festivals as $festival)
                                 <tr class="border-b dark:border-gray-700 text-gray-600">
-                                    <td class="px-4 py-3">
-                                        <input type="checkbox" value="{{ $festival->festival_id }}"
-                                            wire:model="selectedFestivalIds"
-                                            class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer" />
-                                    </td>
-                                    <td class="px-4 py-3">{{ $festival->festival_id }}</td>
-                                    <td class="px-4 py-3">{{ $festival->name }}</td>
-                                    <td class="px-4 py-3">{{ $festival->date }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="custom-switch">
-                                            <input type="checkbox" class="custom-control-input"
-                                                id="status{{ $festival->festival_id }}"
-                                                wire:click="toggleStatus({{ $festival->festival_id }})"
-                                                {{ $festival->status === 'Active' ? 'checked' : '' }}>
-                                            <label class="custom-control-label"
-                                                for="status{{ $festival->festival_id }}"></label>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3">{{ $festival->subject_line }}</td>
-                                    <td class="px-4 py-3">{{ Str::limit($festival->email_body, 50) }}</td>
-                                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
+                                    <td class="px-4 py-1">{{ $festival->name }}</td>
+                                    <td class="px-4 py-1">{{ $festival->date }}</td>
+                                    <td class="px-4 py-1">{{ $festival->subject_line }}</td>
+                                    <td class="px-4 py-1">{{ Str::limit($festival->email_body, 50) }}</td>
+                                    <td class="px-4 py-1 flex items-center justify-end space-x-2">
                                         @if ($isAdmin)
                                             @if ($festival->trashed())
                                                 <button wire:click="restore({{ $festival->festival_id }})"
@@ -144,10 +125,28 @@
                                             @endif
                                         @else
                                             <span
-                                                class="px-2 py-1 font-bold rounded-full {{ $festival->approved ? 'bg-green-400 text-white' : 'bg-yellow-500 text-white' }}">
+                                                class="px-2 py-1 font-bold rounded-full {{ $festival->approved ? ' text-green' : 'bg-yellow-500 text-white' }}">
                                                 {{ $festival->approved ? 'Approved' : 'Pending Approval' }}
                                             </span>
                                         @endif
+                                    </td>
+                                    <td class="px-4 py-1">
+                                        <div class="custom-switch">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="status{{ $festival->festival_id }}"
+                                                wire:click="toggleStatus({{ $festival->festival_id }})"
+                                                {{ $festival->status === 'Active' ? 'checked' : '' }}>
+                                            <label class="custom-control-label"
+                                                for="status{{ $festival->festival_id }}"></label>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
+                                        <button wire:click="viewFestival({{ $festival->festival_id }})"
+                                            class="text-green-600 hover:text-yellow-500"
+                                            title="View Festival Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <!-- Other action buttons here -->
                                     </td>
                                 </tr>
                             @endforeach
@@ -160,6 +159,40 @@
             </div>
         </div>
     </section>
+
+    <!-- Festival Details Modal -->
+    @if($viewingFestival)
+    <div class="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+        <div class="relative w-auto max-w-3xl mx-auto my-6">
+            <!--content-->
+            <div class="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
+                <!--header-->
+                <div class="flex items-start justify-between p-3 border-b border-solid rounded-t border-blueGray-200">
+                    <h3 class="text-2xl font-semibold">
+                        Festival Details
+                    </h3>
+                </div>
+                <!--body-->
+                <div class="relative flex-auto p-6">
+                    <p class="mb-2"><strong>Name:</strong> {{ $viewingFestival->name }}</p>
+                    <p class="mb-2"><strong>Date:</strong> {{ $viewingFestival->date }}</p>
+                    <p class="mb-2"><strong>Status:</strong> {{ $viewingFestival->status }}</p>
+                    <p class="mb-2"><strong>Subject Line:</strong> {{ $viewingFestival->subject_line }}</p>
+                    <p class="mb-2"><strong>Email Body:</strong> {{ $viewingFestival->email_body }}</p>
+                </div>
+                <!--footer-->
+                <div class="flex items-center justify-end p-3 border-t border-solid rounded-b border-blueGray-200">
+                    <button type="button" 
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    wire:click="closeViewModal">
+                    Close
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed inset-0 z-40 bg-black opacity-25"></div>
+    @endif
 
     <!-- Modal for Adding/Editing Festivals -->
     @if ($isModalOpen)
@@ -193,11 +226,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="status">Status</label>
-                                <select class="form-control @error('status') is-invalid @enderror" id="status"
-                                    wire:model="status">
+                                <select class="form-control @error('status') is-invalid @enderror" id="status" wire:model="status">
+                                    <option value="" selected>Select Status</option> <!-- Default option -->
                                     <option value="Active">Active</option>
                                     <option value="Inactive">Inactive</option>
-                                </select>
+                                </select>  
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
