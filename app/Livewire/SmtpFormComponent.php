@@ -5,13 +5,14 @@ namespace App\Livewire;
 use App\Mail\TestEmail;
 use Livewire\Component;
 use App\Models\UserSmtp;
+use App\Models\DefaultSmtpSetting;
 use Illuminate\Support\Str;
 use App\Models\EmailTracking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Config;  // Add this line
+use Illuminate\Support\Facades\Config;
 
 class SmtpFormComponent extends Component
 {
@@ -42,6 +43,17 @@ class SmtpFormComponent extends Component
             }
         } else {
             Log::info('No authenticated user found');
+        }
+    }
+
+    public function changeMailerType($value)
+    {
+        $this->mailer_type = $value;
+        $defaultSetting = DefaultSmtpSetting::where('mailer_type', $value)->first();
+
+        if ($defaultSetting) {
+            $this->smtp_host = $defaultSetting->smtp_host;
+            $this->smtp_port = $defaultSetting->smtp_port;
         }
     }
 
@@ -105,7 +117,7 @@ class SmtpFormComponent extends Component
             Mail::to($smtpSettings->smtp_from_email)->send(new TestEmail($details, $trackingId));
 
             EmailTracking::create([
-                'user_id' => $user->user_id,
+                'user_id' => $user->id,
                 'email' => $smtpSettings->smtp_from_email,
                 'tracking_id' => $trackingId,
                 'sent_at' => now(),
