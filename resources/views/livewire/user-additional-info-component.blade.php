@@ -14,10 +14,10 @@
                     @error('phone')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="phone_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="phone_active"
                             wire:model="active_fields.phone">
-                        <label class="form-check-label" for="phone_active">Active</label>
+                        <label class="custom-control-label" for="phone_active">Active</label>
                     </div>
                 </div>
 
@@ -27,10 +27,10 @@
                     @error('designation')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="designation_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="designation_active"
                             wire:model="active_fields.designation">
-                        <label class="form-check-label" for="designation_active">Active</label>
+                        <label class="custom-control-label" for="designation_active">Active</label>
                     </div>
                 </div>
 
@@ -40,16 +40,16 @@
                     @error('website')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="website_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="website_active"
                             wire:model="active_fields.website">
-                        <label class="form-check-label" for="website_active">Active</label>
+                        <label class="custom-control-label" for="website_active">Active</label>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="newLogo" class="form-label">{{ __('Logo') }}</label>
-                    <input id="newLogo" wire:model="newLogo" type="file" class="form-control">
+                    <input id="newLogo" wire:model="newLogo" type="file" class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     @if ($newLogo)
                         <img src="{{ $newLogo->temporaryUrl() }}" alt="New Logo Preview"
                             style="max-width: 100px; margin-top: 10px;">
@@ -73,10 +73,10 @@
                     @error('address')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="address_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="address_active"
                             wire:model="active_fields.address">
-                        <label class="form-check-label" for="address_active">Active</label>
+                        <label class="custom-control-label" for="address_active">Active</label>
                     </div>
                 </div>
 
@@ -86,10 +86,10 @@
                     @error('telegram')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="telegram_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="telegram_active"
                             wire:model="active_fields.telegram">
-                        <label class="form-check-label" for="telegram_active">Active</label>
+                        <label class="custom-control-label" for="telegram_active">Active</label>
                     </div>
                 </div>
 
@@ -99,10 +99,10 @@
                     @error('whatsapp')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="whatsapp_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="whatsapp_active"
                             wire:model="active_fields.whatsapp">
-                        <label class="form-check-label" for="whatsapp_active">Active</label>
+                        <label class="custom-control-label" for="whatsapp_active">Active</label>
                     </div>
                 </div>
 
@@ -112,10 +112,10 @@
                     @error('skype')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="skype_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="skype_active"
                             wire:model="active_fields.skype">
-                        <label class="form-check-label" for="skype_active">Active</label>
+                        <label class="custom-control-label" for="skype_active">Active</label>
                     </div>
                 </div>
 
@@ -125,58 +125,14 @@
                     @error('imo')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="form-check form-switch mt-2" style="padding-left: 2.50rem;">
-                        <input class="form-check-input" type="checkbox" id="imo_active"
+                    <div class="mt-2 custom-control custom-switch" style="padding-left: 2.50rem;">
+                        <input class="custom-control-input" type="checkbox" id="imo_active"
                             wire:model="active_fields.imo">
-                        <label class="form-check-label" for="imo_active">Active</label>
+                        <label class="custom-control-label" for="imo_active">Active</label>
                     </div>
                 </div>
-
-                <!-- Active Social Media checkboxes -->
-                <div class="mb-3">
-                    <label class="form-label">{{ __('Active Social Media') }}</label>
-                    <div class="row row-cols-2">
-                        <div class="col">
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="skype" value="skype"
-                                    wire:model="active_social">
-                                <label class="form-check-label" for="skype">
-                                    <i class="bi bi-skype"></i> Skype
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="imo" value="imo"
-                                    wire:model="active_social">
-                                <label class="form-check-label" for="imo">
-                                    <i class="bi bi-chat"></i> IMO
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="telegram" value="telegram"
-                                    wire:model="active_social">
-                                <label class="form-check-label" for="telegram">
-                                    <i class="bi bi-telegram"></i> Telegram
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="whatsapp" value="whatsapp"
-                                    wire:model="active_social">
-                                <label class="form-check-label" for="whatsapp">
-                                    <i class="bi bi-whatsapp"></i> Whatsapp
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    @error('active_social')
-                        <div class="mt-2 text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
             </div>
-        </div>
-
+        </div> 
         <div class="gap-4 mt-4 d-flex align-items-center justify-content-end">
             <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
         </div>

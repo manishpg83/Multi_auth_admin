@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\User;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -21,9 +19,8 @@ class UserAdditionalInfoComponent extends Component
     public $whatsapp;
     public $skype;
     public $imo;
-    public $active_social  = [];
-    public $active_fields = [];
     public $newLogo;
+    public $active_fields = [];
 
     public function mount()
     {
@@ -38,7 +35,6 @@ class UserAdditionalInfoComponent extends Component
         $this->skype = $user->skype;
         $this->imo = $user->imo;
         $this->active_fields = is_string($user->active_fields) ? json_decode($user->active_fields, true) : [];
-        $this->active_social = is_string($user->active_social) ? json_decode($user->active_social, true) : [];
     }
 
     public function updateAdditionalInfo()
@@ -54,8 +50,6 @@ class UserAdditionalInfoComponent extends Component
             'skype' => 'nullable|string|max:255',
             'imo' => 'nullable|string|max:255',
             'active_fields' => 'nullable|array',
-            'active_social' => 'nullable|array',
-            'active_social.*' => 'in:skype,telegram,imo,whatsapp',
         ]);
 
         $user = Auth::user();
@@ -68,7 +62,6 @@ class UserAdditionalInfoComponent extends Component
         $user->skype = $this->skype;
         $user->imo = $this->imo;
         $user->active_fields = json_encode($this->active_fields);
-        $user->active_social = json_encode($this->active_social);
 
         if ($this->newLogo) {
             $path = $this->newLogo->store('logos', 'public');
