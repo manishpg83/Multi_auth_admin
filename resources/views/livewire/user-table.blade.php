@@ -83,41 +83,37 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body px-4 py-3 overflow-auto">
-                        <form wire:submit.prevent="save">
+                    <form wire:submit.prevent="save">
+                        <div class="modal-body px-4 py-3 overflow-auto">
                             <div class="form-group mb-3">
-                                <label for="firstName" class="block text-sm font-medium text-gray-700">First
-                                    Name</label>
-                                <input type="text" class="form-control @error('firstName') is-invalid @enderror"
-                                    id="firstName" wire:model="firstName" required>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input type="text" class="form-control @error('firstName') is-invalid @enderror" id="firstName" wire:model.defer="firstName" required>
                                 @error('firstName')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                                <input type="text" class="form-control @error('lastName') is-invalid @enderror"
-                                    id="lastName" wire:model="lastName" required>
+                                <input type="text" class="form-control @error('lastName') is-invalid @enderror" id="lastName" wire:model.defer="lastName" required>
                                 @error('lastName')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" wire:model="email" required>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" wire:model.defer="email" required>
                                 @error('email')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer px-4 py-3 flex justify-end">
-                        <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
-                        <button type="submit" class="btn btn-primary ml-2">
-                            {{ $userId ? 'Update User' : 'Add User' }}
-                        </button>
-                    </div>
+                        </div>
+                        <div class="modal-footer px-4 py-3 flex justify-end">
+                            <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
+                            <button type="submit" class="btn btn-primary ml-2">
+                                {{ $userId ? 'Update User' : 'Add User' }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -130,6 +126,9 @@
                 @this.call('delete', id);
             }
         }
+        window.addEventListener('user-saved', event => {
+            notyf().success(`User ${event.detail.action} successfully!`);
+        })
     </script>
 </div>
 

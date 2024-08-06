@@ -75,28 +75,29 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
-                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('name')">Festival</th>
-                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('date')">Date</th>
-                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('subject_line')">
+                                <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('name')">Festival</th>
+                                <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('date')">Date</th>
+                                <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('subject_line')">
                                     Subject Line</th>
-                                <th scope="col" class="px-4 py-1 font-bold">Email Body</th>
+                                <th scope="col" class="px-4 py-3 font-bold">Email Body</th>
                                 @if ($isAdmin)
-                                    <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('status')">Status
+                                    <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('status')">Status
                                     </th>
+                                    <th scope="col" class="px-4 py-3 font-bold">Actions</th>
                                 @endif
-                                <th scope="col" class="px-4 py-1 font-bold">Actions</th>
-                                <th scope="col" class="px-4 py-1 font-bold">View</th>
+                                <th scope="col" class="px-4 py-3 font-bold">View</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($festivals as $festival)
-                                <tr class="text-gray-600 border-b">
-                                    <td class="px-4 py-1">{{ $festival->name }}</td>
-                                    <td class="px-4 py-1">{{ $festival->date }}</td>
-                                    <td class="px-4 py-1">{{ $festival->subject_line }}</td>
-                                    <td class="px-4 py-1">{{ Str::limit($festival->email_body, 50) }}</td>
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="px-4 py-3">{{ $festival->name }}</td>
+                                    <td class="px-4 py-3">{{ $festival->date }}</td>
+                                    <td class="px-4 py-3">{{ $festival->subject_line }}</td>
+                                    <td class="px-4 py-3">{{ Str::limit($festival->email_body, 50) }}</td>
                                     @if ($isAdmin)
-                                        <td class="px-4 py-1">
+                                        <td class="px-4 py-3">
                                             <div class="custom-switch">
                                                 <input type="checkbox" class="custom-control-input"
                                                     id="status{{ $festival->festival_id }}"
@@ -106,9 +107,7 @@
                                                     for="status{{ $festival->festival_id }}"></label>
                                             </div>
                                         </td>
-                                    @endif
-                                    <td class="flex items-center justify-end px-4 py-1 space-x-2">
-                                        @if ($isAdmin)
+                                        <td class="px-4 py-3 space-x-2">
                                             @if ($festival->trashed())
                                                 <button wire:click="restore({{ $festival->festival_id }})"
                                                     class="text-green-500 hover:text-green-700">
@@ -138,20 +137,15 @@
                                                     </button>
                                                 @endif
                                             @endif
-                                        @else
-                                            <span
-                                                class="px-2 py-1 font-bold rounded-full {{ $festival->approved ? ' text-green' : 'bg-yellow-500 text-white' }}">
-                                                {{ $festival->approved ? 'Approved' : 'Pending Approval' }}
-                                            </span>
-                                        @endif
-
-                                    </td>
-                                    <td class="px-4 py-1"><button
-                                            wire:click="viewFestival({{ $festival->festival_id }})"
+                                        </td>
+                                    @endif
+                                    <td class="px-4 py-3">
+                                        <button wire:click="viewFestival({{ $festival->festival_id }})"
                                             class="text-green-600 hover:text-yellow-500"
                                             title="View Festival Details">
                                             <i class="fas fa-eye"></i>
-                                        </button></td>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -205,7 +199,8 @@
     @if ($isModalOpen)
         <div class="modal-backdrop fade show"></div>
         <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
-            <div class="modal-dialog {{ $isAdmin ? 'modal-md modal-dialog-scrollable' : 'modal-sm' }}" role="document">
+            <div class="modal-dialog {{ $isAdmin ? 'modal-md modal-dialog-scrollable' : 'modal-sm' }}"
+                role="document">
                 <div class="modal-content max-w-lg mx-auto">
                     <div class="modal-header">
                         @if ($isAdmin)

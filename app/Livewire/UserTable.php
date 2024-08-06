@@ -34,6 +34,12 @@ class UserTable extends Component
         $this->isModalOpen = true;
     }
 
+
+    public function mount()
+    {
+        $this->resetFields();
+    }
+
     public function closeModal()
     {
         $this->isModalOpen = false;
@@ -42,7 +48,7 @@ class UserTable extends Component
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $this->userId = $user->user_id;
         $this->firstName = $user->first_name;
         $this->lastName = $user->last_name;
@@ -58,7 +64,7 @@ class UserTable extends Component
             'email' => 'required|email|max:255|unique:users,email,' . $this->userId . ',user_id',
         ]);
 
-        User::updateOrCreate(
+        $user = User::updateOrCreate(
             ['user_id' => $this->userId],
             [
                 'first_name' => $this->firstName,
@@ -66,8 +72,10 @@ class UserTable extends Component
                 'email' => $this->email,
             ]
         );
-        notyf()->success('User updated successfully!');
+
         $this->closeModal();
+        $this->resetFields();
+        notyf()->success('User updated successfully!');
     }
 
     public function delete($id)
