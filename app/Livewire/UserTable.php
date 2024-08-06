@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use Livewire\Component;
@@ -33,6 +34,12 @@ class UserTable extends Component
         $this->isModalOpen = true;
     }
 
+    public function closeModal()
+    {
+        $this->isModalOpen = false;
+        $this->resetFields();
+    }
+
     public function edit($id)
     {
         $user = User::find($id);
@@ -48,24 +55,24 @@ class UserTable extends Component
         $validatedData = $this->validate([
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $this->userId,
+            'email' => 'required|email|max:255|unique:users,email,' . $this->userId . ',user_id',
         ]);
 
         User::updateOrCreate(
             ['user_id' => $this->userId],
-            $validatedData
+            [
+                'first_name' => $this->firstName,
+                'last_name' => $this->lastName,
+                'email' => $this->email,
+            ]
         );
-
-        session()->flash('message', $this->userId ? 'User updated successfully!' : 'User created successfully!');
-        $this->resetFields();
-        $this->isModalOpen = false;
+        notyf()->success('User updated successfully!');
+        $this->closeModal();
     }
 
     public function delete($id)
     {
         User::find($id)->delete();
-        notyf()->success('User deleted successfully!');
-
     }
 
     private function resetFields()
@@ -74,5 +81,14 @@ class UserTable extends Component
         $this->firstName = '';
         $this->lastName = '';
         $this->email = '';
+    }
+
+    public function toggleStatus($id)
+    {
+        $user = User::find($id);
+        $user->status = $user->status == 'Active' ? 'Inactive' : 'Active';
+        $user->save();
+
+        notyf()->success('User status updated successfully!');
     }
 }
