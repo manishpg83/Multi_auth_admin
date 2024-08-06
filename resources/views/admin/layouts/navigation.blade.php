@@ -107,7 +107,11 @@
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-user"></i> {{ Auth::user()->name }}
+                <i class="far fa-user"></i>
+                <span class="ml-2 text-cyan-950" style="font-size: 1.2em; font-weight: bold;">
+                    {{ Auth::user()->name }}
+                    </span>
+                    <i class="fas fa-chevron-down ml-1"></i> <!-- Added arrow icon -->
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="{{ route('admin.profile.edit') }}" class="dropdown-item">
@@ -118,7 +122,7 @@
                     @csrf
                     <button type="submit" class="dropdown-item">
                         <i class="mr-2 fas fa-sign-out-alt"></i> Log Out
-                    </button>
+                    </button> 
                 </form>
             </div>
         </li>
@@ -130,13 +134,13 @@
             </a>
         </li>
 
-        <!-- Control Sidebar Toggle Button -->
+       {{--  <!-- Control Sidebar Toggle Button -->
         <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
                 role="button">
                 <i class="fas fa-th-large"></i>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </nav>
 <!-- /.navbar -->

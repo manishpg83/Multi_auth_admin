@@ -9,17 +9,16 @@
 <aside class="main-sidebar bg-slate-50 elevation-4">
     <div class="sidebar">
         <!-- User Panel -->
-        <div class="user-panel mt-3 pb-1 mb-1 d-flex items-center">
+        <div class="pb-1 mt-3 mb-1 user-panel d-flex">
             <div class="image">
-                <i class="fas fa-user-circle fa-2x mt-2"></i> <!-- Adjust size as needed -->
-            </div>
-            
-            <div class="info bg-gray-100 py-1 px-2 ml-2 mt-1 rounded-lg shadow-md text-center">
-                <a href="{{ route('admin.dashboard') }}" class="block text-slate-500 hover:text-blue-800 font-semibold text-md">
-                    {{ Auth::user()->name }}
+                <img src="{{ asset('images/logo1.jpeg') }}" alt="User Image" class="object-cover w-18 h-18">
+            </div>            
+            <div class="info bg-yellow-400 py-0.5 px-2 ml-2 rounded-lg shadow-md">
+                <a href="{{ route('welcome') }}" class="block text-green-700 hover:text-green-800 font-semibold text-md mt-0.5">
+                    Lttrsnd
                 </a>
             </div>
-        </div>
+        </div>     
         
 
         <!-- Divider -->
@@ -30,29 +29,33 @@
             <ul class="nav nav-sidebar flex flex-col" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Users Link -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'bg-blue-400 text-white' : 'text-black hover:bg-blue-100' }} flex items-center p-2 rounded-md">
-                        <i class="fa fa-user {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-black' }}" aria-hidden="true"></i>
-                        <p class="ml-2">Users</p>
+                    <a href="{{ route('admin.users.index') }}"
+                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('admin.users.*') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
+                        <i class="fa fa-user {{ request()->routeIs('admin.users.*') ? 'text-yellow-400' : 'text-black' }}" aria-hidden="true"></i>
+                        <p class="{{ request()->routeIs('admin.users.*') ? 'text-yellow-400 font-bold' : 'text-black' }} ml-2">Users</p>
                     </a>
                 </li>
                 
                 <!-- Festivals Link -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.festivals.index') }}" class="nav-link {{ request()->routeIs('admin.festivals.*') ? 'bg-blue-400 text-white' : 'text-black hover:bg-blue-100' }} flex items-center p-2 rounded-md">
-                        <i class="fa fa-gift {{ request()->routeIs('admin.festivals.*') ? 'text-white' : 'text-black' }}" aria-hidden="true"></i>
-                        <p class="ml-2">Festivals</p>
+                    <a href="{{ route('admin.festivals.index') }}"
+                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('admin.festivals.*') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
+                        <i class="fa fa-gift {{ request()->routeIs('admin.festivals.*') ? 'text-yellow-400' : 'text-black' }}" aria-hidden="true"></i>
+                        <p class="{{ request()->routeIs('admin.festivals.*') ? 'text-yellow-400 font-bold' : 'text-black' }} ml-2">Festivals</p>
                     </a>
                 </li>
                 
                 <!-- Plans Link -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.plans.index') }}" class="nav-link {{ request()->routeIs('admin.plans.*') ? 'bg-blue-400 text-white' : 'text-black hover:bg-blue-100' }} flex items-center p-2 rounded-md">
-                        <i class="fa fa-calendar {{ request()->routeIs('admin.plans.*') ? 'text-white' : 'text-black' }}" aria-hidden="true"></i>
-                        <p class="ml-2">Plans</p>
+                    <a href="{{ route('admin.plans.index') }}"
+                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('admin.plans.*') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
+                        <i class="fa fa-calendar {{ request()->routeIs('admin.plans.*') ? 'text-yellow-400' : 'text-black' }}" aria-hidden="true"></i>
+                        <p class="{{ request()->routeIs('admin.plans.*') ? 'text-yellow-400 font-bold' : 'text-black' }} ml-2">Plans</p>
                     </a>
                 </li>
             </ul>
         </nav>
+        
         
         
     </div>

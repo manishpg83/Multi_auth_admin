@@ -3,7 +3,8 @@
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                 <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Users Table</h3>
-                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
@@ -14,19 +15,19 @@
                             </div>
                         </form>
                     </div>
-                    <div class="w-full md:w-1/2 text-right">
-                        {{-- <button wire:click="create"
+                    {{-- <div class="w-full md:w-1/2 text-right">
+                        <button wire:click="create"
                             class="bg-cyan-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Add User
-                        </button> --}}
-                    </div>
+                        </button>
+                    </div> --}}
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('user_id')">ID</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('name')">User Name</th>
+                                <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">User Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
                                 <th scope="col" class="px-4 py-3">Status</th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
@@ -48,11 +49,11 @@
                                                 for="status{{ $user->user_id }}"></label>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3 flex items-center justify-center space-x-2">
-                                        {{-- <button wire:click="edit({{ $user->user_id }})"
+                                    <td class="px-4 py-3">
+                                        <button wire:click="edit({{ $user->user_id }})"
                                             class="text-blue-500 hover:text-blue-700">
                                             <i class="fas fa-edit"></i>
-                                        </button> --}}
+                                        </button>
                                         <button onclick="confirmDelete({{ $user->user_id }})"
                                             class="text-red-500 hover:text-red-700">
                                             <i class="fas fa-trash"></i>
@@ -69,7 +70,69 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal for Editing Users -->
+    @if ($isModalOpen)
+        <div class="modal-backdrop fade show"></div>
+        <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content max-w-lg mx-auto flex flex-col">
+                    <div class="modal-header flex items-center justify-between px-4 py-3">
+                        <h5 class="modal-title text-lg font-semibold">{{ $userId ? 'Edit User' : 'Add User' }}</h5>
+                        <button type="button" class="close" wire:click="closeModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-4 py-3 overflow-auto">
+                        <form wire:submit.prevent="save">
+                            <div class="form-group mb-3">
+                                <label for="firstName" class="block text-sm font-medium text-gray-700">First
+                                    Name</label>
+                                <input type="text" class="form-control @error('firstName') is-invalid @enderror"
+                                    id="firstName" wire:model="firstName" required>
+                                @error('firstName')
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                                <input type="text" class="form-control @error('lastName') is-invalid @enderror"
+                                    id="lastName" wire:model="lastName" required>
+                                @error('lastName')
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" wire:model="email" required>
+                                @error('email')
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer px-4 py-3 flex justify-end">
+                        <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
+                        <button type="submit" class="btn btn-primary ml-2">
+                            {{ $userId ? 'Update User' : 'Add User' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+    <script>
+        function confirmDelete(id) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                @this.call('delete', id);
+            }
+        }
+    </script>
 </div>
+
 
 <script>
     function confirmDelete(userId) {
@@ -93,5 +156,3 @@
         });
     }
 </script>
-
-

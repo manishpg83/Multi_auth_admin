@@ -14,22 +14,22 @@
         <nav class="mt-2">
             <ul class="flex flex-col nav nav-sidebar">
                 <!-- Dashboard Link -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('dashboard') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
-                        <i class="fa fa-tachometer-alt {{ request()->routeIs('dashboard') ? 'text-yellow-400' : 'text-black' }} mr-2"></i>
-                        <p class="{{ request()->routeIs('dashboard') ? 'text-yellow-400 font-bold' : 'text-black' }}">Dashboard</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}"
+                            class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('dashboard') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
+                            <i class="fa fa-tachometer-alt {{ request()->routeIs('dashboard') ? 'text-yellow-400' : 'text-black' }} mr-2"></i>
+                            <p class="{{ request()->routeIs('dashboard') ? 'text-yellow-400 font-bold' : 'text-black' }}">Dashboard</p>
+                        </a>
+                    </li>
 
-                <!-- Profile Link -->
-                <li class="nav-item">
-                    <a href="{{ route('profile.edit') }}"
-                        class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('profile.*') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
-                        <i class="fa fa-user {{ request()->routeIs('profile.*') ? 'text-yellow-400' : 'text-black' }} mr-2"></i>
-                        <p class="{{ request()->routeIs('profile.*') ? 'text-yellow-400 font-bold' : 'text-black' }}">Profile</p>
-                    </a>
-                </li>
+                    <!-- Profile Link -->
+                    <li class="nav-item">
+                        <a href="{{ route('profile.edit') }}"
+                            class="nav-link flex items-center p-2 rounded-md {{ request()->routeIs('profile.*') ? 'bg-green-700 text-yellow-400 font-bold' : 'text-black hover:bg-blue-100' }}">
+                            <i class="fa fa-user {{ request()->routeIs('profile.*') ? 'text-yellow-400' : 'text-black' }} mr-2"></i>
+                            <p class="{{ request()->routeIs('profile.*') ? 'text-yellow-400 font-bold' : 'text-black' }}">Profile</p>
+                        </a>
+                    </li>
 
                 <!-- SMTP Settings Link -->
                 <li class="nav-item">
