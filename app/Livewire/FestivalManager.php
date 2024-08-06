@@ -65,7 +65,9 @@ class FestivalManager extends Component
         if (!$isAdmin) {
             $festivalsQuery->where('approved', true);
         }
-
+        if (!$isAdmin) {
+            $festivalsQuery->where('status', 'Active');
+        }
         $festivals = $festivalsQuery->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
@@ -81,7 +83,7 @@ class FestivalManager extends Component
     public function updateFestivalStats()
     {
         $query = Festival::query();
-        
+
         if ($this->statusFilter !== '') {
             $query->where('status', $this->statusFilter);
         }
@@ -151,10 +153,29 @@ class FestivalManager extends Component
 
     public function store()
     {
-        $this->validate();
-
+        // Determine if the user is an admin
         $isAdmin = $this->isAdmin();
 
+        // Set up validation rules
+        $rules = [
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+        ];
+
+        if ($isAdmin) {
+            // Additional rules for admins
+            $rules += [
+                'status' => 'required|string',
+                'email_scheduled' => 'nullable|boolean',
+                'subject_line' => 'nullable|string|max:255',
+                'email_body' => 'nullable|string',
+            ];
+        }
+
+        // Validate input based on user role
+        $this->validate($rules);
+
+        // Create a new festival instance
         $festival = new Festival([
             'name' => $this->name,
             'date' => $this->date,
@@ -165,14 +186,17 @@ class FestivalManager extends Component
             'approved' => $isAdmin,
         ]);
 
+        // Set the appropriate user ID based on role
         if ($isAdmin) {
             $festival->admin_id = Auth::guard('admin')->id();
         } else {
             $festival->user_id = Auth::id();
         }
 
+        // Save the festival to the database
         $festival->save();
 
+        // Notify admins if the user is not an admin
         if (!$isAdmin) {
             Admin::all()->each(function ($admin) use ($festival) {
                 $admin->notify(new NewFestivalForApproval($festival));
@@ -182,11 +206,13 @@ class FestivalManager extends Component
             notyf()->success('Festival created successfully.');
         }
 
+        // Reset fields and refresh the component
         $this->closeModal();
         $this->resetInputFields();
         $this->updateFestivalStats();
         $this->dispatch('refreshComponent');
     }
+
 
     public function approveFestival($id)
     {
@@ -317,13 +343,35 @@ class FestivalManager extends Component
 
     public function update()
     {
-        $this->validate();
+        // Determine if the user is an admin
+        $isAdmin = $this->isAdmin();
 
+        // Set up validation rules
+        $rules = [
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+        ];
+
+        if ($isAdmin) {
+            // Additional rules for admins
+            $rules += [
+                'status' => 'required|string',
+                'email_scheduled' => 'nullable|boolean',
+                'subject_line' => 'nullable|string|max:255',
+                'email_body' => 'nullable|string',
+            ];
+        }
+
+        // Validate input based on user role
+        $this->validate($rules);
+
+        // Find the festival and update its details
         $festival = Festival::find($this->editingFestivalId);
+
         $festival->update([
             'name' => $this->name,
             'date' => $this->date,
-            'status' => $this->status,
+            'status' => $isAdmin ? $this->status : $festival->status, // Keep the existing status if not an admin
             'email_scheduled' => $this->email_scheduled,
             'subject_line' => $this->subject_line,
             'email_body' => $this->email_body,
@@ -335,6 +383,7 @@ class FestivalManager extends Component
         $this->updateFestivalStats();
         $this->dispatch('refreshComponent');
     }
+
 
     public function delete($id)
     {
