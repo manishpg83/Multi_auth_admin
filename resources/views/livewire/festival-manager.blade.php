@@ -92,12 +92,12 @@
                             @foreach ($festivals as $festival)
                                 <tr
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-4 py-3">{{ $festival->name }}</td>
-                                    <td class="px-4 py-3">{{ $festival->date }}</td>
-                                    <td class="px-4 py-3">{{ $festival->subject_line }}</td>
-                                    <td class="px-4 py-3">{{ Str::limit($festival->email_body, 50) }}</td>
+                                    <td class="px-4 py-1">{{ $festival->name }}</td>
+                                    <td class="px-4 py-1">{{ $festival->date }}</td>
+                                    <td class="px-4 py-1">{{ $festival->subject_line }}</td>
+                                    <td class="px-4 py-1">{{ Str::limit($festival->email_body, 50) }}</td>
                                     @if ($isAdmin)
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-1">
                                             <div class="custom-switch">
                                                 <input type="checkbox" class="custom-control-input"
                                                     id="status{{ $festival->festival_id }}"
@@ -107,7 +107,7 @@
                                                     for="status{{ $festival->festival_id }}"></label>
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 space-x-2">
+                                        <td class="px-4 py-1 space-x-2">
                                             @if ($festival->trashed())
                                                 <button wire:click="restore({{ $festival->festival_id }})"
                                                     class="text-green-500 hover:text-green-700">
@@ -139,7 +139,7 @@
                                             @endif
                                         </td>
                                     @endif
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-1">
                                         <button wire:click="viewFestival({{ $festival->festival_id }})"
                                             class="text-green-600 hover:text-yellow-500"
                                             title="View Festival Details">

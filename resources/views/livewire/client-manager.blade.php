@@ -90,10 +90,10 @@
                                             class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer"
                                             wire:model="selectedClients" value="{{ $client->client_id }}">
                                     </td>
-                                    <td class="px-4 py-3">{{ $client->first_name }} {{ $client->last_name }}</td> <!-- Combined cell -->
+                                    <td class="px-4 py-1">{{ $client->first_name }} {{ $client->last_name }}</td>
                                     <td class="px-4 py-1">{{ $client->email }}</td>
                                     <td class="px-4 py-1">{{ $client->company_name }}</td>
-                                    <td class="px-4 py-1 flex items-center justify-end space-x-2">
+                                    <td class="px-4 py-1">
                                         @if ($client->trashed())
                                             <button wire:click="restore({{ $client->client_id }})"
                                                 class="text-green-500 hover:text-green-700">
@@ -114,14 +114,14 @@
                                         @if ($client->trashed())
                                             <span class="text-red-500">Inactive (Deleted)</span>
                                         @else
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input"
-                                                    id="client_status{{ $client->client_id }}"
-                                                    wire:click="toggleStatusClient({{ $client->client_id }})"
-                                                    {{ $client->status === 'Active' ? 'checked' : '' }}>
-                                                <label class="custom-control-label"
-                                                    for="client_status{{ $client->client_id }}"></label>
-                                            </div>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="client_status{{ $client->client_id }}"
+                                                wire:click="toggleStatusClient({{ $client->client_id }})"
+                                                {{ $client->status === 'Active' ? 'checked' : '' }}>
+                                            <label class="custom-control-label"
+                                                for="client_status{{ $client->client_id }}"></label>
+                                        </div>
                                         @endif
                                     </td>
                                 </tr>
