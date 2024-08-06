@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('subject_line')->nullable();
             $table->text('email_body')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('set null');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
         });

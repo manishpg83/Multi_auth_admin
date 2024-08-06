@@ -25,10 +25,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
-function isProfileComplete() {
+/* function isProfileComplete() {
     $user = auth()->user();
     return $user && $user->first_name && $user->last_name && $user->company_name;
-}
+} */
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');

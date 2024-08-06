@@ -154,9 +154,8 @@ class FestivalManager extends Component
         $this->validate();
 
         $isAdmin = $this->isAdmin();
-        $userId = Auth::id();
 
-        $festival = Festival::create([
+        $festival = new Festival([
             'name' => $this->name,
             'date' => $this->date,
             'status' => $isAdmin ? $this->status : 'Inactive',
@@ -164,9 +163,15 @@ class FestivalManager extends Component
             'subject_line' => $this->subject_line,
             'email_body' => $this->email_body,
             'approved' => $isAdmin,
-            'submitted_by' => $userId,
-            'user_id' => $userId,
         ]);
+
+        if ($isAdmin) {
+            $festival->admin_id = Auth::guard('admin')->id();
+        } else {
+            $festival->user_id = Auth::id();
+        }
+
+        $festival->save();
 
         if (!$isAdmin) {
             Admin::all()->each(function ($admin) use ($festival) {
