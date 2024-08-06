@@ -78,24 +78,35 @@
                                 <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('name')">Festival</th>
                                 <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('date')">Date</th>
                                 <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('subject_line')">
-                                    Subject Line
-                                </th>
+                                    Subject Line</th>
                                 <th scope="col" class="px-4 py-1 font-bold">Email Body</th>
-                                <th scope="col" class="px-4 py-1 font-bold">Actions</th>
                                 @if ($isAdmin)
                                     <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('status')">Status
                                     </th>
                                 @endif
-                                <th scope="col" class="px-4 py-1 font-bold"></th>
+                                <th scope="col" class="px-4 py-1 font-bold">Actions</th>
+                                <th scope="col" class="px-4 py-1 font-bold">View</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($festivals as $festival)
-                                <tr class="text-gray-600 border-b dark:border-gray-700">
+                                <tr class="text-gray-600 border-b">
                                     <td class="px-4 py-1">{{ $festival->name }}</td>
                                     <td class="px-4 py-1">{{ $festival->date }}</td>
                                     <td class="px-4 py-1">{{ $festival->subject_line }}</td>
                                     <td class="px-4 py-1">{{ Str::limit($festival->email_body, 50) }}</td>
+                                    @if ($isAdmin)
+                                        <td class="px-4 py-1">
+                                            <div class="custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="status{{ $festival->festival_id }}"
+                                                    wire:click="toggleStatus({{ $festival->festival_id }})"
+                                                    {{ $festival->status === 'Active' ? 'checked' : '' }}>
+                                                <label class="custom-control-label"
+                                                    for="status{{ $festival->festival_id }}"></label>
+                                            </div>
+                                        </td>
+                                    @endif
                                     <td class="flex items-center justify-end px-4 py-1 space-x-2">
                                         @if ($isAdmin)
                                             @if ($festival->trashed())
@@ -116,17 +127,16 @@
                                                     class="text-red-500 hover:text-red-700">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
-                                            @endif
-
-                                            @if (!$festival->approved)
-                                                <button wire:click="approveFestival({{ $festival->festival_id }})"
-                                                    class="text-green-500 hover:text-green-700">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button wire:click="rejectFestival({{ $festival->festival_id }})"
-                                                    class="text-red-500 hover:text-red-700">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
+                                                @if (!$festival->approved)
+                                                    <button wire:click="approveFestival({{ $festival->festival_id }})"
+                                                        class="text-green-500 hover:text-green-700">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                    <button wire:click="rejectFestival({{ $festival->festival_id }})"
+                                                        class="text-red-500 hover:text-red-700">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                @endif
                                             @endif
                                         @else
                                             <span
@@ -134,26 +144,14 @@
                                                 {{ $festival->approved ? 'Approved' : 'Pending Approval' }}
                                             </span>
                                         @endif
+
                                     </td>
-                                    @if ($isAdmin)
-                                        <td class="px-4 py-1">
-                                            <div class="custom-switch">
-                                                <input type="checkbox" class="custom-control-input"
-                                                    id="status{{ $festival->festival_id }}"
-                                                    wire:click="toggleStatus({{ $festival->festival_id }})"
-                                                    {{ $festival->status === 'Active' ? 'checked' : '' }}>
-                                                <label class="custom-control-label"
-                                                    for="status{{ $festival->festival_id }}"></label>
-                                            </div>
-                                        </td>
-                                    @endif
-                                    <td class="flex items-center justify-end px-4 py-3 space-x-2">
-                                        <button wire:click="viewFestival({{ $festival->festival_id }})"
+                                    <td class="px-4 py-1"><button
+                                            wire:click="viewFestival({{ $festival->festival_id }})"
                                             class="text-green-600 hover:text-yellow-500"
                                             title="View Festival Details">
                                             <i class="fas fa-eye"></i>
-                                        </button>
-                                    </td>
+                                        </button></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -205,79 +203,90 @@
 
     <!-- Modal for Adding/Editing Festivals -->
     @if ($isModalOpen)
-    <div class="modal-backdrop fade show"></div>
-    <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @if ($isAdmin)
-                        <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Add Festival' }}</h5>
-                    @else
-                        <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Request Festival' }}</h5>
-                    @endif
-                    <button type="button" class="close" wire:click="closeModal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form wire:submit.prevent="{{ $editingFestivalId ? 'update' : 'store' }}">
-                        <div class="form-group">
-                            <label for="name">Festival Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model="name">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="date">Date</label>
-                            <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" wire:model="date">
-                            @error('date')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+        <div class="modal-backdrop fade show"></div>
+        <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
+            <div class="modal-dialog {{ $isAdmin ? 'modal-md modal-dialog-scrollable' : 'modal-sm' }}" role="document">
+                <div class="modal-content max-w-lg mx-auto">
+                    <div class="modal-header">
                         @if ($isAdmin)
-                            <div class="form-group">
-                                <label for="status">Status</label>
-                                <select class="form-control @error('status') is-invalid @enderror" id="status" wire:model="status">
-                                    <option value="" disabled>Select Status</option> <!-- Default option -->
-                                    <option value="Active" {{ $status === 'Active' ? 'selected' : '' }}>Active</option>
-                                    <option value="Inactive" {{ $status === 'Inactive' ? 'selected' : '' }}>Inactive</option>
-                                </select>
-                                @error('status')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="subject_line">Subject Line</label>
-                                <input type="text" class="form-control @error('subject_line') is-invalid @enderror" id="subject_line" wire:model="subject_line">
-                                @error('subject_line')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="email_body">Email Body</label>
-                                <textarea class="form-control @error('email_body') is-invalid @enderror" id="email_body" wire:model="email_body"></textarea>
-                                @error('email_body')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                            <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Add Festival' }}</h5>
+                        @else
+                            <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Request Festival' }}
+                            </h5>
                         @endif
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
-                            <button type="submit" class="btn btn-primary">
-                                @if ($isAdmin)
-                                    {{ $editingFestivalId ? 'Update Festival' : 'Add Festival' }}
-                                @else
-                                    {{ $editingFestivalId ? 'Update Request' : 'Request Festival' }}
-                                @endif
-                            </button>
-                        </div>
-                    </form>
+                        <button type="button" class="close" wire:click="closeModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form wire:submit.prevent="{{ $editingFestivalId ? 'update' : 'store' }}">
+                            <div class="form-group">
+                                <label for="name">Festival Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" wire:model="name" required>
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                    id="date" wire:model="date" required>
+                                @error('date')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            @if ($isAdmin)
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control @error('status') is-invalid @enderror" id="status"
+                                        wire:model="status" required>
+                                        <option value="" disabled>Select Status</option>
+                                        <option value="Active" {{ $status === 'Active' ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="Inactive" {{ $status === 'Inactive' ? 'selected' : '' }}>
+                                            Inactive</option>
+                                    </select>
+                                    @error('status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject_line">Subject Line</label>
+                                    <input type="text"
+                                        class="form-control @error('subject_line') is-invalid @enderror"
+                                        id="subject_line" wire:model="subject_line" required>
+                                    @error('subject_line')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="email_body">Email Body</label>
+                                    <textarea class="form-control @error('email_body') is-invalid @enderror" id="email_body" wire:model="email_body"
+                                        required></textarea>
+                                    @error('email_body')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            @endif
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
+                        <button type="submit" class="btn btn-primary"
+                            wire:click="{{ $editingFestivalId ? 'update' : 'store' }}">
+                            @if ($isAdmin)
+                                {{ $editingFestivalId ? 'Update Festival' : 'Add Festival' }}
+                            @else
+                                {{ $editingFestivalId ? 'Update Request' : 'Request Festival' }}
+                            @endif
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
+
 
 
     <!-- New Confirmation Modal -->
