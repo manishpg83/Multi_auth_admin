@@ -3,8 +3,7 @@
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                 <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Users Table</h3>
-                <div
-                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
@@ -29,6 +28,7 @@
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('user_id')">ID</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('name')">User Name</th>
                                 <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
+                                <th scope="col" class="px-4 py-3">Status</th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
@@ -36,8 +36,18 @@
                             @foreach ($users as $user)
                                 <tr class="border-b text-gray-600">
                                     <td class="px-4 py-3">{{ $user->user_id }}</td>
-                                    <td class="px-4 py-3">{{ $user->first_name }} {{ $user->last_name }}</td> <!-- Combined cell -->
+                                    <td class="px-4 py-3">{{ $user->first_name }} {{ $user->last_name }}</td>
                                     <td class="px-4 py-3">{{ $user->email }}</td>
+                                    <td class="px-4 py-1">
+                                        <div class="custom-switch">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="status{{ $user->user_id }}"
+                                                wire:click="toggleStatus({{ $user->user_id }})"
+                                                {{ $user->status === 'Active' ? 'checked' : '' }}>
+                                            <label class="custom-control-label"
+                                                for="status{{ $user->user_id }}"></label>
+                                        </div>
+                                    </td>
                                     <td class="px-4 py-3 flex items-center justify-center space-x-2">
                                         {{-- <button wire:click="edit({{ $user->user_id }})"
                                             class="text-blue-500 hover:text-blue-700">
@@ -48,7 +58,6 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
-                                    
                                 </tr>
                             @endforeach
                         </tbody>
@@ -61,6 +70,7 @@
         </div>
     </section>
 </div>
+
 <script>
     function confirmDelete(userId) {
         Swal.fire({

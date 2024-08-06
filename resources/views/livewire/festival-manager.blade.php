@@ -3,7 +3,7 @@
         <div class="max-w-screen-xl mx-auto">
             <!-- Start coding here -->
             <div class="relative overflow-hidden bg-white shadow-md sm:rounded-lg">
-                <h3 class="ml-6 text-2xl font-semibold text-gray-500">
+                <h3 class="ml-6 text-2xl font-semibold text-gray-500 mt-2">
                     Festival Table
                     @if ($statusFilter !== '')
                         (Showing {{ ucfirst($statusFilter) }} Festivals)

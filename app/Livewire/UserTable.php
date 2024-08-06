@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use Livewire\Component;
@@ -64,9 +65,18 @@ class UserTable extends Component
     public function delete($id)
     {
         User::find($id)->delete();
-        notyf()->success('User deleted successfully!');
-
+        session()->flash('message', 'User deleted successfully!');
     }
+
+    public function toggleStatus($id)
+    {
+        $user = User::find($id);
+        $user->status = $user->status == 'Active' ? 'Inactive' : 'Active';
+        $user->save();
+        
+        session()->flash('message', 'User status updated successfully!');
+    }
+
 
     private function resetFields()
     {

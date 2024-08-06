@@ -2,7 +2,7 @@
     <section class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 ml-6">
+                <h3 class="text-2xl font-semibold text-gray-500 ml-6 mt-2">
                     Clients Table
                     @if ($statusFilter !== '')
                         (Showing {{ ucfirst($statusFilter) }} Clients)
