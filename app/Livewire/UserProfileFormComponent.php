@@ -2,6 +2,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class UserProfileFormComponent extends Component
@@ -22,9 +23,12 @@ class UserProfileFormComponent extends Component
 
     public function updateProfile()
     {
+        $userId = Auth::user()->user_id;
+
         $this->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$userId.',user_id',
             'company_name' => 'nullable|string|max:255',
         ]);
 
@@ -35,7 +39,7 @@ class UserProfileFormComponent extends Component
         $user->save();
         notyf()->success('The process was completed successfully.');        
     }
-
+ 
     public function render()
     {
         return view('livewire.user-profile-form');

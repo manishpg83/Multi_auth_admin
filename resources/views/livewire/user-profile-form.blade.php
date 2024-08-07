@@ -34,9 +34,12 @@
         <div class="mb-3 row">
             <div class="col-md-6">
                 <label for="email" class="form-label">{{ __('Email') }}</label>
-                <input id="email" name="email" type="email" class="form-control" wire:model="email" required
-                    readonly>
+                <input id="email" name="email" type="email" class="form-control" wire:model="email" required>
+                @error('email')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
+            
             <div class="col-md-6">
                 <label for="company_name" class="form-label">{{ __('Company Name') }}</label>
                 <input id="company_name" name="company_name" type="text" class="form-control"

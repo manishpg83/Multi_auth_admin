@@ -59,7 +59,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                         <button wire:click="view({{ $user->user_id }})"
-                                            class="text-blue-500 hover:text-blue-700">
+                                            class="text-green-500 hover:text-green-700">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
