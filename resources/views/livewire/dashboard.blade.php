@@ -1,6 +1,6 @@
 <!-- Small boxes (Stat box) -->
 <div class="row">
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-cyan-500 h-30 flex flex-col justify-between">
             <div class="inner">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-yellow-400 h-30 flex flex-col justify-between">
             <div class="inner">
@@ -29,7 +29,7 @@
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-lime-500 h-30 flex flex-col justify-between">
             <div class="inner">
@@ -43,7 +43,7 @@
         </div>
     </div>
     <!-- ./col -->
-    <div class="col-lg-3 col-6">
+    {{-- <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-orange-400 h-30 flex flex-col justify-between">
             <div class="inner">
@@ -55,7 +55,7 @@
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-    </div>
+    </div> --}}
     <!-- ./col -->
 </div>
 <!-- /.row -->

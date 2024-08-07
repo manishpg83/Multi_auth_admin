@@ -19,6 +19,7 @@
                                     class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:ring-2 focus:border-cyan-500 dark:focus:ring-cyan-500 dark:focus:border-cyan-500"
                                     placeholder="Search Festival..." required>
                             </div>
+                            @if ($isAdmin)
                             <div x-data="{ open: false }" class="relative inline-block ml-1 text-left">
                                 <button @click="open = !open" type="button"
                                     class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
@@ -46,11 +47,12 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </form>
                     </div>
                     <div class="flex items-center justify-between w-full space-x-2 text-right md:w-1/2">
 
-                        <button wire:click="sendSelectedFestivalsEmail" wire:loading.attr="disabled"
+                        {{-- <button wire:click="sendSelectedFestivalsEmail" wire:loading.attr="disabled"
                             class="relative flex items-center px-3 py-1 space-x-2 font-bold text-white bg-blue-400 rounded-md shadow-sm text-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <!-- Email icon -->
                             <i class="fas fa-envelope"></i>
@@ -62,7 +64,7 @@
                                 <!-- Text during loading -->
                                 <span class="ml-2">Sending...</span>
                             </span>
-                        </button>
+                        </button> --}}
                         <button wire:click="create"
                             class="px-3 py-1 font-bold bg-yellow-300 rounded-md shadow-sm text-slate-950 text-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             title="{{ $isAdmin ? 'Add Festival' : 'Request Festival' }}">
@@ -75,6 +77,10 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
+                                {{-- checkbox to email send --}}
+                                {{-- <th scope="col" class="px-4 py-3">
+                                    <input type="checkbox" wire:model="selectAll" class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer" />
+                                </th> --}}
                                 <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('name')">Festival</th>
                                 <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('date')">Date</th>
                                 <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('subject_line')">
@@ -92,6 +98,10 @@
                             @foreach ($festivals as $festival)
                                 <tr
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                   {{-- checkbox to email send --}}
+                                    {{-- <td class="px-4 py-3">
+                                        <input type="checkbox" value="{{ $festival->festival_id }}" wire:model="selectedFestivalIds" class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer" />
+                                    </td> --}}
                                     <td class="px-4 py-1">{{ $festival->name }}</td>
                                     <td class="px-4 py-1">{{ $festival->date }}</td>
                                     <td class="px-4 py-1">{{ $festival->subject_line }}</td>

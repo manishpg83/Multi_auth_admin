@@ -15,7 +15,7 @@ class ClientManager extends Component
     protected $listeners = ['deleteClient' => 'delete', 'refreshComponent' => '$refresh'];
 
     public $first_name, $last_name, $email, $company_name, $status;
-    public $editingClientId;
+    public $editingClientId = null;
     public $isModalOpen = false;
     public $clients;
     public $search = '';
@@ -145,7 +145,13 @@ class ClientManager extends Component
 
     public function update()
     {
-        $this->validate();
+        $this->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'company_name' => 'nullable|string|max:255',
+            'status' => 'required|in:Active,Inactive',
+        ]);
 
         $client = Client::withTrashed()->find($this->editingClientId);
         $client->update([
@@ -156,7 +162,7 @@ class ClientManager extends Component
             'status' => $this->status,
         ]);
 
-        notyf()->success('Client Updated successfully.');
+        notyf()->success('Client updated successfully.');
         $this->closeModal();
         $this->resetInputFields();
         $this->updateClientStats();

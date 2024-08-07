@@ -2,12 +2,18 @@
     <section class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 ml-6 mt-2">
-                    Clients Table
-                    @if ($statusFilter !== '')
-                        (Showing {{ ucfirst($statusFilter) }} Clients)
-                    @endif
-                </h3>
+                <div class="flex items-center justify-between ml-6 mt-2">
+                    <h3 class="text-2xl font-semibold text-gray-500">
+                        Clients Table
+                        @if ($statusFilter !== '')
+                            (Showing {{ ucfirst($statusFilter) }} Clients)
+                        @endif
+                    </h3>
+                    <button wire:click="create"
+                            class="bg-blue-400 text-white font-bold px-2 py-1 mr-2 text-md rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Add Client
+                    </button>
+                </div>                
                 <div
                     class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
                     <div class="rounded-lg">
@@ -52,6 +58,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="w-full md:w-1/2 text-right">
                         @if ($clients->whereNotNull('deleted_at')->count() > 0)
                             <button wire:click="restoreSelected"
@@ -94,6 +101,10 @@
                                     <td class="px-4 py-1">{{ $client->email }}</td>
                                     <td class="px-4 py-1">{{ $client->company_name }}</td>
                                     <td class="px-4 py-1">
+                                        <button wire:click="edit({{ $client->client_id }})"
+                                            class="text-blue-500 hover:text-blue-700 mr-2">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
                                         @if ($client->trashed())
                                             <button wire:click="restore({{ $client->client_id }})"
                                                 class="text-green-500 hover:text-green-700">
@@ -114,14 +125,14 @@
                                         @if ($client->trashed())
                                             <span class="text-red-500">Inactive (Deleted)</span>
                                         @else
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input"
-                                                id="client_status{{ $client->client_id }}"
-                                                wire:click="toggleStatusClient({{ $client->client_id }})"
-                                                {{ $client->status === 'Active' ? 'checked' : '' }}>
-                                            <label class="custom-control-label"
-                                                for="client_status{{ $client->client_id }}"></label>
-                                        </div>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="client_status{{ $client->client_id }}"
+                                                    wire:click="toggleStatusClient({{ $client->client_id }})"
+                                                    {{ $client->status === 'Active' ? 'checked' : '' }}>
+                                                <label class="custom-control-label"
+                                                    for="client_status{{ $client->client_id }}"></label>
+                                            </div>
                                         @endif
                                     </td>
                                 </tr>
@@ -134,6 +145,154 @@
                 </div>
             </div>
         </div>
+        @if ($isModalOpen)
+            <div class="modal-backdrop fade show"></div>
+            <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+                    <div class="modal-content max-w-lg mx-auto">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ $editingClientId ? 'Edit Client' : 'Add Client' }}</h5>
+                            <button type="button" class="close" wire:click="closeModal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form wire:submit.prevent="{{ $editingClientId ? 'update' : 'store' }}">
+                                <div class="form-group">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text"
+                                        class="form-control @error('first_name') is-invalid @enderror" id="first_name"
+                                        wire:model="first_name" required>
+                                    @error('first_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text"
+                                        class="form-control @error('last_name') is-invalid @enderror" id="last_name"
+                                        wire:model="last_name" required>
+                                    @error('last_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" wire:model="email" required>
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_name">Company Name</label>
+                                    <input type="text"
+                                        class="form-control @error('company_name') is-invalid @enderror"
+                                        id="company_name" wire:model="company_name">
+                                    @error('company_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control @error('status') is-invalid @enderror" id="status"
+                                        wire:model="status" required>
+                                        <option value="" disabled>Select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                    @error('status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
+                            <button type="submit" class="btn btn-primary"
+                                wire:click="{{ $editingClientId ? 'update' : 'store' }}">
+                                {{ $editingClientId ? 'Update Client' : 'Add Client' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+
+        @if ($isModalOpen)
+            <div class="modal-backdrop fade show"></div>
+            <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+                    <div class="modal-content max-w-lg mx-auto">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ $editingClientId ? 'Edit Client' : 'Add Client' }}</h5>
+                            <button type="button" class="close" wire:click="closeModal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form wire:submit.prevent="{{ $editingClientId ? 'update' : 'store' }}">
+                                <div class="form-group">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text"
+                                        class="form-control @error('first_name') is-invalid @enderror" id="first_name"
+                                        wire:model="first_name" required>
+                                    @error('first_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text"
+                                        class="form-control @error('last_name') is-invalid @enderror" id="last_name"
+                                        wire:model="last_name" required>
+                                    @error('last_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" wire:model="email" required>
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_name">Company Name</label>
+                                    <input type="text"
+                                        class="form-control @error('company_name') is-invalid @enderror"
+                                        id="company_name" wire:model="company_name">
+                                    @error('company_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control @error('status') is-invalid @enderror" id="status"
+                                        wire:model="status" required>
+                                        <option value="" disabled>Select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                    @error('status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
+                            <button type="submit" class="btn btn-primary"
+                                wire:click="{{ $editingClientId ? 'update' : 'store' }}">
+                                {{ $editingClientId ? 'Update Client' : 'Add Client' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </section>
 
     <script>
