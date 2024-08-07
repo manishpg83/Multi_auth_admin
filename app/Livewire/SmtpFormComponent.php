@@ -5,13 +5,14 @@ namespace App\Livewire;
 use App\Mail\TestEmail;
 use Livewire\Component;
 use App\Models\UserSmtp;
-use App\Models\DefaultSmtpSetting;
 use Illuminate\Support\Str;
 use App\Models\EmailTracking;
+use App\Models\DefaultSmtpSetting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Config;
 
 class SmtpFormComponent extends Component
@@ -76,7 +77,7 @@ class SmtpFormComponent extends Component
             [
                 'smtp_host' => $this->smtp_host,
                 'smtp_username' => $this->smtp_username,
-                'smtp_password' => Hash::make($this->smtp_password), // Hash the password
+                'smtp_password' => Crypt::encryptString($this->smtp_password), // Encrypt the password
                 'smtp_port' => $this->smtp_port,
                 'smtp_from_name' => $this->smtp_from_name,
                 'smtp_from_email' => $this->smtp_from_email,
@@ -98,11 +99,14 @@ class SmtpFormComponent extends Component
 
         $smtpSettings = $user->smtpSettings;
 
+         // Decrypt the SMTP password
+        $smtpPassword = Crypt::decryptString($smtpSettings->smtp_password);
+
         // Configure mail settings dynamically
         Config::set('mail.mailers.smtp.host', $smtpSettings->smtp_host);
         Config::set('mail.mailers.smtp.port', $smtpSettings->smtp_port);
         Config::set('mail.mailers.smtp.username', $smtpSettings->smtp_username);
-        Config::set('mail.mailers.smtp.password', $smtpSettings->smtp_password);
+        Config::set('mail.mailers.smtp.password', $smtpPassword); // Use decrypted password
         Config::set('mail.from.address', $smtpSettings->smtp_from_email);
         Config::set('mail.from.name', $smtpSettings->smtp_from_name);
 
@@ -117,7 +121,7 @@ class SmtpFormComponent extends Component
             Mail::to($smtpSettings->smtp_from_email)->send(new TestEmail($details, $trackingId));
 
             EmailTracking::create([
-                'user_id' => $user->id,
+                'user_id' => $user->user_id,
                 'email' => $smtpSettings->smtp_from_email,
                 'tracking_id' => $trackingId,
                 'sent_at' => now(),

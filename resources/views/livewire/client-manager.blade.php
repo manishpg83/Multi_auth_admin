@@ -193,7 +193,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="status">Status</label>
                                     <select class="form-control @error('status') is-invalid @enderror" id="status"
                                         wire:model="status" required>
@@ -204,7 +204,7 @@
                                     @error('status')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -268,7 +268,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="status">Status</label>
                                     <select class="form-control @error('status') is-invalid @enderror" id="status"
                                         wire:model="status" required>
@@ -279,7 +279,7 @@
                                     @error('status')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                         <div class="modal-footer">

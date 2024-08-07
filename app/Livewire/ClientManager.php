@@ -2,15 +2,17 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Client;
 use App\Models\User;
+use App\Traits\ChecksClientLimits;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ClientManager extends Component
 {
     use WithPagination;
+    use ChecksClientLimits;
 
     protected $listeners = ['deleteClient' => 'delete', 'refreshComponent' => '$refresh'];
 
@@ -105,16 +107,19 @@ class ClientManager extends Component
             'last_name' => 'required|string|max:255',
             'email' => 'required|email',
             'company_name' => 'nullable|string|max:255',
-            'status' => 'required|in:Active,Inactive',
         ]);
-
+        if (!$this->checkClientLimit()) {
+            notyf()->error('You have reached your client limit. Please upgrade your plan.');
+            return;
+        }
+        $status = 'Active';
         // Check if client exists and retrieve it, or create a new one
         $client = Client::firstOrNew(['email' => $this->email]);
         $client->fill([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'company_name' => $this->company_name,
-            'status' => $this->status,
+            'status' => $status,
         ]);
         $client->save();
 
@@ -150,7 +155,6 @@ class ClientManager extends Component
             'last_name' => 'required|string|max:255',
             'email' => 'required|email',
             'company_name' => 'nullable|string|max:255',
-            'status' => 'required|in:Active,Inactive',
         ]);
 
         $client = Client::withTrashed()->find($this->editingClientId);
@@ -159,7 +163,6 @@ class ClientManager extends Component
             'last_name' => $this->last_name,
             'email' => $this->email,
             'company_name' => $this->company_name,
-            'status' => $this->status,
         ]);
 
         notyf()->success('Client updated successfully.');
