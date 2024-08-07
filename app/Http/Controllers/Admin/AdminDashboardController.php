@@ -19,13 +19,13 @@ class AdminDashboardController extends Controller
         return view('admin.dashboard', compact('users', 'festivals', 'plans'));
     }
 
-    public function showUsers()
+    /* public function showUsers()
     {
         $users = User::paginate(10);
         $festivals = Festival::all();
         $plans = Plan::all();
         return view('admin.layouts.user', compact('users', 'festivals', 'plans'));
-    }
+    } */
 
     public function showFestivals()
     {

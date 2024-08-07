@@ -82,7 +82,10 @@ class UserTable extends Component
     {
         User::find($id)->delete();
     }
-
+    public function view($id)
+    {
+        return redirect()->route('admin.users.show', ['userId' => $id]);
+    }
     private function resetFields()
     {
         $this->userId = null;

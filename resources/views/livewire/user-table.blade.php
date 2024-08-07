@@ -1,23 +1,23 @@
 <div>
     <section class="bg-gray-50">
-        <div class="mx-auto max-w-screen-xl">
-            <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Users Table</h3>
+        <div class="max-w-screen-xl mx-auto">
+            <div class="relative overflow-hidden bg-white shadow-md sm:rounded-lg">
+                <h3 class="mt-2 mb-2 ml-6 text-2xl font-semibold text-gray-500">Users Table</h3>
                 <div
-                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                    class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <input wire:model="search" type="text" id="simple-search"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:ring-2 focus:border-primary-500 block w-full pl-10 p-2"
+                                    class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:ring-2 focus:border-primary-500"
                                     placeholder="Search Users..." required>
                             </div>
                         </form>
                     </div>
-                    {{-- <div class="w-full md:w-1/2 text-right">
+                    {{-- <div class="w-full text-right md:w-1/2">
                         <button wire:click="create"
-                            class="bg-cyan-500 text-white px-3 py-1 font-bold text-md rounded-md shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="px-3 py-1 font-bold text-white rounded-md shadow-sm bg-cyan-500 text-md hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Add User
                         </button>
                     </div> --}}
@@ -35,7 +35,7 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                                <tr class="border-b text-gray-600">
+                                <tr class="text-gray-600 border-b">
                                     <td class="px-4 py-3">{{ $user->user_id }}</td>
                                     <td class="px-4 py-3">{{ $user->first_name }} {{ $user->last_name }}</td>
                                     <td class="px-4 py-3">{{ $user->email }}</td>
@@ -58,6 +58,10 @@
                                             class="text-red-500 hover:text-red-700">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        <button wire:click="view({{ $user->user_id }})"
+                                            class="text-blue-500 hover:text-blue-700">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -76,40 +80,44 @@
         <div class="modal-backdrop fade show"></div>
         <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content max-w-lg mx-auto flex flex-col">
-                    <div class="modal-header flex items-center justify-between px-4 py-3">
-                        <h5 class="modal-title text-lg font-semibold">{{ $userId ? 'Edit User' : 'Add User' }}</h5>
+                <div class="flex flex-col max-w-lg mx-auto modal-content">
+                    <div class="flex items-center justify-between px-4 py-3 modal-header">
+                        <h5 class="text-lg font-semibold modal-title">{{ $userId ? 'Edit User' : 'Add User' }}</h5>
                         <button type="button" class="close" wire:click="closeModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <form wire:submit.prevent="save">
-                        <div class="modal-body px-4 py-3 overflow-auto">
-                            <div class="form-group mb-3">
-                                <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                                <input type="text" class="form-control @error('firstName') is-invalid @enderror" id="firstName" wire:model.defer="firstName" required>
+                        <div class="px-4 py-3 overflow-auto modal-body">
+                            <div class="mb-3 form-group">
+                                <label for="firstName" class="block text-sm font-medium text-gray-700">First
+                                    Name</label>
+                                <input type="text" class="form-control @error('firstName') is-invalid @enderror"
+                                    id="firstName" wire:model.defer="firstName" required>
                                 @error('firstName')
-                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                    <span class="text-sm text-red-600">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="mb-3 form-group">
                                 <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                                <input type="text" class="form-control @error('lastName') is-invalid @enderror" id="lastName" wire:model.defer="lastName" required>
+                                <input type="text" class="form-control @error('lastName') is-invalid @enderror"
+                                    id="lastName" wire:model.defer="lastName" required>
                                 @error('lastName')
-                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                    <span class="text-sm text-red-600">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="mb-3 form-group">
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" wire:model.defer="email" required>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" wire:model.defer="email" required>
                                 @error('email')
-                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                    <span class="text-sm text-red-600">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                        <div class="modal-footer px-4 py-3 flex justify-end">
+                        <div class="flex justify-end px-4 py-3 modal-footer">
                             <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
-                            <button type="submit" class="btn btn-primary ml-2">
+                            <button type="submit" class="ml-2 btn btn-primary">
                                 {{ $userId ? 'Update User' : 'Add User' }}
                             </button>
                         </div>
