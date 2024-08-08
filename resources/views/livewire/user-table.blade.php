@@ -2,15 +2,15 @@
     <section class="bg-gray-50">
         <div class="max-w-screen-xl mx-auto">
             <div class="relative overflow-hidden bg-white shadow-md sm:rounded-lg">
-                <h3 class="mt-2 mb-2 ml-6 text-2xl font-semibold text-gray-500">Users Table</h3>
+                <h3 class="mt-1 ml-6 text-2xl font-semibold text-gray-500">Users Table</h3>
                 <div
-                    class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
+                    class="flex flex-col items-center justify-between p-2 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <input wire:model="search" type="text" id="simple-search"
-                                    class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:ring-2 focus:border-primary-500"
+                                    class="block w-full p-1 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-cyan-500 focus:ring-2 focus:border-primary-500"
                                     placeholder="Search Users..." required>
                             </div>
                         </form>
@@ -26,19 +26,19 @@
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('user_id')">ID</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('first_name')">User Name</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('email')">Email</th>
-                                <th scope="col" class="px-4 py-3">Status</th>
-                                <th scope="col" class="px-4 py-3">Actions</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('user_id')">ID</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('first_name')">User Name</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('email')">Email</th>
+                                <th scope="col" class="px-4 py-1">Status</th>
+                                <th scope="col" class="px-4 py-1">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
                                 <tr class="text-gray-600 border-b">
-                                    <td class="px-4 py-3">{{ $user->user_id }}</td>
-                                    <td class="px-4 py-3">{{ $user->first_name }} {{ $user->last_name }}</td>
-                                    <td class="px-4 py-3">{{ $user->email }}</td>
+                                    <td class="px-4 py-1">{{ $user->user_id }}</td>
+                                    <td class="px-4 py-1">{{ $user->first_name }} {{ $user->last_name }}</td>
+                                    <td class="px-4 py-1">{{ $user->email }}</td>
                                     <td class="px-4 py-1">
                                         <div class="custom-switch">
                                             <input type="checkbox" class="custom-control-input"
@@ -49,7 +49,7 @@
                                                 for="status{{ $user->user_id }}"></label>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-1">
                                         <button wire:click="edit({{ $user->user_id }})"
                                             class="text-blue-500 hover:text-blue-700">
                                             <i class="fas fa-edit"></i>

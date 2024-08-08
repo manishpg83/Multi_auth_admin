@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-2 mb-8">
         <div class="row">
             <!-- Main Dashboard Content -->
             <div class="col-md-12">

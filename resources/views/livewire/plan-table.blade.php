@@ -2,14 +2,14 @@
     <section class="bg-gray-50">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <h3 class="text-2xl font-semibold text-gray-500 mb-2 ml-6 mt-2">Plans Table</h3>
-                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <h3 class="text-2xl font-semibold text-gray-500 ml-6 mt-1">Plans Table</h3>
+                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <input wire:model.debounce.300ms="search" type="text" id="simple-search"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:ring-2 focus:border-primary-500 block w-full pl-10 p-2"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:ring-2 focus:border-primary-500 block w-full pl-10 p-1"
                                     placeholder="Search Plans..." required>
                             </div>
                         </form>
@@ -25,25 +25,25 @@
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('plan_id')">ID</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('plan_name')">Plan Name</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('plan_type')">Plan Type</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('amount')">Amount</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('plan_description')">Description</th>
-                                <th scope="col" class="px-4 py-3" wire:click="sortBy('client_limit')">Client Limit</th>
-                                <th scope="col" class="px-4 py-3">Actions</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('plan_id')">ID</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('plan_name')">Plan Name</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('plan_type')">Plan Type</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('amount')">Amount</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('plan_description')">Description</th>
+                                <th scope="col" class="px-4 py-1" wire:click="sortBy('client_limit')">Client Limit</th>
+                                <th scope="col" class="px-4 py-1">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($plans as $plan)
                                 <tr class="border-b text-gray-600">
-                                    <td class="px-4 py-3">{{ $plan->plan_id }}</td>
-                                    <td class="px-4 py-3">{{ $plan->plan_name }}</td>
-                                    <td class="px-4 py-3">{{ $plan->plan_type }}</td>
-                                    <td class="px-4 py-3">{{ $plan->amount }}</td>
-                                    <td class="px-4 py-3">{{ $plan->plan_description }}</td>
-                                    <td class="px-4 py-3">{{ $plan->client_limit }}</td>
-                                    <td class="px-4 py-3 text-center">
+                                    <td class="px-4 py-1">{{ $plan->plan_id }}</td>
+                                    <td class="px-4 py-1">{{ $plan->plan_name }}</td>
+                                    <td class="px-4 py-1">{{ $plan->plan_type }}</td>
+                                    <td class="px-4 py-1">{{ $plan->amount }}</td>
+                                    <td class="px-4 py-1">{{ $plan->plan_description }}</td>
+                                    <td class="px-4 py-1">{{ $plan->client_limit }}</td>
+                                    <td class="px-4 py-1 text-center">
                                         <div class="flex justify-center space-x-2">
                                             @if ($plan->trashed())
                                                 <button wire:click="restore({{ $plan->plan_id }})"

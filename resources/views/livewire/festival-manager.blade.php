@@ -22,7 +22,7 @@
                             @if ($isAdmin)
                             <div x-data="{ open: false }" class="relative inline-block ml-1 text-left">
                                 <button @click="open = !open" type="button"
-                                    class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    class="inline-flex justify-center w-full px-2 py-2 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                     id="dropdownButton">
                                     <span>{{ $statusFilter === '' ? 'Statuses' : ucfirst($statusFilter) }}</span>
                                     <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@
                         </form>
                     </div>
                     <div class="flex items-center justify-between w-full space-x-2 text-right md:w-1/2">
-
-                        {{-- <button wire:click="sendSelectedFestivalsEmail" wire:loading.attr="disabled"
+                        {{-- Uncomment and modify this block as needed
+                        <button wire:click="sendSelectedFestivalsEmail" wire:loading.attr="disabled"
                             class="relative flex items-center px-3 py-1 space-x-2 font-bold text-white bg-blue-400 rounded-md shadow-sm text-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <!-- Email icon -->
                             <i class="fas fa-envelope"></i>
@@ -64,14 +64,16 @@
                                 <!-- Text during loading -->
                                 <span class="ml-2">Sending...</span>
                             </span>
-                        </button> --}}
+                        </button>
+                        --}}
+                    
                         <button wire:click="create"
-                            class="px-3 py-1 font-bold bg-yellow-300 rounded-md shadow-sm text-slate-950 text-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            class="px-3 py-1 font-bold bg-yellow-300 rounded-md shadow-sm text-slate-950 text-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 ml-auto"
                             title="{{ $isAdmin ? 'Add Festival' : 'Request Festival' }}">
                             {{ $isAdmin ? 'Add Festival' : 'Request Festival' }}
                         </button>
-
                     </div>
+                    
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -81,17 +83,17 @@
                                 {{-- <th scope="col" class="px-4 py-3">
                                     <input type="checkbox" wire:model="selectAll" class="form-checkbox h-5 w-5 text-blue-600 bg-gray-200 border-gray-300 rounded-md focus:ring-blue-500 focus:ring-2 cursor-pointer" />
                                 </th> --}}
-                                <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('name')">Festival</th>
-                                <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('date')">Date</th>
-                                <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('subject_line')">
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('name')">Festival</th>
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('date')">Date</th>
+                                <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('subject_line')">
                                     Subject Line</th>
-                                <th scope="col" class="px-4 py-3 font-bold">Email Body</th>
+                                <th scope="col" class="px-4 py-1 font-bold">Email Body</th>
                                 @if ($isAdmin)
-                                    <th scope="col" class="px-4 py-3 font-bold" wire:click="sortBy('status')">Status
+                                    <th scope="col" class="px-4 py-1 font-bold" wire:click="sortBy('status')">Status
                                     </th>
-                                    <th scope="col" class="px-4 py-3 font-bold">Actions</th>
+                                    <th scope="col" class="px-4 py-1 font-bold">Actions</th>
                                 @endif
-                                <th scope="col" class="px-4 py-3 font-bold">View</th>
+                                <th scope="col" class="px-4 py-1 font-bold">View</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,7 +119,7 @@
                                                     for="status{{ $festival->festival_id }}"></label>
                                             </div>
                                         </td>
-                                        <td class="px-4 py-1 space-x-2">
+                                        <td class="px-2 py-1">
                                             @if ($festival->trashed())
                                                 <button wire:click="restore({{ $festival->festival_id }})"
                                                     class="text-green-500 hover:text-green-700">
