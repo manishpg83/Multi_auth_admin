@@ -8,12 +8,13 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Traits\ChecksClientLimits;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class BulkClientUploadComponent extends Component
 {
     use WithFileUploads;
     use ChecksClientLimits;
+
     public $csv_file;
 
     protected $rules = [
@@ -28,16 +29,31 @@ class BulkClientUploadComponent extends Component
 
         // Process CSV file
         $data = array_map('str_getcsv', file(storage_path('app/' . $path)));
-        // $data = $this->getCSVData();
+        
+        // Remove the header row
+        array_shift($data);
+
         $numberOfClients = count($data);
 
         if (!$this->canAddClients($numberOfClients)) {
             notyf()->error("You can't add {$numberOfClients} clients. You have {$this->getRemainingClientSlots()} slots remaining.");
             return;
         }
-        $user = User::find(Auth::id());
 
-        foreach ($data as $row) {
+        $user = User::find(Auth::id());
+        $errors = [];
+
+        foreach ($data as $index => $row) {
+            // Validate email
+            $validator = Validator::make(['email' => $row[2]], [
+                'email' => 'required|email',
+            ]);
+
+            if ($validator->fails()) {
+                $errors[] = "Row " . ($index + 2) . ": Invalid email address - " . $row[2];
+                continue;
+            }
+
             // Create or update the client
             $client = Client::updateOrCreate(
                 ['email' => $row[2]],
@@ -52,10 +68,17 @@ class BulkClientUploadComponent extends Component
             // Associate the client with the current user via the pivot table
             $user->clients()->syncWithoutDetaching([$client->client_id => ['is_subscribed' => true]]);
         }
-        notyf()->success('bulk-clients-uploaded');
+
+        if (!empty($errors)) {
+            $errorMessage = implode("\n", $errors);
+            notyf()->error("Some clients couldn't be added due to invalid email addresses:\n" . $errorMessage);
+        } else {
+            notyf()->success('Bulk clients uploaded successfully.');
+        }
+
+        $this->dispatch('bulk-clients-uploaded');
         return redirect()->route('dashboard');
     }
-
 
     public function render()
     {

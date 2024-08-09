@@ -9,16 +9,16 @@
     </div>
 </form>
 
-@if (session('status') === 'bulk-clients-uploaded')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Clients Uploaded',
-                text: 'Bulk clients have been uploaded successfully!',
-                showConfirmButton: false,
-                timer: 2000
-            });
+<script>
+document.addEventListener('livewire:load', function () {
+    Livewire.on('bulk-clients-uploaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Clients Uploaded',
+            text: 'Bulk clients have been uploaded successfully!',
+            showConfirmButton: false,
+            timer: 2000
         });
-    </script>
-@endif
+    });
+});
+</script>

@@ -209,90 +209,80 @@
 
     <!-- Modal for Adding/Editing Festivals -->
     @if ($isModalOpen)
-        <div class="modal-backdrop fade show"></div>
-        <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
-            <div class="modal-dialog {{ $isAdmin ? 'modal-md modal-dialog-scrollable' : 'modal-sm' }}"
-                role="document">
-                <div class="modal-content max-w-lg mx-auto">
-                    <div class="modal-header">
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal show" style="display: block;" tabindex="-1" role="dialog">
+        <div class="modal-dialog {{ $isAdmin ? 'modal-md modal-dialog-scrollable' : 'modal-sm' }}" role="document">
+            <div class="modal-content max-w-lg mx-auto">
+                <div class="modal-header">
+                    @if ($isAdmin)
+                        <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Add Festival' }}</h5>
+                    @else
+                        <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Request Festival' }}</h5>
+                    @endif
+                    <button type="button" class="close" wire:click="closeModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form wire:submit.prevent="{{ $editingFestivalId ? 'update' : 'store' }}">
+                        <div class="form-group">
+                            <label for="name">Festival Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model="name" required>
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" wire:model="date" required
+                                @if (!$isAdmin) min="{{ date('Y-m-d') }}" @endif>
+                            @error('date')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         @if ($isAdmin)
-                            <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Add Festival' }}</h5>
-                        @else
-                            <h5 class="modal-title">{{ $editingFestivalId ? 'Edit Festival' : 'Request Festival' }}
-                            </h5>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="form-control @error('status') is-invalid @enderror" id="status" wire:model="status" required>
+                                    <option value="" disabled>Select Status</option>
+                                    <option value="Active" {{ $status === 'Active' ? 'selected' : '' }}>Active</option>
+                                    <option value="Inactive" {{ $status === 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                                </select>
+                                @error('status')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="subject_line">Subject Line</label>
+                                <input type="text" class="form-control @error('subject_line') is-invalid @enderror" id="subject_line" wire:model="subject_line" required>
+                                @error('subject_line')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="email_body">Email Body</label>
+                                <textarea class="form-control @error('email_body') is-invalid @enderror" id="email_body" wire:model="email_body" required></textarea>
+                                @error('email_body')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         @endif
-                        <button type="button" class="close" wire:click="closeModal">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form wire:submit.prevent="{{ $editingFestivalId ? 'update' : 'store' }}">
-                            <div class="form-group">
-                                <label for="name">Festival Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" wire:model="name" required>
-                                @error('name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Date</label>
-                                <input type="date" class="form-control @error('date') is-invalid @enderror"
-                                    id="date" wire:model="date" required>
-                                @error('date')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            @if ($isAdmin)
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select class="form-control @error('status') is-invalid @enderror" id="status"
-                                        wire:model="status" required>
-                                        <option value="" disabled>Select Status</option>
-                                        <option value="Active" {{ $status === 'Active' ? 'selected' : '' }}>Active
-                                        </option>
-                                        <option value="Inactive" {{ $status === 'Inactive' ? 'selected' : '' }}>
-                                            Inactive</option>
-                                    </select>
-                                    @error('status')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="subject_line">Subject Line</label>
-                                    <input type="text"
-                                        class="form-control @error('subject_line') is-invalid @enderror"
-                                        id="subject_line" wire:model="subject_line" required>
-                                    @error('subject_line')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="email_body">Email Body</label>
-                                    <textarea class="form-control @error('email_body') is-invalid @enderror" id="email_body" wire:model="email_body"
-                                        required></textarea>
-                                    @error('email_body')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            @endif
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
-                        <button type="submit" class="btn btn-primary"
-                            wire:click="{{ $editingFestivalId ? 'update' : 'store' }}">
-                            @if ($isAdmin)
-                                {{ $editingFestivalId ? 'Update Festival' : 'Add Festival' }}
-                            @else
-                                {{ $editingFestivalId ? 'Update Request' : 'Request Festival' }}
-                            @endif
-                        </button>
-                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="closeModal">Close</button>
+                    <button type="submit" class="btn btn-primary" wire:click="{{ $editingFestivalId ? 'update' : 'store' }}">
+                        @if ($isAdmin)
+                            {{ $editingFestivalId ? 'Update Festival' : 'Add Festival' }}
+                        @else
+                            {{ $editingFestivalId ? 'Update Request' : 'Request Festival' }}
+                        @endif
+                    </button>
                 </div>
             </div>
         </div>
-    @endif
+    </div>
+@endif
 
 
 

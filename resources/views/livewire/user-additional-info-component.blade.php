@@ -10,7 +10,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="phone" class="form-label">{{ __('Phone') }}</label>
-                    <input id="phone" wire:model="phone" type="text" class="form-control">
+                    <input id="phone" wire:model="phone" type="number" class="form-control">
                     @error('phone')
                         <div class="mt-2 text-danger">{{ $message }}</div>
                     @enderror
